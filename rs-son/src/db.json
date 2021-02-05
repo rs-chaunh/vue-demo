@@ -1,0 +1,30 @@
+{
+    "4Uf4Y8r4x5OMI9ph1qjiyq4SCQZ2": {
+        "areas": ["frontend", "backend", "career"],
+        "description": "abc",
+        "firstName": "Lap",
+        "hourlyRate": 1,
+        "lastName": "Dao"
+    },
+    "87Zj4oEcrxWV6p370q62Jq6u8DQ2": {
+        "areas": ["frontend"],
+        "description": "123456789",
+        "firstName": "hanh",
+        "hourlyRate": 100,
+        "lastName": "truong"
+    },
+    "8HuQ5s3nobO2ZsGrNSHVz04tkuD2": {
+        "areas": ["frontend"],
+        "description": "abc",
+        "firstName": "Nguyen Dinh",
+        "hourlyRate": 3,
+        "lastName": "Han"
+    },
+    "UdVo2NFoDjRfEUmA3TFgLjWRfI52": {
+        "areas": ["frontend", "backend", "career"],
+        "description": "im a coach",
+        "firstName": "Chau",
+        "hourlyRate": 22,
+        "lastName": "Nguyen"
+    }
+}
