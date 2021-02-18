@@ -1,18 +1,18 @@
 <template>
   <form @submit.prevent="handleSubmitRequest">
     <div class="form-control">
-      <label for="email">Your E-mail</label>
+      <label for="email">{{$t('Yemail')}}</label>
       <input type="email" id="email" v-model="email" />
     </div>
     <div class="form-control">
-      <label for="message">Message</label>
+      <label for="message">{{$t('mess')}}</label>
       <textarea rows="5" id="message" required v-model="messages"></textarea>
     </div>
     <p v-if="errors" class="errors">
-      Please enter a valid email and non-empty message.
+      {{$t('err')}}.
     </p>
     <div class="action">
-      <item-button>Send Message</item-button>
+      <item-button>{{$t('send')}}</item-button>
     </div>
   </form>
 </template>

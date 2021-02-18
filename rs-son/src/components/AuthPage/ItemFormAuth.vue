@@ -21,15 +21,15 @@
       <input type="email" v-model="email" id="email" />
     </div>
     <div class="form-control">
-      <label for="password">Password</label>
+      <label for="password">{{ $t("pass") }}</label>
       <input type="password" v-model="password" id="password" required />
     </div>
     <p v-if="errors">
-      Please enter a valid email and password (must be at least 6 characters long).
+      {{ $t("errAuth") }}
     </p>
     <item-button> {{ textBtn }} </item-button>
     <item-link @click.prevent="handleChangeAction()" class="flat" :linkTo="linkToReg">
-      {{ textLink }} instead
+      {{ textLink }} {{ $t("instead") }}
     </item-link>
   </form>
 </template>
@@ -62,9 +62,21 @@ export default {
       // SET TEXT FOR BTN
       this.checkAction = !this.checkAction;
       if (this.checkAction) {
-        (this.textBtn = "Login"), (this.textLink = "Signup");
+        if (this.getLocale == "gb") {
+          this.textBtn = this.$i18n.messages.gb.textBtn;
+          this.textLink = this.$i18n.messages.gb.textLink;
+        } else {
+          this.textBtn = this.$i18n.messages.vn.textBtn;
+          this.textLink = this.$i18n.messages.vn.textLink;
+        }
       } else {
-        (this.textBtn = "Signup"), (this.textLink = "Login");
+        if (this.getLocale == "gb") {
+          this.textBtn = this.$i18n.messages.gb.textLink;
+          this.textLink = this.$i18n.messages.gb.textBtn;
+        } else {
+          this.textBtn = this.$i18n.messages.vn.textLink;
+          this.textLink = this.$i18n.messages.vn.textBtn;
+        }
       }
     },
     handleSubmit() {
@@ -77,7 +89,7 @@ export default {
           password: this.password,
           returnSecureToken: true,
         };
-        if (this.textBtn == "Signup") {
+        if (this.textBtn == "Signup" || this.textBtn == "Đăng ký" ) {
           // SIGN UP
           console.log("SIGN UP");
           event.preventDefault();
@@ -112,9 +124,21 @@ export default {
     getTextErr() {
       let text = "";
       if (!this.$store.state.checkLogin) {
-        text = "Failed to authenticate. Check your login data.";
+        if (this.getLocale == "gb") {
+          text = this.$i18n.messages.gb.errLoginContent;
+        } else {
+          text = this.$i18n.messages.vn.errLoginContent;
+        }
       }
       return text;
+    },
+    getLocale() {
+      return this.$store.state.locale;
+    },
+  },
+  watch: {
+    getLocale: function () {
+      this.handleChangeAction();
     },
   },
 };

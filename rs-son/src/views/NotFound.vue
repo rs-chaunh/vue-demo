@@ -2,10 +2,12 @@
   <transition name="open" appear>
     <section>
       <item-card>
-        <h2>Page not found</h2>
+        <h2>{{ $t("notFound") }}</h2>
         <p>
-          " This page could not be found - maybe check out all our "
-          <a href="/coaches">coaches</a>
+          " {{ $t("notFoundContent") }} "
+          <router-link to="/coaches">
+            {{ $t("coaches") }}
+          </router-link>
         </p>
       </item-card>
     </section>
@@ -16,7 +18,7 @@
 import ItemCard from "../components/common/ItemCard.vue";
 export default {
   components: { ItemCard },
-    beforeRouteLeave() {
+  beforeRouteLeave() {
     console.log("GOODBYE");
   },
   beforeRouteEnter(to, from) {

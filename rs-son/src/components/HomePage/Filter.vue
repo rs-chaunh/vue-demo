@@ -2,7 +2,7 @@
   <section>
     {{setDataFilter}}
     <item-card>
-      <h2>Find Your Coach</h2>
+      <h2>{{$t('findCoach')}}</h2>
       <span class="filter-option">
         <input
           type="checkbox"

@@ -1,7 +1,7 @@
 <template>
   <form @submit="handleSubmit" method="post" novalidate="true">
     <div class="form-control" :class="dataCoach.firstname.err == '' ? '' : 'error'">
-      <label for="firstname">Firstname</label>
+      <label for="firstname">{{$t('firstname')}}</label>
       <input
         type="text"
         v-model="dataCoach.firstname.value"
@@ -11,7 +11,7 @@
       <p v-if="dataCoach.firstname.err">{{ dataCoach.firstname.err }}</p>
     </div>
     <div class="form-control" :class="dataCoach.lastname.err == '' ? '' : 'error'">
-      <label for="lastname">Lastname</label>
+      <label for="lastname">{{$t('lastname')}}</label>
       <input
         type="text"
         v-model="dataCoach.lastname.value"
@@ -21,7 +21,7 @@
       <p v-if="dataCoach.lastname.err">{{ dataCoach.lastname.err }}</p>
     </div>
     <div class="form-control" :class="dataCoach.description.err == '' ? '' : 'error'">
-      <label for="description">Description</label>
+      <label for="description">{{$t('description')}}</label>
       <textarea
         type="text"
         v-model="dataCoach.description.value"
@@ -32,7 +32,7 @@
       <p v-if="dataCoach.description.err">{{ dataCoach.description.err }}</p>
     </div>
     <div class="form-control" :class="dataCoach.hRate.err == '' ? '' : 'error'">
-      <label for="hRate">Hourly Rate</label>
+      <label for="hRate">{{$t('hRate')}}</label>
       <input
         type="number"
         v-model="dataCoach.hRate.value"
@@ -42,7 +42,7 @@
       <p v-if="dataCoach.hRate.err">{{ dataCoach.hRate.err }}</p>
     </div>
     <div class="form-control">
-      <h3>Areas of Expertise</h3>
+      <h3>{{$t('areasOf')}}</h3>
       <div :class="dataCoach.areas.err == '' ? '' : 'error'">
         <input
           type="checkbox"
@@ -51,7 +51,7 @@
           id="frontend"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="frontend">Frontend Deverloper</label>
+        <label for="frontend">{{$t('devF')}}</label>
       </div>
       <div :class="dataCoach.areas.err == '' ? '' : 'error'">
         <input
@@ -61,7 +61,7 @@
           id="backend"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="backend">Backend Deverloper</label>
+        <label for="backend">{{$t('devB')}}</label>
       </div>
       <div :class="dataCoach.areas.err == '' ? '' : 'error'">
         <input
@@ -71,7 +71,7 @@
           id="career"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="career">Career Deverloper</label>
+        <label for="career">{{$t('devC')}}</label>
       </div>
       <p v-if="dataCoach.areas.err">{{ dataCoach.areas.err }}</p>
     </div>

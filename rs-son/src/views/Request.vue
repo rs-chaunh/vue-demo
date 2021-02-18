@@ -3,7 +3,7 @@
     <section>
       <item-card>
         <header>
-          <h2>Requests Received</h2>
+          <h2>{{$t('requestRecevied')}}</h2>
         </header>
         <list-request></list-request>
       </item-card>

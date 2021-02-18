@@ -1,7 +1,18 @@
-import { createApp } from 'vue'
+import {
+    createApp
+} from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import FlagIcon from 'vue-flag-icon'
+import i18n from './plugins/i18n'
 
-createApp(App).use(store).use(router).mount('#app')
+const app = createApp(App);
+
+
+app.use(store)
+app.use(router)
+app.use(i18n)
+app.use(FlagIcon)
+app.mount('#app')
