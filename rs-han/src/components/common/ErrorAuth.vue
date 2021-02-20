@@ -1,30 +1,32 @@
 <template>
-  <div :class="[openDialog ? 'backdrop' : '']"></div>
-  <transition name="dialog">
-    <dialog :open="openDialog" v-if="openDialog">
-      <header>
-        <template v-if="authenDialog">
-          <h2>Authenticating...</h2>
-        </template>
-        <template v-else>
-          <h2>An error occurred</h2>
-        </template>
-      </header>
-      <section>
-        <template v-if="loadingDialog">
-          <my-loading></my-loading>
-        </template>
-        <template v-else>
-          <p>Failed to authenticate. Check your login data.</p>
-        </template>
-      </section>
-      <menu>
-        <button @click="closeDialog">
-          Close
-        </button>
-      </menu>
-    </dialog>
-  </transition>
+  <div>
+    <div :class="[openDialog ? 'backdrop' : '']"></div>
+    <transition name="dialog">
+      <dialog :open="openDialog" v-if="openDialog">
+        <header>
+          <template v-if="authenDialog">
+            <h2>{{ $t("auth.error.dialog.titleLoading") }}</h2>
+          </template>
+          <template v-else>
+            <h2>{{ $t("auth.error.dialog.titleAuth") }}</h2>
+          </template>
+        </header>
+        <section>
+          <template v-if="loadingDialog">
+            <my-loading></my-loading>
+          </template>
+          <template v-else>
+            <p>{{ $t("auth.error.dialog.message") }}</p>
+          </template>
+        </section>
+        <menu>
+          <button @click="closeDialog">
+            {{ $t("common.button.close") }}
+          </button>
+        </menu>
+      </dialog>
+    </transition>
+  </div>
 </template>
 
 <script>

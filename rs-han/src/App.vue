@@ -1,10 +1,12 @@
 <template>
-  <the-heading />
-  <router-view v-slot="{ Component }">
-    <transition name="animate" mode="out-in">
-      <component :is="Component"></component>
-    </transition>
-  </router-view>
+  <div>
+    <the-heading />
+    <router-view v-slot="{ Component }">
+      <transition name="animate" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
+  </div>
 </template>
 <script>
 import TheHeading from "./components/common/TheHeading";

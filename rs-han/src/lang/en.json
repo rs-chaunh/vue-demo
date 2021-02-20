@@ -1,0 +1,91 @@
+{
+  "common": {
+    "button": {
+      "login": "Login",
+      "logout": "Logout",
+      "request": "Requests",
+      "close": "Close",
+      "allCoaches": "All coaches",
+      "refresh": "Refresh",
+      "loginToRegister": "Login to register coaches",
+      "registerCoaches": "Register as coaches",
+      "contact": "Contact",
+      "viewDetail": "View Detail"
+    },
+    "text": {
+      "hour": "hour",
+      "linkCoaches": "coaches",
+      "findYourCoaches": "Find Your Coach"
+    }
+  },
+  "auth": {
+    "button": {
+      "signup": "Signup",
+      "loginInstead": "Login instead",
+      "signupInstead": "Signup instead"
+    },
+    "inputText": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "error": {
+      "validate": " Please enter a valid email and password (must be at least 6 characters long).",
+      "dialog": {
+        "titleLoading": "Authenticating...",
+        "titleAuth": "An error occurred",
+        "message": "Failed to authenticate. Check your login data."
+      }
+    }
+  },
+  "register": {
+    "button": {
+      "register": "Register"
+    },
+    "title": "Register as a coach now!",
+    "inputText": {
+      "firstName": "FirstName",
+      "lastName": " LastName",
+      "description": "Description",
+      "hourlyRate": "Hourly Rate",
+      "areas": "Areas of Expertise",
+      "frontendDev": "Frontend Development",
+      "backendDev": "Backend Development",
+      "fullstackDev": "Fullstack Development"
+    },
+    "error": {
+      "validate": {
+        "nonValue": {
+          "firstName": "Firstname must not be empty.",
+          "lastName": "Lastname must not be empty.",
+          "description": "Description must not be empty.",
+          "hourlyRate": "Rate must be greater than 0.",
+          "areas": "At least one expertise must be selected."
+        },
+        "wrongFormat": {
+          "firstName": "Firstname must capitalize the first letter.",
+          "lastName": "LastName must be over 3 characters.",
+          "description": "The description must be less than 100 characters long."
+        }
+      },
+      "message": "Please fix the above errors and submit again."
+    }
+  },
+  "contact": {
+    "title": "Interested? Reach out now!",
+    "button": {
+      "sendMessage": "Send Message"
+    },
+    "inputText": {
+      "yourEmail": "Your E-mail",
+      "message": "Message"
+    }
+  },
+  "request": {
+    "title": "Requests Received",
+    "message": "You havent received any requests yet!"
+  },
+  "fileNotFound": {
+    "title": "Page not found",
+    "message": "This page could not be found - maybe check out all our"
+  }
+}

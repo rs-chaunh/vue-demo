@@ -2,14 +2,14 @@
   <section>
     <my-card>
       <header>
-        <h2>Requests Received</h2>
+        <h2>{{ $t("request.title") }}</h2>
       </header>
       <template v-if="loading">
         <my-loading></my-loading>
       </template>
       <template v-else>
         <h3 v-if="request.length == 0">
-          You haven't received any requests yet!
+          {{ $t("request.message") }}
         </h3>
         <ul v-else v-for="req in request" :key="req">
           <li>

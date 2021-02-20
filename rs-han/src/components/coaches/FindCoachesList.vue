@@ -3,18 +3,18 @@
     <my-card>
       <div class="controls">
         <my-button class="outline" @click="$store.dispatch('getCoaches')">
-          Refresh
+          {{ $t("common.button.refresh") }}
         </my-button>
         <template v-if="isRegister"> </template>
         <template v-else>
           <template v-if="auth">
             <button-link :link="'/register'">
-              Register as Coach
+              {{ $t("common.button.registerCoaches") }}
             </button-link>
           </template>
           <template v-else>
             <button-link :link="'/auth'" :query="'register'">
-              Login to Register as Coach
+              {{ $t("common.button.loginToRegister") }}
             </button-link>
           </template>
         </template>

@@ -3,14 +3,16 @@
     <section>
       <my-card>
         <h2>{{ listCoaches.firstName + " " + listCoaches.lastName }}</h2>
-        <h3>{{ listCoaches.hourlyRate }}$/hour</h3>
+        <h3>{{ listCoaches.hourlyRate }}$/{{ $t("common.text.hour") }}</h3>
       </my-card>
     </section>
     <section>
       <my-card>
         <header>
-          <h2>Interested? Reach out now!</h2>
-          <button-link :link="'#'">Contact</button-link>
+          <h2>{{ $t("contact.title") }}</h2>
+          <button-link :link="'#'">{{
+            $t("common.button.contact")
+          }}</button-link>
           <coaches-contact-form :id="listCoaches.id" />
         </header>
       </my-card>

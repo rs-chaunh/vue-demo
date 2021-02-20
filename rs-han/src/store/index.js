@@ -13,6 +13,7 @@ export default createStore({
     openDialog: false,
     authenDialog: false,
     loadingDialog: false,
+    lang: localStorage.getItem("lang") || "gb",
   },
   getters: {
     allCoaches: (state) => {
@@ -78,6 +79,7 @@ export default createStore({
 
     logout({ commit }) {
       localStorage.removeItem("userID");
+      localStorage.removeItem("token");
       commit("SET_IS_REGISTER", false);
       commit("TOGGLE_AUTH", null);
     },
@@ -85,6 +87,7 @@ export default createStore({
       var user = payload.userCredential.user;
       commit("TOGGLE_AUTH", user.uid);
       localStorage.setItem("userID", user.uid);
+      localStorage.setItem("token", user.refreshToken);
       setTimeout(() => {
         commit("SET_OPEN_DIALOG", false);
         commit("SET_LOADING_DIALOG", false);
@@ -138,6 +141,10 @@ export default createStore({
 
     SET_LOADING_DIALOG(state, payload) {
       state.loadingDialog = payload;
+    },
+
+    SET_LANGUAGE(state, payload) {
+      state.lang = payload;
     },
 
     CHECK_USER_REGISTER(state, payload) {

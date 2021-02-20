@@ -1,0 +1,91 @@
+{
+  "common": {
+    "button": {
+      "login": "Đăng nhập",
+      "logout": "Đăng xuất",
+      "request": "Yêu cầu",
+      "close": "Đóng",
+      "allCoaches": "Tất cả người hướng dẫn",
+      "refresh": "Làm mới",
+      "loginToRegister": "Đăng nhập để đăng ký",
+      "registerCoaches": "Đăng ký người hướng dẫn",
+      "contact": "Liên hệ",
+      "viewDetail": "Xem chi tiết"
+    },
+    "text": {
+      "hour": "giờ",
+      "linkCoaches": "trang chủ",
+      "findYourCoaches": "Tìm người hướng dẫn"
+    }
+  },
+  "auth": {
+    "button": {
+      "signup": "Đăng ký",
+      "loginInstead": "Đăng nhập ngay",
+      "signupInstead": "Đăng ký ngay"
+    },
+    "inputText": {
+      "email": "Tài khoản email",
+      "password": "Mật khẩu"
+    },
+    "error": {
+      "validate": "Vui lòng nhập tài khoản email và mật khẩu ( phải ít nhất 6 ký tự).",
+      "dialog": {
+        "titleLoading": "Đang xác thực...",
+        "titleAuth": "Đã xảy ra lỗi",
+        "message": "Không xác thực được. Kiểm tra dữ liệu đăng nhập của bạn."
+      }
+    }
+  },
+  "register": {
+    "button": {
+      "register": "Đăng ký"
+    },
+    "title": "Đăng ký người hướng dẫn ngay bây giờ!",
+    "inputText": {
+      "firstName": "Tên",
+      "lastName": " Họ",
+      "description": "Mô tả",
+      "hourlyRate": "Mức lương mỗi giờ",
+      "areas": "Lĩnh vực chuyên môn",
+      "frontendDev": "Phát triển Frontend",
+      "backendDev": "Phát triển Backend",
+      "fullstackDev": "Phát triển Fullstack"
+    },
+    "error": {
+      "validate": {
+        "nonValue": {
+          "firstName": "Tên không được để trống.",
+          "lastName": "Họ không được để trống.",
+          "description": "Mô tả không được để trống.",
+          "hourlyRate": "Mức lương phải lớn hơn 0.",
+          "areas": "Ít nhất một chuyên môn phải được chọn."
+        },
+        "wrongFormat": {
+          "firstName": "Tên phải viết hoa chữ cái đầu tiên.",
+          "lastName": "Họ phải trên 3 ký tự.",
+          "description": "Mô tả phải dưới 100 ký tự."
+        }
+      },
+      "message": "Vui lòng sửa các lỗi trên và gửi lại."
+    }
+  },
+  "contact": {
+    "title": "Thú vị? Tiếp cận ngay bây giờ!",
+    "button": {
+      "sendMessage": "Gửi tin nhắn"
+    },
+    "inputText": {
+      "yourEmail": "E-mail của bạn",
+      "message": "Tin nhắn"
+    }
+  },
+  "request": {
+    "title": "Các yêu cầu nhận được",
+    "message": "Bạn chưa nhận được bất kỳ yêu cầu nào!"
+  },
+  "fileNotFound": {
+    "title": "Không tìm thấy trang",
+    "message": "Không thể tìm thấy trang này - có thể kiểm tra tất cả tại"
+  }
+}

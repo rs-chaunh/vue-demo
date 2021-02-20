@@ -1,7 +1,7 @@
 <template>
   <section class="find__coaches">
     <my-card>
-      <h2 class="card__title">Find Your Coach</h2>
+      <h2 class="card__title">{{ $t("common.text.findYourCoaches") }}</h2>
       <span class="card__option">
         <input
           type="checkbox"

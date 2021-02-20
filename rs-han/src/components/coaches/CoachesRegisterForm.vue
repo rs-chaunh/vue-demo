@@ -1,9 +1,9 @@
 <template>
   <form @submit.prevent="register">
     <div class="form-control">
-      <label for="firstname" :class="errorFirstName ? 'errorWord' : ''"
-        >Firstname</label
-      >
+      <label for="firstname" :class="errorFirstName ? 'errorWord' : ''">{{
+        $t("register.inputText.firstName")
+      }}</label>
       <input
         type="text"
         id="firstName"
@@ -16,9 +16,9 @@
       </p>
     </div>
     <div class="form-control">
-      <label for="lastname" :class="errorLastName ? 'errorWord' : ''"
-        >Lastname</label
-      >
+      <label for="lastname" :class="errorLastName ? 'errorWord' : ''">{{
+        $t("register.inputText.lastName")
+      }}</label>
       <input
         type="text"
         id="lastName"
@@ -31,9 +31,9 @@
       </p>
     </div>
     <div class="form-control">
-      <label for="description" :class="errorDescription ? 'errorWord' : ''"
-        >Description</label
-      >
+      <label for="description" :class="errorDescription ? 'errorWord' : ''">{{
+        $t("register.inputText.description")
+      }}</label>
       <textarea
         id="description"
         rows="5"
@@ -46,9 +46,9 @@
       </p>
     </div>
     <div class="form-control">
-      <label for="rate" :class="errorHourlyRate ? 'errorWord' : ''"
-        >Hourly Rate</label
-      >
+      <label for="rate" :class="errorHourlyRate ? 'errorWord' : ''">{{
+        $t("register.inputText.hourlyRate")
+      }}</label>
       <input
         type="number"
         id="rate"
@@ -61,7 +61,7 @@
       </p>
     </div>
     <div class="form-control">
-      <h3>Areas of Expertise</h3>
+      <h3>{{ $t("register.inputText.areas") }}</h3>
       <div class="card__option">
         <input
           type="checkbox"
@@ -70,9 +70,9 @@
           v-model="areas"
           @blur="checkAreas"
         />
-        <label for="frontend" :class="errorAreas ? 'errorWord' : ''"
-          >Frontend Development</label
-        >
+        <label for="frontend" :class="errorAreas ? 'errorWord' : ''">{{
+          $t("register.inputText.frontendDev")
+        }}</label>
       </div>
       <div class="card__option">
         <input
@@ -82,9 +82,9 @@
           v-model="areas"
           @blur="checkAreas"
         />
-        <label for="backend" :class="errorAreas ? 'errorWord' : ''"
-          >Backend Development</label
-        >
+        <label for="backend" :class="errorAreas ? 'errorWord' : ''">{{
+          $t("register.inputText.backendDev")
+        }}</label>
       </div>
       <div class="card__option">
         <input
@@ -94,14 +94,14 @@
           v-model="areas"
           @blur="checkAreas"
         />
-        <label for="fullstack" :class="errorAreas ? 'errorWord' : ''"
-          >Fullstack Development</label
-        >
+        <label for="fullstack" :class="errorAreas ? 'errorWord' : ''">{{
+          $t("register.inputText.fullstackDev")
+        }}</label>
       </div>
       <p v-if="errorAreas">{{ messErrorAreas }}</p>
-      <p v-if="errorGeneral">Please fix the above errors and submit again.</p>
+      <p v-if="errorGeneral">{{ $t("register.error.message") }}</p>
     </div>
-    <my-button>Register</my-button>
+    <my-button>{{ $t("register.button.register") }}</my-button>
   </form>
 </template>
 
@@ -131,6 +131,46 @@ export default {
       messErrorAreas: "",
       errorGeneral: false,
     };
+  },
+  computed: {
+    language() {
+      return this.$store.state.lang;
+    },
+    i18n() {
+      return this.$i18n.messages[this.language].register.error.validate;
+    },
+  },
+  watch: {
+    language() {
+      var errors = {
+        FirstName: this.errorFirstName,
+        LastName: this.errorLastName,
+        Description: this.errorDescription,
+        HourlyRate: this.errorHourlyRate,
+        Areas: this.errorAreas,
+      };
+      Object.values(errors).forEach((e, i) => {
+        if (e) {
+          let fn = "check" + Object.keys(errors)[i];
+          this[fn]();
+        }
+      });
+      // if (this.errorFirstName) {
+      //   this.checkFirstName();
+      // }
+      // if (this.errorLastName) {
+      //   this.checkLastName();
+      // }
+      // if (this.errorDescription) {
+      //   this.checkDescription();
+      // }
+      // if (this.errorHourlyRate) {
+      //   this.checkHourlyRate();
+      // }
+      // if (this.errorAreas) {
+      //   this.checkAreas();
+      // }
+    },
   },
   methods: {
     register() {
@@ -166,13 +206,13 @@ export default {
     checkFirstName() {
       if (this.firstName == "") {
         this.errorFirstName = true;
-        this.messErrorFirstName = "Firstname must not be empty.";
+        this.messErrorFirstName = this.i18n.nonValue.firstName;
+        console.log(this.i18n.nonValue.firstName);
       } else {
         let firstCharactersAscii = this.firstName.split("")[0].charCodeAt(0);
         if (firstCharactersAscii >= 97 && firstCharactersAscii <= 122) {
           this.errorFirstName = true;
-          this.messErrorFirstName =
-            "firstname must capitalize the first letter.";
+          this.messErrorFirstName = this.i18n.wrongFormat.firstName;
         } else {
           this.errorFirstName = false;
         }
@@ -181,11 +221,11 @@ export default {
     checkLastName() {
       if (this.lastName == "") {
         this.errorLastName = true;
-        this.messErrorLastName = "Lastname must not be empty.";
+        this.messErrorLastName = this.i18n.nonValue.lastName;
       } else {
         if (this.lastName.length <= 3) {
           this.errorLastName = true;
-          this.messErrorLastName = "lastName must be over 3 characters";
+          this.messErrorLastName = this.i18n.wrongFormat.lastName;
         } else {
           this.errorLastName = false;
         }
@@ -194,12 +234,11 @@ export default {
     checkDescription() {
       if (this.description == "") {
         this.errorDescription = true;
-        this.messErrorDescription = "Description must not be empty.";
+        this.messErrorDescription = this.i18n.nonValue.description;
       } else {
         if (this.description.length >= 100) {
           this.errorDescription = true;
-          this.messErrorDescription =
-            "The description must be less than 100 characters long";
+          this.messErrorDescription = this.i18n.wrongFormat.description;
         } else {
           this.errorDescription = false;
         }
@@ -208,7 +247,7 @@ export default {
     checkHourlyRate() {
       if (this.hourlyRate <= 0) {
         this.errorHourlyRate = true;
-        this.messErrorHourlyRate = "Rate must be greater than 0.";
+        this.messErrorHourlyRate = this.i18n.nonValue.hourlyRate;
       } else {
         this.errorHourlyRate = false;
       }
@@ -216,7 +255,7 @@ export default {
     checkAreas() {
       if (this.areas.length == 0) {
         this.errorAreas = true;
-        this.messErrorAreas = "At least one expertise must be selected.";
+        this.messErrorAreas = this.i18n.nonValue.areas;
       } else {
         this.errorAreas = false;
       }
