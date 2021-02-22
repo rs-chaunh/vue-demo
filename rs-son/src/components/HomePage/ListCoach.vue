@@ -62,7 +62,6 @@ export default {
       }
     },
     setLinkTo() {
-      console.log(this.getLinkTo);
       if (this.getLinkTo != null) {
         return this.getLinkTo;
       } else {

@@ -18,11 +18,11 @@
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
       <label for="email">E-mail</label>
-      <input type="email" v-model="email" id="email" />
+      <input type="email" v-model="email" id="email"/>
     </div>
     <div class="form-control">
       <label for="password">{{ $t("pass") }}</label>
-      <input type="password" v-model="password" id="password" required />
+      <input type="password" v-model="password" id="password" />
     </div>
     <p v-if="errors">
       {{ $t("errAuth") }}
@@ -53,8 +53,8 @@ export default {
       password: "",
       errors: false,
       path: "",
-      loading: "Authenticating...",
-      check: "An error occurred",
+      loading: "",
+      check: "",
     };
   },
   methods: {
@@ -62,24 +62,18 @@ export default {
       // SET TEXT FOR BTN
       this.checkAction = !this.checkAction;
       if (this.checkAction) {
-        if (this.getLocale == "gb") {
-          this.textBtn = this.$i18n.messages.gb.textBtn;
-          this.textLink = this.$i18n.messages.gb.textLink;
-        } else {
-          this.textBtn = this.$i18n.messages.vn.textBtn;
-          this.textLink = this.$i18n.messages.vn.textLink;
-        }
+        this.textBtn = this.$i18n.messages[this.getLocale].textBtn;
+        this.textLink = this.$i18n.messages[this.getLocale].textLink;
       } else {
-        if (this.getLocale == "gb") {
-          this.textBtn = this.$i18n.messages.gb.textLink;
-          this.textLink = this.$i18n.messages.gb.textBtn;
-        } else {
-          this.textBtn = this.$i18n.messages.vn.textLink;
-          this.textLink = this.$i18n.messages.vn.textBtn;
-        }
+        this.textBtn = this.$i18n.messages[this.getLocale].textLink;
+        this.textLink = this.$i18n.messages[this.getLocale].textBtn;
       }
     },
     handleSubmit() {
+      // SET TEXT FOR POPUP
+      this.loading = this.$i18n.messages[this.getLocale].loading;
+      this.check = this.$i18n.messages[this.getLocale].check;
+      // VALIDATE FORM
       if (this.email == "" || this.messages == "" || this.password.length < 6) {
         this.errors = true;
         event.preventDefault();
@@ -89,7 +83,7 @@ export default {
           password: this.password,
           returnSecureToken: true,
         };
-        if (this.textBtn == "Signup" || this.textBtn == "Đăng ký" ) {
+        if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
           // SIGN UP
           console.log("SIGN UP");
           event.preventDefault();
@@ -124,11 +118,7 @@ export default {
     getTextErr() {
       let text = "";
       if (!this.$store.state.checkLogin) {
-        if (this.getLocale == "gb") {
-          text = this.$i18n.messages.gb.errLoginContent;
-        } else {
-          text = this.$i18n.messages.vn.errLoginContent;
-        }
+        text = this.$i18n.messages[this.getLocale].errLoginContent;
       }
       return text;
     },
