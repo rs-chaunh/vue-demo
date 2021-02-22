@@ -8,6 +8,7 @@ import store from './store'
 import FlagIcon from 'vue-flag-icon'
 import i18n from './plugins/i18n'
 
+
 const app = createApp(App);
 
 

@@ -10,16 +10,14 @@
     </div>
     <p v-if="errors" class="errors">{{ $t("err") }}.</p>
     <div class="action">
-      <item-button @click.prevent="handleSendRequest()">{{ $t("send") }}</item-button>
+      <item-button>{{ $t("send") }}</item-button>
     </div>
   </form>
 </template>
 
 <script>
 import ItemButton from "../common/ItemButton.vue";
-import firebase from "firebase/app";
-import "firebase/messaging";
-// import "firebase/messaging";
+
 export default {
   components: { ItemButton },
   data() {
@@ -48,56 +46,6 @@ export default {
         event.preventDefault();
       }
     },
-    // SEND REQUEST
-    handleSendRequest() {
-      // const messaging = firebase.messaging();
-      var registrationToken = this.token;
-      console.log(registrationToken);
-      // var message = {
-      //   data: {
-      //     score: "850",
-      //     time: "2:45",
-      //   },
-      //   token: registrationToken,
-      // };
-
-      // // Send a message to the device corresponding to the provided
-      // // registration token.
-      // messaging
-      //   .send(message)
-      //   .then((response) => {
-      //     // Response is a message ID string.
-      //     console.log("Successfully sent message:", response);
-      //   })
-      //   .catch((error) => {
-      //     console.log("Error sending message:", error);
-      //   });
-    },
-  },
-  mounted() {
-    // GET TOKEN TO SEND MESS
-    const messaging = firebase.messaging();
-    messaging
-      .getToken({
-        vapidKey:
-          "BHfAYLs9Ki2M-6qa_yfRYGJNUp08A3WAjJFGWarwcTIHqir9YheKXhjfPuTmTgMq_X_wGto3DUGmyFQ716ARKaA",
-      })
-      .then((currentToken) => {
-        if (currentToken) {
-          this.token = currentToken;
-          console.log("token", currentToken);
-        } else {
-          // Show permission request UI
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-          // ...
-        }
-      })
-      .catch((err) => {
-        console.log("An error occurred while retrieving token. ", err);
-        // ...
-      });
   },
 };
 </script>
