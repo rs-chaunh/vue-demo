@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 import TheHeader from "./components/layouts/TheHeader";
 export default {
     name: "App",
@@ -21,7 +22,7 @@ export default {
                 document.title = to.meta.title || "Find Your Coaches";
             }
         }
-    }
+    },
 };
 </script>
 

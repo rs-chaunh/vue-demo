@@ -1,11 +1,11 @@
 <template>
     <form @submit.prevent="sendRequest">
         <div class="form-control">
-            <label for="email">Your E-Mail</label>
+            <label for="email"> {{$t('coach_item.form_contact.labels.email') }} </label>
             <input v-model.trim="request.email" type="email" id="email" />
         </div>
         <div class="form-control">
-            <label for="message">Message</label>
+            <label for="message"> {{$t('coach_item.form_contact.labels.message') }} </label>
             <textarea
                 v-model.trim="request.message"
                 rows="5"
@@ -13,19 +13,19 @@
             ></textarea>
         </div>
         <p v-if="isError" class="errors">
-            Please enter a valid email and non-empty message.
+            {{ $t('coach_item.form_contact.error') }}
         </p>
         <!---->
         <div class="actions">
             <base-button>
-                Send Message
+                {{ $t("coach_item.buttons.send_message") }}
             </base-button>
         </div>
     </form>
 </template>
 
 <script>
-import BaseButton from "../../commons/BaseButton"
+import BaseButton from "../../commons/BaseButton";
 export default {
     data() {
         return {
@@ -34,26 +34,30 @@ export default {
                 message: ""
             },
             isError: false
-        }
+        };
     },
     components: {
-        BaseButton,
+        BaseButton
     },
     methods: {
         sendRequest() {
-            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(this.request.email) == false ||
+            if (
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+                    this.request.email
+                ) == false ||
                 this.request.email.length == 0 ||
-                this.request.message.length == 0)
-                this.isError = true
+                this.request.message.length == 0
+            )
+                this.isError = true;
             else {
                 this.$store.dispatch("sendRequest", {
                     id: this.$route.params.id,
                     request: this.request
-                })
+                });
             }
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>

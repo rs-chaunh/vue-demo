@@ -1,7 +1,7 @@
 <template>
     <li>
         <h3>{{ fullName }}</h3>
-        <h4>${{ coach.hourlyRate }}/hour</h4>
+        <h4>${{ coach.hourlyRate }}/{{ $t("common.labels.hour") }}</h4>
         <div>
             <base-badge
                 v-for="(area, index) in coach.areas"
@@ -17,41 +17,40 @@
                 :path="'/coaches/' + coach.id + '/contact'"
                 :name="'CoachContact'"
                 :params="{
-                    id: coach.id,
+                    id: coach.id
                 }"
                 class="outline"
             >
-                Contact
+                {{ $t("common.buttons.contact") }}
             </base-button>
-            <base-button 
+            <base-button
                 :type="'link'"
-                :path="'/coaches/' + coach.id" 
+                :path="'/coaches/' + coach.id"
                 :name="'CoachItemDetails'"
                 :params="{
-                    id: coach.id,
+                    id: coach.id
                 }"
             >
-                View Details
+                {{ $t("common.buttons.view_details") }}
             </base-button>
         </div>
     </li>
 </template>
 
-
 <script>
-import BaseBadge from "../../commons/BaseBadge"
-import BaseButton from "../../commons/BaseButton"
+import BaseBadge from "../../commons/BaseBadge";
+import BaseButton from "../../commons/BaseButton";
 export default {
     props: {
         coach: Object
     },
     components: {
         BaseBadge,
-        BaseButton,
+        BaseButton
     },
     computed: {
         fullName() {
-            var name = this.coach.firstName + " " + this.coach.lastName
+            var name = this.coach.firstName + " " + this.coach.lastName;
             return name
                 .split(" ")
                 .filter(e => e)
@@ -59,10 +58,10 @@ export default {
                     e =>
                         e.substr(0, 1).toUpperCase() + e.substr(1).toLowerCase()
                 )
-                .join(" ")
+                .join(" ");
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>

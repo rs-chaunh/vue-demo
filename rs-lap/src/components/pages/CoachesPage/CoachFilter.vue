@@ -1,5 +1,5 @@
 <template>
-    <h2>Find Your Coach</h2>
+    <h2>{{ $t("common.labels.title") }}</h2>
     <span class="filter-option">
         <input
             @change="onChange"
