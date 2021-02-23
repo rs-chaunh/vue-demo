@@ -1,20 +1,25 @@
 <template>
   <the-heading></the-heading>
-    <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }">
     <transition name="router" mode="out-in">
       <component :is="Component" />
     </transition>
   </router-view>
+  <notification-box></notification-box>
+
 </template>
 
 <script>
+import NotificationBox from './views/commons/NotificationBox.vue'
 import TheHeading from './views/layouts/TheHeading.vue'
+
 
 export default {
   name: 'App',
   components: {
-    TheHeading
-  }
+    TheHeading,
+    NotificationBox,
+  },
 }
 </script>
 
