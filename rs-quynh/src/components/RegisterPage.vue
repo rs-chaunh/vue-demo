@@ -77,20 +77,23 @@ export default {
     validateFirstName() {
       this.checkErrors(
         "firstName",
-        "Firstname must not be empty.",
+        this.$t('register.errors.empty', {field: this.$t('register.labels.firstname')}),
         "isRequired"
       );
       this.checkErrors(
         "firstName",
-        "Firstname must capitalize the first letter",
+        this.$t('register.errors.capitalize_letter', {field: this.$t('register.labels.firstname')}),
         "capitalizeText"
       );
     },
     validateLastName() {
-      this.checkErrors("lastName", "Lastname must not be empty.", "isRequired");
+      this.checkErrors(
+        "lastName", 
+        this.$t('register.errors.empty', {field: this.$t('register.labels.lastname')}),
+        "isRequired");
       this.checkErrors(
         "lastName",
-        "Lastname must be over 3 characters.",
+        this.$t('register.errors.min_length', {field: this.$t('register.labels.lastname'), number: 3}),
         "minLength",
         3
       );
@@ -98,12 +101,12 @@ export default {
     validateDescription() {
       this.checkErrors(
         "description",
-        "Description must not be empty.",
+        this.$t('register.errors.empty', {field: this.$t('register.labels.description')}),
         "isRequired"
       );
       this.checkErrors(
         "description",
-        "Description must be less than 100 characters.",
+        this.$t('register.errors.max_length', {field: this.$t('register.labels.description'), number: 100}),
         "maxLength",
         100
       );
@@ -111,19 +114,19 @@ export default {
     validateHourlyRate() {
       this.checkErrors(
         "hourlyRate",
-        "Hourly Rate must not be empty.",
+        this.$t('register.errors.empty', {field: this.$t('register.labels.hourlyrate')}),
         "isRequired"
       );
       this.checkErrors(
         "hourlyRate",
-        "Hourly Rate must be greater than 0.",
+        this.$t('register.errors.is_number', {field: this.$t('register.labels.hourlyrate')}),
         "isNumber"
       );
     },
     validateAreas() {
       this.checkErrors(
         "areas",
-        "At least one expertise must be selected.",
+        this.$t('register.errors.selected'),
         "isRequired"
       );
     },
@@ -181,11 +184,10 @@ export default {
     },
     toggleAreas(area) {
       const index = this.coach.areas.value.indexOf(area);
+      this.coach.areas.error = "";
       if (index === -1) 
         this.coach.areas.value.push(area);
       else this.coach.areas.value.splice(index, 1);
-    console.log(this.coach.areas.value)
-
     },
     setValueType(type, value) {
         this.coach[type].value = value;
