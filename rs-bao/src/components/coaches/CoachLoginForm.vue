@@ -16,24 +16,23 @@
 
   <form @submit.prevent="checkClick == 1 ? onLogin() : onRegister()">
     <div class="input-group">
-      <label for="email">E-Mail</label>
+      <label for="email">{{ $t("email") }}</label>
       <input type="email" name="email" id="email" v-model="email" />
     </div>
     <div class="input-group">
-      <label for="password">Password</label>
+      <label for="password">{{ $t("password") }}</label>
       <input type="password" name="password" id="password" v-model="password" />
     </div>
     <p v-if="message">
-      Please enter a valid email and password (must be at least 6 characters
-      long).
+      {{ $t("messageAuth") }}
     </p>
     <div class="button-group">
       <div v-if="checkClick">
         <button type="submit" id="btn-login" v-if="checkClick == 1">
-          Login
+          {{ $t("menu.login") }}
         </button>
         <button type="submit" id="btn-login" v-else>
-          Sign Up
+          {{ $t("signup") }}
         </button>
         <button
           type="button"
@@ -41,7 +40,7 @@
           id="btn-signup"
           v-if="checkClick == 1"
         >
-          Signup instead
+          {{ $t("signupInstead") }}
         </button>
         <button
           type="button"
@@ -49,7 +48,7 @@
           id="btn-signup"
           v-else
         >
-          Login instead
+          {{ $t("loginInstead") }}
         </button>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onRegister">
     <div class="input-group" :class="{ invalid: !firstName.isValid }">
-      <label for="firstname">Firstname:</label>
+      <label for="firstname">{{ $t("firstName") }}:</label>
       <input
         type="text"
         id="firstname"
@@ -9,11 +9,11 @@
         @blur="onBlur('firstName')"
       />
       <p class="error-message" v-if="!firstName.isValid">
-        FirstName is required and first character must be toUpperCase
+        {{ $t("errorFirst") }}
       </p>
     </div>
     <div class="input-group" :class="{ invalid: !lastName.isValid }">
-      <label for="lastname">Lastname:</label>
+      <label for="lastname">{{ $t("lastName") }}:</label>
       <input
         type="text"
         id="lastname"
@@ -21,11 +21,11 @@
         @blur="onBlur('lastName')"
       />
       <p class="error-message" v-if="!lastName.isValid">
-        LastName is required and more than 3 characters
+        {{ $t("errorLast") }}
       </p>
     </div>
     <div class="input-group" :class="{ invalid: !description.isValid }">
-      <label for="description">Description:</label>
+      <label for="description"> {{ $t("description") }} :</label>
       <textarea
         id="description"
         rows="5"
@@ -33,11 +33,11 @@
         @blur="onBlur('description')"
       ></textarea>
       <p class="error-message" v-if="!description.isValid">
-        Description is required and not more than 100 characters.
+        {{ $t("errorDescription") }}
       </p>
     </div>
     <div class="input-group" :class="{ invalid: !hourlyRate.isValid }">
-      <label for="hourlyRate">Hourly Rate:</label>
+      <label for="hourlyRate"> {{ $t("hourlyRate") }} :</label>
       <input
         type="number"
         id="hourlyRate"
@@ -45,11 +45,11 @@
         @blur="onBlur('hourlyRate')"
       />
       <p class="error-message" v-if="!hourlyRate.isValid">
-        HourlyRate must be a number
+        {{ $t("errorHourlyRate") }}
       </p>
     </div>
     <div class="select-group" :class="{ invalid: !areas.isValid }">
-      <h3>Areas of Expertise:</h3>
+      <h3>{{ $t("area") }} :</h3>
 
       <div>
         <input
@@ -59,7 +59,7 @@
           v-model="areas.value"
           @blur="onBlur('areas')"
         />
-        <label for="frontend">Frontend Development</label>
+        <label for="frontend">{{ $t("frontendDev") }}</label>
       </div>
       <div>
         <input
@@ -69,7 +69,7 @@
           v-model="areas.value"
           @blur="onBlur('areas')"
         />
-        <label for="backend">Backend Development</label>
+        <label for="backend">{{ $t("backendDev") }}</label>
       </div>
       <div>
         <input
@@ -79,10 +79,10 @@
           v-model="areas.value"
           @blur="onBlur('areas')"
         />
-        <label for="career">Career Advisory</label>
+        <label for="career">{{ $t("careerDev") }}</label>
       </div>
       <p class="error-message" v-if="!areas.isValid">
-        Areas must be selected
+        {{ $t("errorArea") }}
       </p>
     </div>
     <coach-button>Register</coach-button>

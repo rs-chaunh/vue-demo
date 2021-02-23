@@ -5,5 +5,7 @@ export default {
   setRequest: (state, _, _2, rootGetters) => {
     const id = rootGetters["auth/user"];
     return state.requests.filter((request) => request.id === id);
-  }
+  },
+
+  checkRequest: (state) => state.length,
 };

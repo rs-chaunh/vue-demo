@@ -8,4 +8,6 @@ export default {
       (coach) => coach.id === getters.user
     );
   },
+
+  getLanguages: (state) => state.language,
 };

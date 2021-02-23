@@ -7,7 +7,7 @@
       <coach-card>
         <div class="list-button">
           <coach-button @click="fetchCoaches" background="light">
-            Refresh
+            {{ $t("refresh") }}
           </coach-button>
 
           <coach-button
@@ -16,7 +16,7 @@
             :path="'/auth'"
             :query="'register'"
           >
-            Login to Register as Coach
+            {{ $t("loginToRegister") }}
           </coach-button>
 
           <coach-button
@@ -24,7 +24,7 @@
             link
             :path="'/register'"
           >
-            Register as Coach
+            {{ $t("registerCoach") }}
           </coach-button>
         </div>
         <div v-if="loading">
@@ -46,7 +46,7 @@
           </coach-item>
         </div>
         <div v-else>
-          <h3>No coaches found.</h3>
+          <h3>{{ $t("notFoundCoach") }}</h3>
         </div>
       </coach-card>
     </section>

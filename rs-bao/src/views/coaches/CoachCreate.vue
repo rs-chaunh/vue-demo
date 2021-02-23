@@ -1,7 +1,7 @@
 <template>
   <div id="coach-create">
     <coach-card>
-      <h2>Register a Coach</h2>
+      <h2>{{$t('registerACoach')}}</h2>
       <coach-create-form @register-coach="registerCoach"></coach-create-form>
     </coach-card>
   </div>
