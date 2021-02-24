@@ -1,3 +1,4 @@
+//TODO tên file chưa hợp lí => CoachDetail, tên folder cũng k hợp lí, nên tạo 1 folder để chưa các file liên quan đến coach: CoachList, CoachDetail, CoachFilter, CoachRegister..., 
 <template>
   <li>
     <h3>{{ itemList[1].firstName }}</h3>

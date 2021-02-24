@@ -1,3 +1,4 @@
+// TODO tên folder nếu đã k viết hoa thì không biết hoa hết, k để chỗ có chỗ k
 <template>
   <teleport to="body">
     <transition name="popup">
@@ -17,7 +18,8 @@
 
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
-      <label for="email">E-mail</label>
+      <label for="email">E-mail</label> 
+      <!-- //TODO thiếu i18 -->
       <input type="email" v-model="email" id="email"/>
     </div>
     <div class="form-control">
@@ -31,6 +33,7 @@
     <item-link @click.prevent="handleChangeAction()" class="flat" :linkTo="linkToReg">
       {{ textLink }} {{ $t("instead") }}
     </item-link>
+    <!-- //TODO cái này để là button thì hợp lí hơn vì nó k redirect, a thấy cái linkTo bị thừa -->
   </form>
 </template>
 
@@ -42,19 +45,19 @@ import ItemPop from "../common/ItemPop.vue";
 import ItemModal from "../common/ItemModal.vue";
 import ItemLazyLoad from "../common/itemLazyLoad.vue";
 export default {
-  components: { ItemButton, ItemLink, ItemPop, ItemModal, ItemLazyLoad },
+  components: { ItemButton, ItemLink, ItemPop, ItemModal, ItemLazyLoad }, //TODO những component thì sẽ sử dụng ở nhiều chỗ, nên khi báo global
   data() {
     return {
-      linkToReg: "#",
-      checkAction: false,
-      textBtn: "",
-      textLink: "",
+      linkToReg: "#", //TODO cái này chỉ đc sử dụng 1 chỗ duy nhất thì viết thằng trên template luôn, cần gì đặt biến
+      checkAction: false, //TODO tên biến k rõ, có gì để check đâu, có thể sửa thành như doLogin, doRegister,... 
+      textBtn: "", //TODO nên bỏ ở computed
+      textLink: "", //TODO nên bỏ ở computed
       email: "",
       password: "",
       errors: false,
-      path: "",
-      loading: "",
-      check: "",
+      path: "", //TODO biến này k dùng thì xóa đi
+      loading: "", //TODO loading ở đây là text thì nên đặt tên là loadingMessage, ...
+      check: "", //TODO tên biến k rõ
     };
   },
   methods: {
@@ -72,11 +75,12 @@ export default {
     handleSubmit() {
       // SET TEXT FOR POPUP
       this.loading = this.$i18n.messages[this.getLocale].loading;
+      console.log(this.loading);
       this.check = this.$i18n.messages[this.getLocale].check;
       // VALIDATE FORM
       if (this.email == "" || this.messages == "" || this.password.length < 6) {
         this.errors = true;
-        event.preventDefault();
+        event.preventDefault(); //TODO preventDefault bị lặp lại quá nhiều lần, .prevent trên template luôn, hoặc đặt ngoài điều kiện if để nó luôn chạy
       } else {
         let dataPost = {
           email: this.email,
@@ -86,7 +90,7 @@ export default {
         if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
           // SIGN UP
           console.log("SIGN UP");
-          event.preventDefault();
+          event.preventDefault(); 
           this.$store.dispatch({
             type: "handleSignUp",
             url:
@@ -95,6 +99,9 @@ export default {
             route: this.$route,
             router: this.$router,
           });
+          //TODO đường dẫn api và apiKey nên lưu vào file env, nếu sau này có thay đổi firebase thì chỉ cần sửa 1 chỗ
+          //TODO k nên truyền route, router vào action, async await đợi api chạy xong rồi redirect tiếp theo
+          //TODO k truyền url kiểu này, set vào trong action luôn, ở đâu dispatch ra th
         } else {
           // LOGIN
           console.log("LOGIN");
@@ -121,7 +128,7 @@ export default {
         text = this.$i18n.messages[this.getLocale].errLoginContent;
       }
       return text;
-    },
+    }, // TODO k nên đặt tên là get..., vì sẽ hiểu đây là 1 action, computed cũng tương tự như data, computed nên đặt là danh từ
     getLocale() {
       return this.$store.state.locale;
     },

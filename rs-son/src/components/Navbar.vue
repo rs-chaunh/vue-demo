@@ -83,7 +83,7 @@ header {
     align-items: center;
   }
   a {
-    text-decoration: none;
+    text-decoration: none; //TODO style này a thấy bị lặp lại nhiều, nên để trong file css chung, còn nhiều style đang bị tương tự
     color: #f391e3;
     display: inline-block;
     padding: 0.75rem 1.5rem;

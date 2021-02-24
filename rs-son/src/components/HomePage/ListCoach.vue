@@ -76,7 +76,7 @@ export default {
       }
     },
     getCheckCoach() {
-      let arr = this.temp;
+      let arr = this.temp; // TODO đặt tên k rõ ràng, arr của cái gì, temp của cái gì
       let userId = this.getTokenId;
       let index = -1;
       if (userId != null && arr != null) {
