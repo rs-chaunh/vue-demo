@@ -1,6 +1,7 @@
 <template>
   <form @submit="handleSubmit" method="post" novalidate="true">
     <div class="form-control" :class="dataCoach.firstname.err == '' ? '' : 'error'">
+      <!-- //TODO có thể viết gọn hơn là :class="{error:!!dataCoach.firstname.err}"" -->
       <label for="firstname">{{ $t("firstname") }}</label>
       <input
         type="text"
