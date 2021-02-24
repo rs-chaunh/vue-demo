@@ -2,7 +2,7 @@
   <transition appear name="open">
     <section>
       <item-card>
-        <h2>Register as a coach now!</h2>
+        <h2> {{$t('registerCoach')}} </h2>
         <item-form-regis></item-form-regis>
       </item-card>
     </section>

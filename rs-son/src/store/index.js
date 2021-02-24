@@ -16,6 +16,7 @@ export default createStore({
     request: [],
     checkLogin: true,
     loading: false,
+    locale : localStorage.getItem("lang") ? localStorage.getItem("lang") : "gb",
   },
   getters: {
     getTokenId: (state) => {
@@ -37,6 +38,11 @@ export default createStore({
     },
   },
   mutations: {
+    SET_LOCALE(state,locale) {
+      // console.log(locale);
+      return state.locale = locale
+    }
+    ,
     SET_DEFAULT_DATA(state, coaches) {
       return state.coaches = coaches;
     },

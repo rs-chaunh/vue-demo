@@ -8,7 +8,7 @@
         <slot></slot>
       </section>
       <div class="menu">
-        <item-button @click.prevent="togglePopup()">Close</item-button>
+        <item-button @click.prevent="togglePopup()">  {{ $t("close") }} </item-button>
       </div>
     </dialog>
   </transition>

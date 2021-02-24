@@ -9,7 +9,7 @@
         <p>{{ item.message }}</p>
       </li>
     </ul>
-    <h4 v-else>You haven't received any requests yet!</h4>
+    <h4 v-else> {{$t('received')}} </h4>
   </div>
 </template>
 

@@ -18,18 +18,18 @@
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
       <label for="email">E-mail</label>
-      <input type="email" v-model="email" id="email" />
+      <input type="email" v-model="email" id="email"/>
     </div>
     <div class="form-control">
-      <label for="password">Password</label>
-      <input type="password" v-model="password" id="password" required />
+      <label for="password">{{ $t("pass") }}</label>
+      <input type="password" v-model="password" id="password" />
     </div>
     <p v-if="errors">
-      Please enter a valid email and password (must be at least 6 characters long).
+      {{ $t("errAuth") }}
     </p>
     <item-button> {{ textBtn }} </item-button>
     <item-link @click.prevent="handleChangeAction()" class="flat" :linkTo="linkToReg">
-      {{ textLink }} instead
+      {{ textLink }} {{ $t("instead") }}
     </item-link>
   </form>
 </template>
@@ -53,8 +53,8 @@ export default {
       password: "",
       errors: false,
       path: "",
-      loading: "Authenticating...",
-      check: "An error occurred",
+      loading: "",
+      check: "",
     };
   },
   methods: {
@@ -62,12 +62,18 @@ export default {
       // SET TEXT FOR BTN
       this.checkAction = !this.checkAction;
       if (this.checkAction) {
-        (this.textBtn = "Login"), (this.textLink = "Signup");
+        this.textBtn = this.$i18n.messages[this.getLocale].textBtn;
+        this.textLink = this.$i18n.messages[this.getLocale].textLink;
       } else {
-        (this.textBtn = "Signup"), (this.textLink = "Login");
+        this.textBtn = this.$i18n.messages[this.getLocale].textLink;
+        this.textLink = this.$i18n.messages[this.getLocale].textBtn;
       }
     },
     handleSubmit() {
+      // SET TEXT FOR POPUP
+      this.loading = this.$i18n.messages[this.getLocale].loading;
+      this.check = this.$i18n.messages[this.getLocale].check;
+      // VALIDATE FORM
       if (this.email == "" || this.messages == "" || this.password.length < 6) {
         this.errors = true;
         event.preventDefault();
@@ -77,7 +83,7 @@ export default {
           password: this.password,
           returnSecureToken: true,
         };
-        if (this.textBtn == "Signup") {
+        if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
           // SIGN UP
           console.log("SIGN UP");
           event.preventDefault();
@@ -112,9 +118,17 @@ export default {
     getTextErr() {
       let text = "";
       if (!this.$store.state.checkLogin) {
-        text = "Failed to authenticate. Check your login data.";
+        text = this.$i18n.messages[this.getLocale].errLoginContent;
       }
       return text;
+    },
+    getLocale() {
+      return this.$store.state.locale;
+    },
+  },
+  watch: {
+    getLocale: function () {
+      this.handleChangeAction();
     },
   },
 };

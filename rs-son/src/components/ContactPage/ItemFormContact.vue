@@ -1,24 +1,23 @@
 <template>
   <form @submit.prevent="handleSubmitRequest">
     <div class="form-control">
-      <label for="email">Your E-mail</label>
+      <label for="email">{{ $t("Yemail") }}</label>
       <input type="email" id="email" v-model="email" />
     </div>
     <div class="form-control">
-      <label for="message">Message</label>
-      <textarea rows="5" id="message" required v-model="messages"></textarea>
+      <label for="message">{{ $t("mess") }}</label>
+      <textarea rows="5" id="message" v-model="messages"></textarea>
     </div>
-    <p v-if="errors" class="errors">
-      Please enter a valid email and non-empty message.
-    </p>
+    <p v-if="errors" class="errors">{{ $t("err") }}.</p>
     <div class="action">
-      <item-button>Send Message</item-button>
+      <item-button>{{ $t("send") }}</item-button>
     </div>
   </form>
 </template>
 
 <script>
 import ItemButton from "../common/ItemButton.vue";
+
 export default {
   components: { ItemButton },
   data() {
@@ -26,6 +25,7 @@ export default {
       email: "",
       messages: "",
       errors: false,
+      token: "",
     };
   },
   methods: {
