@@ -10,7 +10,7 @@
     </div>
     <p v-if="errors" class="errors">{{ $t("err") }}.</p>
     <div class="action">
-      <item-button @click.prevent="handleSendRequest()">{{ $t("send") }}</item-button>
+      <item-button>{{ $t("send") }}</item-button>
     </div>
   </form>
 </template>
@@ -19,6 +19,7 @@
 import ItemButton from "../common/ItemButton.vue";
 import firebase from "firebase/app";
 import "firebase/messaging";
+import axios from "axios";
 // import "firebase/messaging";
 export default {
   components: { ItemButton },
@@ -31,47 +32,44 @@ export default {
     };
   },
   methods: {
+    // handleSubmitRequest() {
+    //   let dataPostRequest = {
+    //     userEmail: this.email,
+    //     message: this.messages,
+    //   };
+    //   if (this.email == "" || this.messages == "") {
+    //     this.errors = true;
+    //   } else {
+    //     this.$store.dispatch({
+    //       type: "handlePostDataRequest",
+    //       url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/request/${this.$route.params.id}.json`,
+    //       data: dataPostRequest,
+    //     });
+    //     this.$router.push({ path: "/coaches" });
+    //     event.preventDefault();
+    //   }
+    // },
+    // SEND REQUEST
     handleSubmitRequest() {
-      let dataPostRequest = {
-        userEmail: this.email,
+      // sendNotification();
+      // SEND TOKEN
+      axios.post(
+        `https://coaches-project-8d77f-default-rtdb.firebaseio.com/token.json`,
+        {
+          token : this.token,
+          uid : this.$route.params.id
+        }
+      );
+      // SEND NOTIFICATION
+        let dataPostRequest = {
+        userEmail: `Request from ${this.email}`,
         message: this.messages,
       };
-      if (this.email == "" || this.messages == "") {
-        this.errors = true;
-      } else {
-        this.$store.dispatch({
-          type: "handlePostDataRequest",
-          url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/request/${this.$route.params.id}.json`,
-          data: dataPostRequest,
-        });
-        this.$router.push({ path: "/coaches" });
-        event.preventDefault();
-      }
-    },
-    // SEND REQUEST
-    handleSendRequest() {
-      // const messaging = firebase.messaging();
-      var registrationToken = this.token;
-      console.log(registrationToken);
-      // var message = {
-      //   data: {
-      //     score: "850",
-      //     time: "2:45",
-      //   },
-      //   token: registrationToken,
-      // };
-
-      // // Send a message to the device corresponding to the provided
-      // // registration token.
-      // messaging
-      //   .send(message)
-      //   .then((response) => {
-      //     // Response is a message ID string.
-      //     console.log("Successfully sent message:", response);
-      //   })
-      //   .catch((error) => {
-      //     console.log("Error sending message:", error);
-      //   });
+      axios.post(
+        `https://coaches-project-8d77f-default-rtdb.firebaseio.com/notification.json`,
+        dataPostRequest
+      );
+      // var registrationToken = this.token;
     },
   },
   mounted() {
@@ -85,18 +83,17 @@ export default {
       .then((currentToken) => {
         if (currentToken) {
           this.token = currentToken;
-          console.log("token", currentToken);
+          console.log(this.token);
+          // axios.post(`https://coaches-project-8d77f-default-rtdb.firebaseio.com/notification.json`, currentToken)
         } else {
           // Show permission request UI
           console.log(
             "No registration token available. Request permission to generate one."
           );
-          // ...
         }
       })
       .catch((err) => {
         console.log("An error occurred while retrieving token. ", err);
-        // ...
       });
   },
 };

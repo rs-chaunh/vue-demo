@@ -101,7 +101,6 @@ export default createStore({
         .then((res) => {
           store.commit('SET_DATA_REQUEST', res.data);
           store.commit('SET_LOADING', false);
-          console.log(res.data);
         }).catch(err => console.log(err));
     },
     // GET DATA TEMP TO SS WITH FILTER
