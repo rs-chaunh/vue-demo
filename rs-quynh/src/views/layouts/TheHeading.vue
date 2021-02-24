@@ -6,26 +6,33 @@
       </h1>
       <ul>
         <li>
-          <router-link to="/coaches" class="btn">All Coaches</router-link>
+          <router-link to="/coaches" class="btn">{{ $t("common.buttons.all_coaches") }}</router-link>
         </li>
         <li v-if="!isAuthenticated">
-          <router-link to="/auth" class="btn">Login</router-link>
+          <router-link to="/auth" class="btn"> {{ $t("auth.buttons.login") }}</router-link>
         </li>
         <template v-else>
           <li>
-            <router-link to="/requests" class="btn">Requests</router-link>
+            <router-link to="/requests" class="btn">{{ $t("common.buttons.requests") }}</router-link>
           </li>
           <li>
-            <button @click.prevent="handlerLogout" class="btn">Logout</button>
+            <button @click.prevent="handlerLogout" class="btn">
+              {{ $t("auth.buttons.logout") }}
+            </button>
           </li>
         </template>
+        <li>
+          <the-heading-language></the-heading-language>
+        </li>
       </ul>
     </nav>
   </header>
 </template>
 
 <script>
+import TheHeadingLanguage from "./TheHeadingLanguage.vue";
 export default {
+  components: { TheHeadingLanguage },
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
@@ -33,7 +40,7 @@ export default {
   },
   methods: {
     handlerLogout() {
-      this.$store.dispatch("logout")
+      this.$store.dispatch("logout");
     },
   },
 };

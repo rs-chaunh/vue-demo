@@ -16,9 +16,9 @@
         <section>
             <card>
                 <div class="controls">
-                    <button-outline @click="refreshPage">Refresh</button-outline>
-                    <button-purple v-if="!isAuthenticated" :href="'/auth?redirect=register'">Login to Register as Coach</button-purple>
-                    <button-purple v-else-if="!isHadRegisterACoach" :href="'/register'">Register as Coach</button-purple>
+                    <button-outline @click="refreshPage">{{ $t("common.buttons.refresh") }}</button-outline>
+                    <button-purple v-if="!isAuthenticated" :href="'/auth?redirect=register'">{{ $t("common.buttons.login_to_register") }}</button-purple>
+                    <button-purple v-else-if="!isHadRegisterACoach" :href="'/register'">{{ $t("common.buttons.register") }}</button-purple>
                 </div>
                 <loading v-if="isLoading"></loading>
                 <ul v-else-if="filterCoaches.length > 0">
@@ -27,6 +27,7 @@
                         :coach="coach"
                     ></coaches-item>
                 </ul>
+                <h1 v-else>{{ $t("coach.not_coach") }}</h1>
             </card>
         </section>
     </div>
@@ -87,6 +88,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    h1 {
+        text-align: center;
+    }
     h2 {
         margin: .5rem 0;
     }

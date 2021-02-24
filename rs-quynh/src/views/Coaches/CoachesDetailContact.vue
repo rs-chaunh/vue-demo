@@ -1,15 +1,15 @@
 <template>
 <div>    
     <form @submit.prevent="sendNewRequest(email, message)">
-        <form-control :label="'Your E-mail'" :id="'email'">
+        <form-control :label="$t('common.form.email')" :id="'email'">
             <input type="email" name="email" id="email" v-model="email"/>
         </form-control>
-        <form-control :label="'Message'" :id="'message'">
+        <form-control :label="$t('common.form.message')" :id="'message'">
             <textarea rows="5" name="message" id="message" v-model="message"></textarea>
         </form-control>
         <p class="error" v-if="error">Please enter a valid email and non-empty message.</p>
         <coaches-action>
-            <button-purple>Send Message</button-purple>
+            <button-purple>{{ $t('coach.buttons.send_messages') }}</button-purple>
         </coaches-action>
     </form>
 </div>
