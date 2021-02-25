@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import router from "../router";
 import axios from "axios";
-import firebase from "firebase/app";
+import firebase from "../firebase";
 import "firebase/auth";
 import i18n from "../plugins/i18n";
 

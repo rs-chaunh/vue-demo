@@ -61,6 +61,35 @@ export default {
         url: this.$route.query.redirect,
         isLogin: this.isLogin,
       });
+
+      const messaging = firebase.messaging();
+      messaging
+        .getToken({
+          vapidKey:
+            "BKJRY0TZ_tn1Afod5lvQNuxlb63cqNxNfBdCq1UzLLCfemeVUFmrlBzOuWSmG3TktVRmyk862XGhDEgD5UWnvTM",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log("token", currentToken);
+            firebase
+              .database()
+              .ref("/tokens")
+              .push({
+                token: currentToken,
+                uid: userID,
+              });
+          } else {
+            // Show permission request UI
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+            // ...
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+          // ...
+        });
     },
   },
   beforeRouteLeave() {
