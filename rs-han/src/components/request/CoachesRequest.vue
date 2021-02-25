@@ -1,36 +1,33 @@
 <template>
   <section>
-    <my-card>
+    <div class="card">
       <header>
         <h2>Requests Received</h2>
       </header>
-      <template v-if="loading">
+      <div v-if="loading">
         <my-loading></my-loading>
-      </template>
-      <template v-else>
+      </div>
+      <div v-else>
         <h3 v-if="request.length == 0">
           You haven't received any requests yet!
         </h3>
         <ul v-else v-for="req in request" :key="req">
           <li>
-            <div>
-              <a :href="`mailto:${req.email}`">{{ req.email }}</a>
-            </div>
+            <a :href="`mailto:${req.email}`">{{ req.email }}</a>
             <p>{{ req.message }}</p>
           </li>
         </ul>
-      </template>
-    </my-card>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
-import MyCard from "../common/MyCard";
 import MyLoading from "../loading/MyLoading";
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
-  components: { MyCard, MyLoading },
+  components: { MyLoading },
   name: "CoachesRequest",
   data() {
     return {
@@ -40,22 +37,7 @@ export default {
   computed: { ...mapState(["loading"]) },
 
   created() {
-    this.$store.commit("SET_LOADING", true);
-    axios
-      .get("https://my-coaches-default-rtdb.firebaseio.com/request.json")
-      .then((response) => {
-        setTimeout(() => {
-          this.$store.commit("SET_LOADING", false);
-        }, 700);
-        for (let i = 0; i < Object.values(response.data).length; i++) {
-          if (
-            Object.values(response.data)[i].id == localStorage.getItem("userID")
-          ) {
-            this.request.push(Object.values(response.data)[i]);
-          }
-        }
-      })
-      .catch((error) => {});
+    this.$store.dispatch("requestCoaches", this.request);
   },
   beforeRouteLeave() {
     console.log("good bye!");

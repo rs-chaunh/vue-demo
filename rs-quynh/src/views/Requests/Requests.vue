@@ -2,14 +2,14 @@
   <section>
     <nav>
       <card>
-        <h2>Requests Received</h2>
-        <ul v-if="listRequest">
+        <h2>{{ $t('requests.title')}}</h2>
+        <ul v-if="listRequest.length > 0">
           <li v-for="(request, index) in listRequest" :key="index">
             <a :href="`mailto: ${request.email}`">{{ request.email }}</a>
             <p>{{ request.message }}</p>
           </li>
         </ul>
-        <h3 v-else>You haven't received any requests yet!</h3>
+        <h3 v-else>{{ $t('requests.not_requests')}}</h3>
       </card>
     </nav>
   </section>

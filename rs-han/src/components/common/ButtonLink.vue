@@ -1,5 +1,11 @@
 <template>
-  <router-link :to="{ path: link, query: { redirect: query } }">
+  <router-link
+    :to="{
+      name: namePage,
+      query: { redirect: queryPage },
+      params: { id: userId },
+    }"
+  >
     <slot></slot>
   </router-link>
 </template>
@@ -7,7 +13,14 @@
 <script>
 export default {
   name: "ButtonLink",
-  props: ["link", "query"],
+  props: ["name", "query", "id"],
+  data() {
+    return {
+      namePage: this.name,
+      queryPage: this.query,
+      userId: this.id,
+    };
+  },
 };
 </script>
 

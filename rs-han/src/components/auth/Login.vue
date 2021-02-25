@@ -1,6 +1,6 @@
 <template>
-  <my-card>
-    <form @submit.prevent="flag ? login() : signup()">
+  <div class="card">
+    <form @submit.prevent="loginOrSignup()">
       <div class="form-control">
         <label for="email">
           E-Mail
@@ -17,7 +17,7 @@
         Please enter a valid email and password (must be at least 6 characters
         long).
       </p>
-      <template v-if="flag">
+      <template v-if="isLogin">
         <button type="submit">Login</button>
         <button class="flat" @click.prevent="toggle">Signup instead</button>
       </template>
@@ -26,68 +26,38 @@
         <button class="flat" @click.prevent="toggle">Login instead</button>
       </template>
     </form>
-
     <error-auth></error-auth>
-  </my-card>
+  </div>
 </template>
 
 <script>
-import MyCard from "../common/MyCard";
 import ErrorAuth from "../common/ErrorAuth";
-import firebase from "firebase/app";
-import "firebase/auth";
 export default {
   name: "Login",
-  components: { MyCard, ErrorAuth },
+  components: { ErrorAuth },
   data() {
     return {
-      flag: true,
+      isLogin: true,
       email: "",
       password: "",
-      checkValid: false,
     };
+  },
+  computed: {
+    checkValid() {
+      return this.$store.state.checkValid;
+    },
   },
   methods: {
     toggle() {
-      this.flag = !this.flag;
+      this.isLogin = !this.isLogin;
     },
-    login() {
-      if (this.email == "" || this.password == "") {
-        this.checkValid = true;
-      } else {
-        this.$store.commit("SET_OPEN_DIALOG", true);
-        this.$store.commit("SET_AUTHEN_DIALOG", true);
-        this.$store.commit("SET_LOADING_DIALOG", true);
-        let url = this.$route.query.redirect;
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.password)
-          .then((userCredential) => {
-            this.$store.dispatch("loginAndSignup", { userCredential, url });
-          })
-          .catch(() => {
-            this.$store.dispatch("errorLoginAndSignup");
-          });
-      }
-    },
-    signup() {
-      if (this.email == "" || this.password == "") {
-        this.checkValid = true;
-      } else {
-        this.$store.commit("SET_OPEN_DIALOG", true);
-        this.$store.commit("SET_AUTHEN_DIALOG", true);
-        this.$store.commit("SET_LOADING_DIALOG", true);
-        let url = this.$route.query.redirect;
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then((userCredential) => {
-            this.$store.dispatch("loginAndSignup", { userCredential, url });
-          })
-          .catch(() => {
-            this.$store.dispatch("errorLoginAndSignup");
-          });
-      }
+    loginOrSignup() {
+      this.$store.dispatch("loginOrSignup", {
+        email: this.email,
+        password: this.password,
+        url: this.$route.query.redirect,
+        isLogin: this.isLogin,
+      });
     },
   },
   beforeRouteLeave() {
@@ -95,7 +65,6 @@ export default {
   },
 };
 </script>
-TheHeading
 
 <style scoped>
 .card {

@@ -1,18 +1,18 @@
 <template>
   <form @submit.prevent="onSendMessage">
     <div class="input-group">
-      <label for="email">Your E-Mail</label>
+      <label for="email">{{ $t("email") }}</label>
       <input type="email" id="send-email" v-model.trim="email" />
     </div>
     <div class="input-group">
-      <label for="message">Message</label>
+      <label for="message">{{ $t("message") }}</label>
       <textarea rows="5" id="message" v-model.trim="message" />
     </div>
     <p class="errors" v-if="!formIsValid">
-      Please enter a valid email and non-empty message.
+      {{ $t("notifyMessage") }}
     </p>
     <div class="input-submit">
-      <coach-button> Send message</coach-button>
+      <coach-button>{{ $t("sendMessage") }}</coach-button>
     </div>
   </form>
 </template>

@@ -1,8 +1,9 @@
+//TODO tên file luôn có ít nhất 2 từ, CoachFilter chẳng hạn
 <template>
   <section>
     {{setDataFilter}}
     <item-card>
-      <h2>Find Your Coach</h2>
+      <h2>{{$t('findCoach')}}</h2>
       <span class="filter-option">
         <input
           type="checkbox"

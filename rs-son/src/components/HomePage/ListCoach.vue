@@ -2,10 +2,18 @@
   <section>
     <item-card>
       <div class="controls">
-        <item-button @click="handleRefresh()" class="outline"> Refresh </item-button>
-        <item-link v-if="getCheckCoach == -1" :linkTo="setLinkTo">
+        <item-button @click="handleRefresh()" class="outline">
+          {{ $t("refresh") }}
+        </item-button>
+
+        <item-link v-if="getCheckCoach == -1 && getLocale == 'gb'" :linkTo="setLinkTo">
           {{ (textLink = setTokenId ? "" : "Login to" || "") }}
-          Register as Coach
+          {{ $t("regAsCoach") }}
+        </item-link>
+
+        <item-link v-if="getCheckCoach == -1 && getLocale == 'vn'" :linkTo="setLinkTo">
+          {{ (textLink = setTokenId ? "" : "Đăng nhập để" || "") }}
+          {{ $t("regAsCoach") }}
         </item-link>
       </div>
       <item-lazy-load v-if="$store.state.loading"></item-lazy-load>
@@ -54,7 +62,6 @@ export default {
       }
     },
     setLinkTo() {
-      console.log(this.getLinkTo);
       if (this.getLinkTo != null) {
         return this.getLinkTo;
       } else {
@@ -69,14 +76,17 @@ export default {
       }
     },
     getCheckCoach() {
-      let arr = this.temp;
+      let arr = this.temp; // TODO đặt tên k rõ ràng, arr của cái gì, temp của cái gì
       let userId = this.getTokenId;
       let index = -1;
       if (userId != null && arr != null) {
         index = Object.keys(arr).findIndex((item) => item == userId.localId);
-        localStorage.setItem('checkCoach',index);
+        localStorage.setItem("checkCoach", index);
       }
       return index;
+    },
+    getLocale() {
+      return this.$store.state.locale;
     },
   },
   mounted() {

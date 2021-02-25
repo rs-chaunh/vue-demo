@@ -1,11 +1,20 @@
 <template>
-
+  <the-heading></the-heading>
+    <router-view v-slot="{ Component }">
+    <transition name="router" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script>
+import TheHeading from './views/layouts/TheHeading.vue'
 
 export default {
   name: 'App',
+  components: {
+    TheHeading
+  }
 }
 </script>
 
@@ -64,5 +73,33 @@ p {
   display: block;
   margin-block-start: 1em;
   margin-block-end: 1em;
+}
+
+.router-enter-from {
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+.router-enter-to {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.router-enter-active {
+  transition: all .4s;
+}
+
+.router-leave-from {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.router-leave-active {
+  transition: all .4s;
+}
+
+.router-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
 }
 </style>

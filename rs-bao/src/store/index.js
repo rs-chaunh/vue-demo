@@ -8,5 +8,5 @@ export default createStore({
     coaches: coachesStore,
     auth: authStore,
     requests: requestsStore,
-  }
+  },
 });

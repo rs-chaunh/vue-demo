@@ -1,12 +1,12 @@
 <template>
   <section>
     <card>
-      <h2>Register as a coach now!</h2>
+      <h2>{{ $t('register.title') }}</h2>
       <form @submit.prevent="handlerRegister">
         <form-control
           :error="coach.firstName.error ? true : false"
           :id="'firstname'"
-          :label="'Firstname'"
+          :label="$t('register.labels.firstname') "
         >
           <input
             v-model="firstName"
@@ -21,7 +21,7 @@
         <form-control
           :error="coach.lastName.error ? true : false"
           :id="'lastname'"
-          :label="'Listname'"
+          :label="$t('register.labels.lastname')"
         >
           <input
             v-model="lastName"
@@ -36,7 +36,7 @@
         <form-control
           :error="coach.description.error ? true : false"
           :id="'description'"
-          :label="'Description'"
+          :label="$t('register.labels.description')"
         >
           <textarea
             v-model="description"
@@ -51,7 +51,7 @@
         <form-control
           :error="coach.hourlyRate.error ? true : false"
           :id="'hourlyRate'"
-          :label="'Hourly Rate'"
+          :label="$t('register.labels.hourlyrate')"
         >
           <input
             v-model="hourlyRate"
@@ -66,7 +66,7 @@
         <form-control
           :error="coach.areas.error ? true : false"
           :id="'areas'"
-          :label="'Areas of Expertise'"
+          :label="$t('register.labels.areas')"
         >
           <filter-option
             v-for="area in dataAreas"
@@ -80,8 +80,8 @@
             {{ coach.areas.error }}
           </p>
         </form-control>
-        <p v-if="isHadError">Please fix the above errors and submit again.</p>
-        <button-purple>Register</button-purple>
+        <p v-if="isHadError">{{ $t('register.errors.all') }}</p>
+        <button-purple>{{ $t('register.buttons.submit') }}</button-purple>
       </form>
     </card>
   </section>
@@ -141,6 +141,7 @@ export default {
   methods: {
     toggleAreas(option) {
       this.$emit("toggleAreas", option);
+      
     },
   },
   watch: {

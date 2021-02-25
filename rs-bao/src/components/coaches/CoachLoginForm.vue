@@ -94,7 +94,6 @@ export default {
     onChangeClick(number) {
       this.checkClick = number;
     },
-    // ...mapMutations(["setCurrentUser"]),
     async onLogin() {
       if (
         this.email === "" ||
@@ -139,6 +138,7 @@ export default {
           email: this.email,
           password: this.password,
         });
+
         const redirectTo = "/" + (this.$route.query.redirect || "coaches");
         this.$router.replace(redirectTo);
       } catch (err) {

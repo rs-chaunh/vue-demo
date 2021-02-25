@@ -1,5 +1,5 @@
 <template>
-  <span :class="['badge', area]">
+  <span :class="['badge', myArea]">
     <slot></slot>
   </span>
 </template>
@@ -8,13 +8,16 @@
 export default {
   name: "MyBadge",
   props: ["area"],
+  data() {
+    return {
+      myArea: this.area,
+    };
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .badge {
-  /* background-color: #ccc;
-  color: #252525; */
   color: #fff;
   border-radius: 30px;
   padding: 0.5rem 1.5rem;

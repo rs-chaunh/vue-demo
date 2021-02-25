@@ -2,14 +2,14 @@
   <div>
     <card>
       <form @submit.prevent="handlerSubmitAuthForm">
-        <form-control :id="'email'" :label="'E-Mail'">
+        <form-control :id="'email'" :label="$t('common.form.email')">
           <input 
             type="email" 
             id="email" 
             name="email" 
             v-model="email" />
         </form-control>
-        <form-control :id="'password'" :label="'Password'">
+        <form-control :id="'password'" :label="$t('common.form.password')">
           <input
             type="password"
             id="password"
@@ -18,16 +18,17 @@
           />
         </form-control>
         <p v-if="errors">
-          Please enter a valid email and password (must be at least 6 characters
-          long).
+         {{ $t('auth.errors.form') }}
         </p>
         
-        <button-purple v-if="isHasAccount">Login</button-purple>
-        <button-purple v-else>Signup</button-purple>
+        <button-purple v-if="isHasAccount">{{ $t('auth.buttons.login') }}</button-purple>
+        <button-purple v-else>{{ $t('auth.buttons.signup') }}</button-purple>
 
-        <button-transparent @click="handlerChangeType">{{
-          isHasAccount ? "Signup instead" : "Login instead"
-        }}</button-transparent>
+        <button-transparent @click="handlerChangeType">
+          {{ $t('auth.buttons.instead', { 
+            action: isHasAccount ? $t('auth.buttons.signup') :  $t('auth.buttons.login')
+          }) }}
+        </button-transparent>
       </form>
     </card>
     <auth-modal v-if="isOpenModal" :handlerCloseModal="handlerCloseModal"></auth-modal>

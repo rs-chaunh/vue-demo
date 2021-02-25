@@ -3,16 +3,16 @@
     <div class="backdrop"></div>
     <section class="modal">
       <header>
-        <h2>{{ isLoading ? "Authenticating" : "An error occurred" }}</h2>
+        <h2>{{ isLoading ? $t('auth.labels.authenticating') :  $t('auth.labels.errors') }}</h2>
       </header>
 
       <section>
-        <p v-if="errorsAuth">Failed to authenticate. Check your login data.</p>
+        <p v-if="errorsAuth">{{ $t('auth.errors.authen') }}</p>
         <loading v-else></loading>
       </section>
 
       <menu>
-        <button-purple @click="handlerCloseModal">Close</button-purple>
+        <button-purple @click="handlerCloseModal">{{ $t('auth.buttons.close') }}</button-purple>
       </menu>
     </section>
   </teleport>
@@ -58,7 +58,6 @@ export default {
   z-index: 100;
   border-radius: 12px;
   border: none;
-  // box-shadow: 0 2px 8px rgba(0 0 0 / 26%);
   padding: 0;
   margin: 0;
   overflow: hidden;
