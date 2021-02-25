@@ -12,10 +12,9 @@
 </template>
 
 <script>
-import ItemCard from "../components/common/ItemCard.vue";
 import ListRequest from "../components/Request/ListRequest.vue";
 export default {
-  components: { ItemCard, ListRequest },
+  components: {  ListRequest },
   beforeRouteLeave() {
     console.log("GOODBYE");
   },

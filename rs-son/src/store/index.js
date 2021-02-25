@@ -2,14 +2,15 @@
 import {
   createStore
 } from 'vuex'
-
 import axios from "axios";
+
+import * as firebase from '../env'
 
 export default createStore({
   state: {
     areas: ["frontend", "backend", "career"],
     coaches: [],
-    temp: [],
+    coachesTemp: [],
     dataDetail: [],
     tokenId: JSON.parse(localStorage.getItem('checkLogin')),
     linkTo: '/coaches',
@@ -17,12 +18,9 @@ export default createStore({
     request: [],
     checkLogin: true,
     loading: false,
-    locale : localStorage.getItem("lang") ? localStorage.getItem("lang") : "gb",
+    locale: localStorage.getItem("lang") ? localStorage.getItem("lang") : "gb",
   },
   getters: {
-    getTokenId: (state) => {
-      return state.tokenId;
-    },
     getLinkTo: (state) => {
       if (state.tokenId != null && state.tokenId != '') {
         state.linkTo = '/register'
@@ -39,16 +37,14 @@ export default createStore({
     },
   },
   mutations: {
-    SET_LOCALE(state,locale) {
-      // console.log(locale);
+    SET_LOCALE(state, locale) {
       return state.locale = locale
-    }
-    ,
+    },
     SET_DEFAULT_DATA(state, coaches) {
       return state.coaches = coaches;
     },
-    SET_TEMP_DATA(state, temp) {
-      return state.temp = temp;
+    SET_TEMP_DATA(state, coachesTemp) {
+      return state.coachesTemp = coachesTemp;
     },
     SET_DATA_FILTER(state, areas) {
       return state.areas = areas;
@@ -98,7 +94,7 @@ export default createStore({
     getDataRequest(store) {
       let userId = store.state.tokenId.localId;
       axios
-        .get(`https://coaches-project-8d77f-default-rtdb.firebaseio.com/request/${userId}.json`)
+        .get(`${firebase.API_DATA_JSON}/request/${userId}.json`)
         .then((res) => {
           store.commit('SET_DATA_REQUEST', res.data);
           store.commit('SET_LOADING', false);
@@ -108,7 +104,7 @@ export default createStore({
     // GET DATA TEMP TO SS WITH FILTER
     getDatafilter(store, payLoad) {
       store.commit('SET_DATA_FILTER', payLoad.listFilter)
-      let temp = Object.values(store.state.temp).filter((item) => {
+      let temp = Object.values(store.state.coachesTemp).filter((item) => {
         let check;
         payLoad.listFilter.forEach(elm => {
           if (item.areas.indexOf(elm) != -1) {
@@ -123,7 +119,7 @@ export default createStore({
     handlePostDataCoach({
       commit
     }, payLoad) {
-      axios.put(payLoad.url, payLoad.data).then((res) => {
+      axios.put(`${firebase.API_DATA_JSON}/coaches/${payLoad.user.localId}.json?auth=${payLoad.user.idToken}`, payLoad.data).then((res) => {
         console.log('POST CORRECTED');
         commit('SET_RESULT_POST', res.data);
       }).catch(err => {
@@ -133,7 +129,7 @@ export default createStore({
     },
     // HANDLE POST REQUEST FROM USER
     handlePostDataRequest(store, payLoad) {
-      axios.post(payLoad.url, payLoad.data).then((res) => {
+      axios.post(`${firebase.API_DATA_JSON}/request/${payLoad.requestId}.json`, payLoad.data).then((res) => {
         console.log('POST REQUESTS CORRECTED');
         console.log(res);
       }).catch(err => {
@@ -142,72 +138,48 @@ export default createStore({
       })
     },
     // HANDLE SIGN FOR USER
-    handleSignUp({
+    async handleSignUp({
       commit
     }, payLoad) {
       commit('SET_LOADING', true);
       setTimeout(() => {
         commit('SET_LOADING', false);
       }, 500)
-      axios.post(payLoad.url, payLoad.data).then(res => {
-        console.log('SignUp CORRECTED');
+      try {
+        let res = await axios.post(`${firebase.API_AUTH}:signUp?key=${firebase.API_KEY}`, payLoad.data);
         commit('SET_LOADING', false);
         commit('SET_TOKEN_ID', res.data);
         localStorage.setItem("checkLogin", JSON.stringify(res.data));
-        if (payLoad.route.query.redirect) {
-          payLoad.router.push({
-            path: "/register"
-          });
-        } else {
-          payLoad.router.push({
-            path: "/coaches"
-          });
-        }
         localStorage.setItem("userId", JSON.stringify(res.data));
-      }).catch(err => {
+        return true
+      } catch (err) {
         console.log(err);
-        commit('SET_CHECK_LOGIN', false);
-      })
+        return false;
+      }
     },
     // HANDLE LOGIN FOR MEM
-    handleLogin({
+    async handleLogin({
       commit,
-      state
+      // state
     }, payLoad) {
       commit('SET_LOADING', true);
       setTimeout(() => {
         commit('SET_LOADING', false);
       }, 500)
-      axios.post(payLoad.url, payLoad.data).then(res => {
-        console.log("LOGIN CORRECTED");
+      try {
+        let res = await axios.post(`${firebase.API_AUTH}:signInWithPassword?key=${firebase.API_KEY}`, payLoad.data)
         let checkLogin = {
           idToken: res.data.idToken,
           localId: res.data.localId,
           email: res.data.email,
         };
-        localStorage.setItem("checkLogin", JSON.stringify(checkLogin));
         commit('SET_TOKEN_ID', checkLogin);
-        // CHECK LINK TO LOGIN OR REGISTER
-        let arr = state.temp;
-        let userId = state.tokenId;
-        let index = -1;
-        if (userId != null && arr != null) {
-          index = Object.keys(arr).findIndex((item) => item == userId.localId);
-        }
-        // DON'T TO REGISTER PAGE IF HAVE ACCOUNT
-        if (payLoad.route.query.redirect && index == -1) {
-          payLoad.router.push({
-            path: "/register"
-          });
-        } else {
-          payLoad.router.push({
-            path: "/coaches"
-          });
-        }
-      }).catch(err => {
-        commit('SET_CHECK_LOGIN', false);
+        localStorage.setItem("checkLogin", JSON.stringify(checkLogin));
+        return true;
+      } catch (err) {
         console.log(err);
-      })
+        return false;
+      }
     },
   },
 })

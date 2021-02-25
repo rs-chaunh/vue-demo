@@ -1,9 +1,9 @@
-//TODO tên file k rõ
+//FIXED
 <template>
   <transition name="popup" appear>
     <dialog open>
       <header>
-        <h2>{{ titlePopup }}</h2>
+        <h2>{{ popupTitle }}</h2>
       </header>
       <section>
         <slot></slot>
@@ -19,7 +19,7 @@
 import ItemButton from "./ItemButton.vue";
 export default {
   components: { ItemButton },
-  props: ["titlePopup"], //TODO đúng ngữ pháp sẽ là popupTitle
+  props: ["popupTitle"], //FIXED
   data() {
     return {};
   },

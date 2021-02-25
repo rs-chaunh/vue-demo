@@ -6,86 +6,86 @@
           {{ $t("refresh") }}
         </item-button>
 
-        <item-link v-if="getCheckCoach == -1 && getLocale == 'gb'" :linkTo="setLinkTo">
-          {{ (textLink = setTokenId ? "" : "Login to" || "") }}
+        <item-link v-if="isCheckCoach == -1 && locale == 'gb'" :linkTo="linkTo">
+          {{ (textLink = tokenId ? "" : "Login to" || "") }}
           {{ $t("regAsCoach") }}
         </item-link>
 
-        <item-link v-if="getCheckCoach == -1 && getLocale == 'vn'" :linkTo="setLinkTo">
-          {{ (textLink = setTokenId ? "" : "Đăng nhập để" || "") }}
+        <item-link v-if="isCheckCoach == -1 && locale == 'vn'" :linkTo="linkTo">
+          {{ (textLink = tokenId ? "" : "Đăng nhập để" || "") }}
           {{ $t("regAsCoach") }}
         </item-link>
       </div>
       <item-lazy-load v-if="$store.state.loading"></item-lazy-load>
       <ul v-else>
-        <item-coach
-          v-for="item in Object.entries(getData)"
+        <coach-detail
+          v-for="item in Object.entries(dataCoachDefault)"
           :key="item[0]"
           :itemList="item"
         >
-        </item-coach>
+        </coach-detail>
       </ul>
     </item-card>
   </section>
 </template>
 
 <script>
-import ItemButton from "../common/ItemButton.vue";
-import ItemCard from "../common/ItemCard.vue";
-import ItemLazyLoad from "../common/itemLazyLoad.vue";
-import ItemLink from "../common/ItemLink.vue";
-import ItemCoach from "./ItemCoach.vue";
+import ItemButton from "../Common/ItemButton";
+import ItemCard from "../Common/ItemCard";
+import ItemLazyLoad from "../Common/ItemLazyLoad";
+import ItemLink from "../Common/ItemLink";
+import CoachDetail from "./CoachDetail";
 import { mapState, mapGetters } from "vuex";
 
 export default {
-  components: { ItemCoach, ItemButton, ItemLink, ItemCard, ItemLazyLoad },
+  components: { CoachDetail, ItemButton, ItemLink, ItemCard, ItemLazyLoad },
   data() {
     return {
       textLink: "",
     };
   },
   computed: {
-    ...mapState(["coaches", "status", "temp", "areas"]),
-    ...mapGetters(["getTokenId", "getLinkTo"]),
-    getData() {
+    ...mapState(["coaches", "status", "coachesTemp", "areas","tokenId"]),
+    ...mapGetters(["getLinkTo"]),
+    dataCoachDefault() {
       if (this.coaches != null) {
         return this.coaches;
       } else {
         return "";
       }
     },
-    setTokenId() {
-      if (this.getTokenId != null) {
-        return this.getTokenId;
+    tokenId() {
+      if (this.tokenId != null) {
+        return this.tokenId;
       } else {
         return "";
       }
     },
-    setLinkTo() {
+    linkTo() {
       if (this.getLinkTo != null) {
         return this.getLinkTo;
       } else {
         return "/coaches";
       }
     },
-    getResultPost() {
+    resultPost() {
       if (this.status) {
         return this.status;
       } else {
         return "";
       }
     },
-    getCheckCoach() {
-      let arr = this.temp; // TODO đặt tên k rõ ràng, arr của cái gì, temp của cái gì
-      let userId = this.getTokenId;
+    isCheckCoach() {
+      let coachArr = this.coachesTemp; // FIXED
+      let userId = this.tokenId;
       let index = -1;
-      if (userId != null && arr != null) {
-        index = Object.keys(arr).findIndex((item) => item == userId.localId);
+      if (userId != null && coachArr != null) {
+        index = Object.keys(coachArr).findIndex((item) => item == userId.localId);
         localStorage.setItem("checkCoach", index);
       }
       return index;
     },
-    getLocale() {
+    locale() {
       return this.$store.state.locale;
     },
   },
@@ -106,7 +106,7 @@ export default {
     },
   },
   watch: {
-    getResultPost: function () {
+    resultPost: function () {
       this.$store.dispatch("getDefaultData");
     },
   },

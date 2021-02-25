@@ -1,8 +1,8 @@
 <template>
   <item-lazy-load v-if="$store.state.loading"></item-lazy-load>
   <div>
-    <ul v-if="getDataRequest != ''">
-      <li v-for="(item, index) in getDataRequest" :key="index">
+    <ul v-if="dataRequest != ''">
+      <li v-for="(item, index) in dataRequest" :key="index">
         <div>
           <a :href="`mailto:` + item.userEmail"> {{ item.userEmail }} </a>
         </div>
@@ -14,11 +14,9 @@
 </template>
 
 <script>
-import itemLazyLoad from "../common/itemLazyLoad.vue";
 export default {
-  components: { itemLazyLoad },
   computed: {
-    getDataRequest() {
+    dataRequest() {
       if (this.$store.state.request) {
         return Object.values(this.$store.state.request);
       } else {
@@ -48,7 +46,6 @@ ul {
     }
     a {
       color: #3d008d;
-      text-decoration: none;
       font-weight: 700;
     }
   }

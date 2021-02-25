@@ -1,4 +1,4 @@
-//TODO tên file luôn có ít nhất 2 từ, CoachFilter chẳng hạn
+//FIXED
 <template>
   <section>
     {{setDataFilter}}
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ItemCard from "../common/ItemCard.vue";
+import ItemCard from "../Common/ItemCard.vue";
 export default {
   components: { ItemCard },
   data() {

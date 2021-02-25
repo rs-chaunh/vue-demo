@@ -33,14 +33,11 @@
 </template>
 
 <script>
-import ItemBadge from "../components/common/ItemBadge.vue";
-import ItemCard from "../components/common/ItemCard.vue";
-import ItemLink from "../components/common/ItemLink.vue";
+
 import ItemFormContact from "../components/ContactPage/ItemFormContact.vue";
-// import axios from "axios";
 
 export default {
-  components: { ItemCard, ItemLink, ItemFormContact, ItemBadge },
+  components: { ItemFormContact },
   data() {
     return {
       NotFound: "/NotFound",

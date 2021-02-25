@@ -1,4 +1,4 @@
-//TODO tên file k đồng bộ
+//FIXED
 <template>
   <div class="form-control">
       <slot></slot>

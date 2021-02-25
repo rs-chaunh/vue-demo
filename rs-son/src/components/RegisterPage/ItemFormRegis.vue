@@ -1,7 +1,7 @@
 <template>
   <form @submit="handleSubmit" method="post" novalidate="true">
-    <div class="form-control" :class="dataCoach.firstname.err == '' ? '' : 'error'">
-      <!-- //TODO có thể viết gọn hơn là :class="{error:!!dataCoach.firstname.err}"" -->
+    <div class="form-control" :class="{error:!!dataCoach.firstname.err}">
+      <!-- //FIXED -->
       <label for="firstname">{{ $t("firstname") }}</label>
       <input
         type="text"
@@ -11,7 +11,7 @@
       />
       <p v-if="dataCoach.firstname.err">{{ dataCoach.firstname.err }}</p>
     </div>
-    <div class="form-control" :class="dataCoach.lastname.err == '' ? '' : 'error'">
+    <div class="form-control" :class="{error:!!dataCoach.lastname.err}">
       <label for="lastname">{{ $t("lastname") }}</label>
       <input
         type="text"
@@ -21,7 +21,7 @@
       />
       <p v-if="dataCoach.lastname.err">{{ dataCoach.lastname.err }}</p>
     </div>
-    <div class="form-control" :class="dataCoach.description.err == '' ? '' : 'error'">
+    <div class="form-control" :class="{error:!!dataCoach.description.err}">
       <label for="description">{{ $t("description") }}</label>
       <textarea
         type="text"
@@ -32,7 +32,7 @@
       ></textarea>
       <p v-if="dataCoach.description.err">{{ dataCoach.description.err }}</p>
     </div>
-    <div class="form-control" :class="dataCoach.hRate.err == '' ? '' : 'error'">
+    <div class="form-control" :class="{error:!!dataCoach.hRate.err}">
       <label for="hRate">{{ $t("hRate") }}</label>
       <input
         type="number"
@@ -44,7 +44,7 @@
     </div>
     <div class="form-control">
       <h3>{{ $t("areasOf") }}</h3>
-      <div :class="dataCoach.areas.err == '' ? '' : 'error'">
+      <div :class="{error:!!dataCoach.areas.err}">
         <input
           type="checkbox"
           v-model="dataCoach.areas.value"
@@ -54,7 +54,7 @@
         />
         <label for="frontend">{{ $t("devF") }}</label>
       </div>
-      <div :class="dataCoach.areas.err == '' ? '' : 'error'">
+      <div :class="{error:!!dataCoach.areas.err}">
         <input
           type="checkbox"
           v-model="dataCoach.areas.value"
@@ -64,7 +64,7 @@
         />
         <label for="backend">{{ $t("devB") }}</label>
       </div>
-      <div :class="dataCoach.areas.err == '' ? '' : 'error'">
+      <div :class="{error:!!dataCoach.areas.err}">
         <input
           type="checkbox"
           v-model="dataCoach.areas.value"
@@ -82,10 +82,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
-import ItemButton from "../common/ItemButton.vue";
 export default {
-  components: { ItemButton },
   data() {
     return {
       dataCoach: {
@@ -136,12 +133,12 @@ export default {
         // console.log(dataCoach);
         this.$store.dispatch({
           type: "handlePostDataCoach",
-          url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${user.localId}.json?auth=${user.idToken}`,
+          user : user,
           data: dataCoach,
         });
         this.$router.push("/coaches");
       } else {
-        this.errNote = this.$i18n.messages[this.getLocale].errNote;
+        this.errNote = this.$i18n.messages[this.localeDefault].errNote;
       }
     },
     handleCheckAll() {
@@ -150,7 +147,7 @@ export default {
       });
     },
     handleCheckErrItem(item, key) {
-      let locale = this.getLocale;
+      let locale = this.localeDefault;
       switch (item) {
         case "firstname":
           if (key.value == "") {
@@ -221,12 +218,12 @@ export default {
     },
   },
   computed: {
-    getLocale() {
+    localeDefault() {
       return this.$store.state.locale;
     },
   },
   watch: {
-    getLocale: function () {
+    localeDefault: function () {
       this.handleSubmit();
     },
   },

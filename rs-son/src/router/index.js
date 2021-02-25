@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router';
 import store from '../store/index';
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: {
       path: '/coaches',
@@ -14,15 +15,7 @@ const routes = [
     path: '/coaches',
     name: 'Coaches',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Home.vue'), //TODO xóa cái webpackChunkName, nó vd th
-    components: {
-      default: Home,
-    }, //TODO field components mục đích là để làm gì Sơn
-    // children: [{
-    //   path: '/coaches/:id',
-    //   name: 'Detail',
-    //   component: () => import( /* webpackChunkName: "about" */ '../views/Detail.vue'),
-    // }]
+    import('../views/Coach.vue'), //FIXED
   },
   {
     path: '/auth',
@@ -31,27 +24,21 @@ const routes = [
     },
     name: 'Auth',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Auth.vue'),
+      import('../views/Auth.vue'),
   },
-  {
-    path: '/auth',
-    name: 'Auth',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Auth.vue'),
-  }, //TODO a thấy 2 cái trên giống nhau mà
   {
     path: '/coaches/:id/contact',
     name: 'Contact',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Contact.vue'),
+      import('../views/Contact.vue'),
   },
   {
     path: '/register',
     name: 'RegisterCoach',
     beforeEnter: (to, from, next) => {
-      let checkCoach = localStorage.getItem('checkCoach');
+      let indexOfCoach = localStorage.getItem('checkCoach');
       if (store.state.tokenId != null) {
-        if (checkCoach > 0) { //TODO tên var k rõ ràng
+        if (indexOfCoach > 0) { //FIXED
           next('/coaches');
         } else {
           next();
@@ -61,24 +48,24 @@ const routes = [
       }
     },
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/RegisterCoach.vue'),
+      import('../views/RegisterCoach.vue'),
   },
   {
     path: '/detail/:id',
     name: 'Detail',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Detail.vue'),
+      import('../views/Detail.vue'),
   },
   {
     path: '/requests',
     name: 'Request',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Request.vue'),
+      import('../views/Request.vue'),
   },
   {
     path: '/:NotFound(.*)*',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/NotFound.vue'),
+      import('../views/NotFound.vue'),
   },
 ];
 

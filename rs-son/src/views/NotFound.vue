@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import ItemCard from "../components/common/ItemCard.vue";
 export default {
-  components: { ItemCard },
   beforeRouteLeave() {
     console.log("GOODBYE");
   },

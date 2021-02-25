@@ -37,12 +37,8 @@
 </template>
 
 <script>
-import ItemBadge from "../components/common/ItemBadge.vue";
-import ItemCard from "../components/common/ItemCard.vue";
-import ItemLink from "../components/common/ItemLink.vue";
-// import axios from "axios";
+
 export default {
-  components: { ItemCard, ItemBadge, ItemLink },
   data() {
     return {
       detailCoach: "",

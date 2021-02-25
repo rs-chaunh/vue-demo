@@ -10,10 +10,10 @@
             {{ $t("allCoaches") }}
           </router-link>
         </li>
-        <li v-if="getTokenId != null && getTokenId != ''">
+        <li v-if="tokenId != null && tokenId != ''">
           <router-link to="/requests"> {{ $t("request") }} </router-link>
         </li>
-        <li v-if="getTokenId != null && getTokenId != ''">
+        <li v-if="tokenId != null && tokenId != ''">
           <item-button @click="handleLogout()">{{ $t("logout") }}</item-button>
         </li>
         <li v-else>
@@ -33,9 +33,7 @@
 </template>
 
 <script>
-import ItemButton from "./common/ItemButton.vue";
 export default {
-  components: { ItemButton },
   data() {
     return {
       checkLogin: "",
@@ -51,8 +49,8 @@ export default {
     },
   },
   computed: {
-    getTokenId() {
-      return this.$store.getters.getTokenId;
+    tokenId() {
+      return this.$store.state.tokenId;
     },
   },
   watch: {
@@ -83,7 +81,7 @@ header {
     align-items: center;
   }
   a {
-    text-decoration: none; //TODO style này a thấy bị lặp lại nhiều, nên để trong file css chung, còn nhiều style đang bị tương tự
+    // FIXED
     color: #f391e3;
     display: inline-block;
     padding: 0.75rem 1.5rem;
