@@ -3,27 +3,30 @@
     <form @submit.prevent="loginOrSignup()">
       <div class="form-control">
         <label for="email">
-          E-Mail
+          {{ $t("auth.inputText.email") }}
         </label>
         <input type="email" id="email" v-model="email" />
       </div>
       <div class="form-control">
         <label for="password">
-          Password
+          {{ $t("auth.inputText.password") }}
         </label>
         <input type="password" id="password" v-model="password" />
       </div>
       <p v-if="checkValid">
-        Please enter a valid email and password (must be at least 6 characters
-        long).
+        {{ $t("auth.error.validate") }}
       </p>
       <template v-if="isLogin">
         <button type="submit">Login</button>
-        <button class="flat" @click.prevent="toggle">Signup instead</button>
+        <button class="flat" @click.prevent="toggle">
+          {{ $t("auth.button.signupInstead") }}
+        </button>
       </template>
       <template v-else>
-        <button type="submit">Signup</button>
-        <button class="flat" @click.prevent="toggle">Login instead</button>
+        <button type="submit">{{ $t("auth.button.signup") }}</button>
+        <button class="flat" @click.prevent="toggle">
+          {{ $t("auth.button.loginInstead") }}
+        </button>
       </template>
     </form>
     <error-auth></error-auth>

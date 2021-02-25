@@ -5,7 +5,7 @@
       <dialog :open="openDialog" v-if="openDialog">
         <span v-if="loadingDialog">
           <header>
-            <h2>Authenticating...</h2>
+            <h2>{{ $t("auth.error.dialog.titleLoading") }}</h2>
           </header>
           <section>
             <my-loading></my-loading>
@@ -13,7 +13,7 @@
         </span>
         <span v-else>
           <header>
-            <h2>An error occurred</h2>
+            <h2>{{ $t("auth.error.dialog.titleAuth") }}</h2>
           </header>
           <section>
             <p>{{ errorAuth }}</p>
@@ -21,7 +21,7 @@
         </span>
         <menu>
           <button @click="closeDialog">
-            Close
+            {{ $t("common.button.close") }}
           </button>
         </menu>
       </dialog>

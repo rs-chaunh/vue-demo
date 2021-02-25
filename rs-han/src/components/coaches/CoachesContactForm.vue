@@ -1,15 +1,15 @@
 <template>
   <form @submit.prevent="sendRequest">
     <div class="form-control">
-      <label for="email">Your E-Mail</label>
-      <input type="email" id="email" v-model="email" />
+      <label for="email">{{ $t("contact.inputText.yourEmail") }}</label>
+      <input type="email" id="email" v-model="email" required />
     </div>
     <div class="form-control">
-      <label for="message">Message</label>
-      <textarea rows="5" id="message" v-model="message"></textarea>
+      <label for="message">{{ $t("contact.inputText.message") }}</label>
+      <textarea rows="5" id="message" v-model="message" required></textarea>
     </div>
     <div class="actions">
-      <button class="my-button">Send Message</button>
+      <button class="my-button">{{ $t("contact.button.sendMessage") }}</button>
     </div>
   </form>
 </template>

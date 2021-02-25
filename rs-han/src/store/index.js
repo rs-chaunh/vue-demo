@@ -3,6 +3,7 @@ import router from "../router";
 import axios from "axios";
 import firebase from "firebase/app";
 import "firebase/auth";
+import i18n from "../plugins/i18n";
 
 export default createStore({
   state: {
@@ -15,6 +16,7 @@ export default createStore({
     isRegister: false,
     openDialog: false,
     loadingDialog: false,
+    lang: localStorage.getItem("lang") || "gb",
     errorAuth: null,
     checkValid: false,
   },
@@ -140,6 +142,7 @@ export default createStore({
 
     logout({ commit }) {
       localStorage.removeItem("userID");
+      localStorage.removeItem("token");
       commit("SET_IS_REGISTER", false);
       commit("TOGGLE_AUTH", null);
     },
@@ -190,6 +193,12 @@ export default createStore({
             dispatch("errorLoginAndSignup", error.message);
           });
       }
+    },
+
+    changLanguage({ commit }, payload) {
+      localStorage.setItem("lang", payload);
+      commit("SET_LANGUAGE", payload);
+      i18n.global.locale = payload;
     },
 
     errorLoginAndSignup({ commit }, payload) {
@@ -245,6 +254,10 @@ export default createStore({
 
     SET_CHECK_VALID(state, payload) {
       state.checkValid = payload;
+    },
+
+    SET_LANGUAGE(state, payload) {
+      state.lang = payload;
     },
   },
 });

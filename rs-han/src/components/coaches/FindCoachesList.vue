@@ -6,16 +6,16 @@
           @click="$store.dispatch('getCoaches')"
           class="my-button outline"
         >
-          Refresh
+          {{ $t("common.button.refresh") }}
         </button>
 
         <div v-if="isRegister"></div>
         <div v-else>
           <button-link :name="'Register'" v-if="auth">
-            Register as Coach
+            {{ $t("common.button.registerCoaches") }}
           </button-link>
           <button-link :name="'Auth'" :query="'register'" v-else>
-            Login to Register as Coach
+            {{ $t("common.button.loginToRegister") }}
           </button-link>
         </div>
       </div>

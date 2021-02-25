@@ -3,14 +3,16 @@
     <section>
       <div class="card">
         <h2>{{ fullName }}</h2>
-        <h3>{{ infoCoaches.hourlyRate }}$/hour</h3>
+        <h3>{{ infoCoaches.hourlyRate }}$/{{ $t("common.text.hour") }}</h3>
       </div>
     </section>
     <section>
       <div class="card">
         <header>
-          <h2>Interested? Reach out now!</h2>
-          <button-link :name="'ContactCoach'">Contact</button-link>
+          <h2>{{ $t("contact.title") }}</h2>
+          <button-link :name="'ContactCoach'">{{
+            $t("common.button.contact")
+          }}</button-link>
           <coaches-contact-form :id="infoCoaches.id" />
         </header>
       </div>
@@ -30,7 +32,6 @@
 import ButtonLink from "../components/common/ButtonLink";
 import MyBadge from "../components/common/MyBadge";
 import CoachesContactForm from "../components/coaches/CoachesContactForm.vue";
-import axios from "axios";
 export default {
   name: "ContacCoach",
   components: { ButtonLink, MyBadge, CoachesContactForm },

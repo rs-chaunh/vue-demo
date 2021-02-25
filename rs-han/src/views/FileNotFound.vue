@@ -1,10 +1,10 @@
 <template>
   <section>
     <div class="card">
-      <h2>Page not found</h2>
+      <h2>{{ $t("fileNotFound.title") }}</h2>
       <p>
-        This page could not be found - maybe check out all our
-        <a href="/coaches" class="">coaches</a>
+        {{ $t("fileNotFound.message") }}
+        <a href="/coaches" class="">{{ $t("common.text.linkCoaches") }}</a>
         .
       </p>
     </div>

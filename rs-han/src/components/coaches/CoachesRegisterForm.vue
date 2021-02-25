@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="register">
     <div :class="['form-control', { error: dataValidate.firstName.error }]">
-      <label>Firstname</label>
+      <label>{{ $t("register.inputText.firstName") }}</label>
       <input
         type="text"
         id="firstName"
@@ -13,7 +13,7 @@
       </p>
     </div>
     <div :class="['form-control', { error: dataValidate.lastName.error }]">
-      <label>Lastname</label>
+      <label>{{ $t("register.inputText.lastName") }}</label>
       <input
         type="text"
         id="lastName"
@@ -25,7 +25,7 @@
       </p>
     </div>
     <div :class="['form-control', { error: dataValidate.description.error }]">
-      <label>Description</label>
+      <label>{{ $t("register.inputText.description") }}</label>
       <textarea
         id="description"
         rows="5"
@@ -37,7 +37,7 @@
       </p>
     </div>
     <div :class="['form-control', { error: dataValidate.hourlyRate.error }]">
-      <label>Hourly Rate</label>
+      <label>{{ $t("register.inputText.hourlyRate") }}</label>
       <input
         type="number"
         id="rate"
@@ -49,7 +49,7 @@
       </p>
     </div>
     <div :class="['form-control', { error: dataValidate.areas.error }]">
-      <h3>Areas of Expertise</h3>
+      <h3>{{ $t("register.inputText.areas") }}</h3>
       <div class="card__option">
         <input
           type="checkbox"
@@ -58,7 +58,7 @@
           v-model="dataValidate.areas.value"
           @blur="validateRegister('areas')"
         />
-        <label>Frontend Development</label>
+        <label>{{ $t("register.inputText.frontendDev") }}</label>
       </div>
       <div class="card__option">
         <input
@@ -68,7 +68,7 @@
           v-model="dataValidate.areas.value"
           @blur="validateRegister('areas')"
         />
-        <label>Backend Development</label>
+        <label>{{ $t("register.inputText.backendDev") }}</label>
       </div>
       <div class="card__option">
         <input
@@ -78,14 +78,14 @@
           v-model="dataValidate.areas.value"
           @blur="validateRegister('areas')"
         />
-        <label>Fullstack Development</label>
+        <label>{{ $t("register.inputText.fullstackDev") }}</label>
       </div>
       <p v-if="dataValidate.areas.error">{{ dataValidate.areas.errorMess }}</p>
       <p v-if="dataValidate.general.error">
-        {{ dataValidate.general.errorMess }}
+        {{ $t("register.error.validate.general") }}
       </p>
     </div>
-    <button class="my-button">Register</button>
+    <button class="my-button">{{ $t("register.button.register") }}</button>
   </form>
 </template>
 
@@ -122,10 +122,33 @@ export default {
         },
         general: {
           error: false,
-          errorMess: "",
         },
       },
     };
+  },
+  computed: {
+    language() {
+      return this.$store.state.lang;
+    },
+    i18n() {
+      return this.$i18n.messages[this.language].register.error.validate;
+    },
+  },
+  watch: {
+    language() {
+      var errors = {
+        firstName: this.dataValidate.firstName.error,
+        lastName: this.dataValidate.lastName.error,
+        description: this.dataValidate.description.error,
+        hourlyRate: this.dataValidate.hourlyRate.error,
+        areas: this.dataValidate.areas.error,
+      };
+      Object.values(errors).forEach((e, i) => {
+        if (e) {
+          this.validateRegister(Object.keys(errors)[i]);
+        }
+      });
+    },
   },
   methods: {
     register() {
@@ -139,6 +162,7 @@ export default {
         !this.dataValidate.hourlyRate.error &&
         !this.dataValidate.areas.error
       ) {
+        this.dataValidate.general.error = false;
         this.$store.dispatch("registerCoaches", {
           id: localStorage.getItem("userID"),
           areas: this.dataValidate.areas.value,
@@ -149,8 +173,6 @@ export default {
         });
       } else {
         this.dataValidate.general.error = true;
-        this.dataValidate.general.errorMess =
-          "Please fix the above errors and submit again.";
       }
     },
     validateRegister(name) {
@@ -158,16 +180,14 @@ export default {
         case "firstName":
           if (this.dataValidate.firstName.value == "") {
             this.dataValidate.firstName.error = true;
-            this.dataValidate.firstName.errorMess =
-              "Firstname must not be empty.";
+            this.dataValidate.firstName.errorMess = this.i18n.nonValue.firstName;
           } else {
             let firstCharactersAscii = this.dataValidate.firstName.value
               .split("")[0]
               .charCodeAt(0);
             if (firstCharactersAscii >= 97 && firstCharactersAscii <= 122) {
               this.dataValidate.firstName.error = true;
-              this.dataValidate.firstName.errorMess =
-                "firstname must capitalize the first letter.";
+              this.dataValidate.firstName.errorMess = this.i18n.wrongFormat.firstName;
             } else {
               this.dataValidate.firstName.error = false;
             }
@@ -176,14 +196,11 @@ export default {
         case "lastName":
           if (this.dataValidate.lastName.value == "") {
             this.dataValidate.lastName.error = true;
-            this.dataValidate.lastName.errorMess =
-              "Lastname must not be empty.";
+            this.dataValidate.lastName.errorMess = this.i18n.nonValue.lastName;
           } else {
             if (this.dataValidate.lastName.value.length <= 3) {
               this.dataValidate.lastName.error = true;
-
-              this.dataValidate.lastName.errorMess =
-                "lastname must be over 3 characters";
+              this.dataValidate.lastName.errorMess = this.i18n.wrongFormat.lastName;
             } else {
               this.dataValidate.lastName.error = false;
             }
@@ -193,15 +210,13 @@ export default {
         case "description":
           if (this.dataValidate.description.value == "") {
             this.dataValidate.description.error = true;
-            this.dataValidate.description.errorMess =
-              "Description must not be empty.";
+            this.dataValidate.description.errorMess = this.i18n.nonValue.description;
           } else {
             if (this.dataValidate.description.value.length >= 100) {
               this.dataValidate.description.error = true;
-              this.dataValidate.description.errorMess =
-                "The description must be less than 100 characters long";
+              this.dataValidate.description.errorMess = this.i18n.wrongFormat.description;
             } else {
-              this.dataValidate.description.error = true;
+              this.dataValidate.description.error = false;
             }
           }
           break;
@@ -209,9 +224,7 @@ export default {
         case "hourlyRate":
           if (this.dataValidate.hourlyRate.value <= 0) {
             this.dataValidate.hourlyRate.error = true;
-
-            this.dataValidate.hourlyRate.errorMess =
-              "Rate must be greater than 0.";
+            this.dataValidate.hourlyRate.errorMess = this.i18n.nonValue.hourlyRate;
           } else {
             this.dataValidate.hourlyRate.error = false;
           }
@@ -220,8 +233,7 @@ export default {
         case "areas":
           if (this.dataValidate.areas.value.length == 0) {
             this.dataValidate.areas.error = true;
-            this.dataValidate.areas.errorMess =
-              "At least one expertise must be selected.";
+            this.dataValidate.areas.errorMess = this.i18n.nonValue.areas;
           } else {
             this.dataValidate.areas.error = false;
           }

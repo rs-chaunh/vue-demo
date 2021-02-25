@@ -3,16 +3,16 @@
     <section>
       <div class="card">
         <h2>{{ fullName }}</h2>
-        <h3>{{ infoCoaches.hourlyRate }}$/hour</h3>
+        <h3>{{ infoCoaches.hourlyRate }}$/{{ $t("common.text.hour") }}</h3>
       </div>
     </section>
     <section>
       <div class="card">
         <header>
-          <h2>Interested? Reach out now!</h2>
-          <button-link :name="'ContactCoach'" :id="$route.params.id"
-            >Contact</button-link
-          >
+          <h2>{{ $t("contact.title") }}</h2>
+          <button-link :name="'ContactCoach'" :id="$route.params.id">{{
+            $t("common.button.contact")
+          }}</button-link>
         </header>
       </div>
     </section>

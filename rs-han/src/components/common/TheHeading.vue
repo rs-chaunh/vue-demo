@@ -6,23 +6,30 @@
       </h1>
       <ul class="header__menu-list">
         <li class="header__menu-item">
-          <router-link :to="{ name: 'Coaches' }">All Coaches</router-link>
+          <router-link :to="{ name: 'Coaches' }">{{
+            $t("common.button.allCoaches")
+          }}</router-link>
         </li>
         <template v-if="checkLogin">
           <li class="header__menu-item">
-            <router-link :to="{ name: 'CoachesRequest' }">Request</router-link>
+            <router-link :to="{ name: 'CoachesRequest' }">{{
+              $t("common.button.request")
+            }}</router-link>
           </li>
           <li class="header__menu-item">
             <button @click="logout" class="my-button" :isOutline="true">
-              Logout
+              {{ $t("common.button.logout") }}
             </button>
           </li>
         </template>
         <template v-else>
           <li class="header__menu-item">
-            <router-link :to="{ name: 'Auth' }"> Login </router-link>
+            <router-link :to="{ name: 'Auth' }">
+              {{ $t("common.button.login") }}
+            </router-link>
           </li>
         </template>
+        <select-language />
       </ul>
     </nav>
   </header>
@@ -30,8 +37,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+import SelectLanguage from "./SelectLanguage";
 export default {
   name: "TheHeading",
+  components: { SelectLanguage },
   computed: mapGetters(["checkLogin"]),
   methods: {
     logout() {

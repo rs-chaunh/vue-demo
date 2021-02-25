@@ -2,14 +2,14 @@
   <section>
     <div class="card">
       <header>
-        <h2>Requests Received</h2>
+        <h2>{{ $t("request.title") }}</h2>
       </header>
       <div v-if="loading">
         <my-loading></my-loading>
       </div>
       <div v-else>
         <h3 v-if="request.length == 0">
-          You haven't received any requests yet!
+          {{ $t("request.message") }}
         </h3>
         <ul v-else v-for="req in request" :key="req">
           <li>
@@ -24,7 +24,6 @@
 
 <script>
 import MyLoading from "../loading/MyLoading";
-import axios from "axios";
 import { mapState } from "vuex";
 export default {
   components: { MyLoading },

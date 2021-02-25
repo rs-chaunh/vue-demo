@@ -3,17 +3,21 @@
     <h3 class="card__name-item">
       {{ fullName }}
     </h3>
-    <h4 class="card__price-item">${{ list.hourlyRate }}/hour</h4>
+    <h4 class="card__price-item">
+      ${{ list.hourlyRate }}/{{ $t("common.text.hour") }}
+    </h4>
     <div class="card-badge">
       <my-badge v-for="(area, index) in list.areas" :key="index" :area="area">
         {{ area.toUpperCase() }}
       </my-badge>
     </div>
     <div class="action">
-      <button-link :name="'ContactCoach'" :id="list.id" class="outline"
-        >Contact</button-link
-      >
-      <button-link :name="'ViewDetail'" :id="list.id">View Details</button-link>
+      <button-link :name="'ContactCoach'" :id="list.id" class="outline">{{
+        $t("common.button.contact")
+      }}</button-link>
+      <button-link :name="'ViewDetail'" :id="list.id">{{
+        $t("common.button.viewDetail")
+      }}</button-link>
     </div>
   </li>
 </template>
