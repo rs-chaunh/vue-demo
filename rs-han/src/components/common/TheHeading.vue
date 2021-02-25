@@ -13,13 +13,14 @@
             <router-link :to="{ name: 'CoachesRequest' }">Request</router-link>
           </li>
           <li class="header__menu-item">
-            <my-button @click="logout" :isOutline="true">Logout</my-button>
+            <button @click="logout" class="my-button" :isOutline="true">
+              Logout
+            </button>
           </li>
         </template>
-
         <template v-else>
           <li class="header__menu-item">
-            <router-link :to="{ name: 'Auth' }">Login</router-link>
+            <router-link :to="{ name: 'Auth' }"> Login </router-link>
           </li>
         </template>
       </ul>
@@ -28,18 +29,13 @@
 </template>
 
 <script>
-import MyButton from "../common/MyButton";
 import { mapGetters } from "vuex";
 export default {
   name: "TheHeading",
-  components: { MyButton },
   computed: mapGetters(["checkLogin"]),
   methods: {
     logout() {
-      // this.$store.commit("TOGGLE_AUTH");
-      // localStorage.removeItem("userID");
       this.$store.dispatch("logout");
-      this.$router.push({ name: "Coaches" });
     },
   },
 };

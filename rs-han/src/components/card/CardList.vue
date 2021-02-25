@@ -1,8 +1,5 @@
 <template>
-  <h2
-    class="center"
-    v-if="allList.length == 0 || $store.state.coaches.length == 0"
-  >
+  <h2 class="center" v-if="isCoaches">
     No Coaches Found!
   </h2>
 
@@ -23,6 +20,9 @@ export default {
   computed: {
     allList() {
       return this.$store.getters.allCoaches;
+    },
+    isCoaches() {
+      return this.allList.length == 0 || this.$store.state.coaches.length == 0;
     },
   },
 };

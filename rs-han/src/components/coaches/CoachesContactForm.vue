@@ -1,25 +1,21 @@
 <template>
   <form @submit.prevent="sendRequest">
     <div class="form-control">
-      <label for="email">Your E-Mail</label
-      ><input type="email" id="email" v-model="email" />
+      <label for="email">Your E-Mail</label>
+      <input type="email" id="email" v-model="email" />
     </div>
     <div class="form-control">
-      <label for="message">Message</label
-      ><textarea rows="5" id="message" v-model="message"></textarea>
+      <label for="message">Message</label>
+      <textarea rows="5" id="message" v-model="message"></textarea>
     </div>
     <div class="actions">
-      <my-button>Send Message</my-button>
+      <button class="my-button">Send Message</button>
     </div>
   </form>
 </template>
 
 <script>
-import MyButton from "../common/MyButton";
-import axios from "axios";
-
 export default {
-  components: { MyButton },
   props: ["id"],
   name: "CoachesContactForm",
   data() {
@@ -28,17 +24,16 @@ export default {
       message: "",
     };
   },
-  methods: {
+  computed: {
+    userId() {
+      return this.id;
+    },
     sendRequest() {
-      axios
-        .post("https://my-coaches-default-rtdb.firebaseio.com/request.json", {
-          id: this.id,
-          email: this.email,
-          message: this.message,
-        })
-        .catch((error) => console.log(error));
-
-      this.$router.push({ name: "Coaches" });
+      this.$store.dispatch("sendRequest", {
+        id: this.userId,
+        email: this.email,
+        message: this.message,
+      });
     },
   },
 };

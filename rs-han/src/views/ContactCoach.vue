@@ -1,55 +1,49 @@
 <template>
-  <div>
+  <section>
     <section>
-      <my-card>
-        <h2>{{ listCoaches.firstName + " " + listCoaches.lastName }}</h2>
-        <h3>{{ listCoaches.hourlyRate }}$/hour</h3>
-      </my-card>
+      <div class="card">
+        <h2>{{ fullName }}</h2>
+        <h3>{{ infoCoaches.hourlyRate }}$/hour</h3>
+      </div>
     </section>
     <section>
-      <my-card>
+      <div class="card">
         <header>
           <h2>Interested? Reach out now!</h2>
-          <button-link :link="'#'">Contact</button-link>
-          <coaches-contact-form :id="listCoaches.id" />
+          <button-link :name="'ContactCoach'">Contact</button-link>
+          <coaches-contact-form :id="infoCoaches.id" />
         </header>
-      </my-card>
+      </div>
     </section>
     <section>
-      <my-card>
-        <my-badge v-for="area in listCoaches.areas" :key="area" :area="area">
+      <div class="card">
+        <my-badge v-for="area in infoCoaches.areas" :key="area" :area="area">
           {{ area.toUpperCase() }}</my-badge
         >
-        <p>{{ listCoaches.description }}</p>
-      </my-card>
+        <p>{{ infoCoaches.description }}</p>
+      </div>
     </section>
-  </div>
+  </section>
 </template>
 
 <script>
-import MyCard from "../components/common/MyCard";
 import ButtonLink from "../components/common/ButtonLink";
 import MyBadge from "../components/common/MyBadge";
 import CoachesContactForm from "../components/coaches/CoachesContactForm.vue";
 import axios from "axios";
 export default {
   name: "ContacCoach",
-  components: { MyCard, ButtonLink, MyBadge, CoachesContactForm },
-  data() {
-    return {
-      listCoaches: [],
-    };
+  components: { ButtonLink, MyBadge, CoachesContactForm },
+  computed: {
+    infoCoaches() {
+      return this.$store.state.infoCoaches;
+    },
+    fullName() {
+      return this.infoCoaches.firstName + " " + this.infoCoaches.lastName;
+    },
   },
   created() {
-    axios
-      .get(
-        "https://my-coaches-default-rtdb.firebaseio.com/coaches/" +
-          this.$route.params.id +
-          ".json"
-      )
-      .then((response) => {
-        this.listCoaches = response.data;
-      });
+    this.$store.dispatch("infoCoaches", this.$route.params.id);
   },
   beforeRouteLeave() {
     console.log("good bye!");

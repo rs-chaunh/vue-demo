@@ -1,20 +1,19 @@
 <template>
   <section>
-    <my-card>
+    <div class="card">
       <h2>Page not found</h2>
       <h3>
-        Bạn đã đăng ký-Vui lòng không lươn lẹo ~~ Vui lòng trở về
+        You have registered. Each person can only register once. Please come
+        back
         <a href="/coaches" class="">coaches</a>
         .
       </h3>
-    </my-card>
+    </div>
   </section>
 </template>
 
 <script>
-import MyCard from "../components/common/MyCard";
 export default {
-  components: { MyCard },
   name: "NotificationRegister",
 };
 </script>
