@@ -1,7 +1,8 @@
 <template>
   <form @submit="handleSubmit" method="post" novalidate="true">
     <div class="form-control" :class="dataCoach.firstname.err == '' ? '' : 'error'">
-      <label for="firstname">Firstname</label>
+      <!-- //TODO có thể viết gọn hơn là :class="{error:!!dataCoach.firstname.err}"" -->
+      <label for="firstname">{{ $t("firstname") }}</label>
       <input
         type="text"
         v-model="dataCoach.firstname.value"
@@ -11,7 +12,7 @@
       <p v-if="dataCoach.firstname.err">{{ dataCoach.firstname.err }}</p>
     </div>
     <div class="form-control" :class="dataCoach.lastname.err == '' ? '' : 'error'">
-      <label for="lastname">Lastname</label>
+      <label for="lastname">{{ $t("lastname") }}</label>
       <input
         type="text"
         v-model="dataCoach.lastname.value"
@@ -21,7 +22,7 @@
       <p v-if="dataCoach.lastname.err">{{ dataCoach.lastname.err }}</p>
     </div>
     <div class="form-control" :class="dataCoach.description.err == '' ? '' : 'error'">
-      <label for="description">Description</label>
+      <label for="description">{{ $t("description") }}</label>
       <textarea
         type="text"
         v-model="dataCoach.description.value"
@@ -32,7 +33,7 @@
       <p v-if="dataCoach.description.err">{{ dataCoach.description.err }}</p>
     </div>
     <div class="form-control" :class="dataCoach.hRate.err == '' ? '' : 'error'">
-      <label for="hRate">Hourly Rate</label>
+      <label for="hRate">{{ $t("hRate") }}</label>
       <input
         type="number"
         v-model="dataCoach.hRate.value"
@@ -42,7 +43,7 @@
       <p v-if="dataCoach.hRate.err">{{ dataCoach.hRate.err }}</p>
     </div>
     <div class="form-control">
-      <h3>Areas of Expertise</h3>
+      <h3>{{ $t("areasOf") }}</h3>
       <div :class="dataCoach.areas.err == '' ? '' : 'error'">
         <input
           type="checkbox"
@@ -51,7 +52,7 @@
           id="frontend"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="frontend">Frontend Deverloper</label>
+        <label for="frontend">{{ $t("devF") }}</label>
       </div>
       <div :class="dataCoach.areas.err == '' ? '' : 'error'">
         <input
@@ -61,7 +62,7 @@
           id="backend"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="backend">Backend Deverloper</label>
+        <label for="backend">{{ $t("devB") }}</label>
       </div>
       <div :class="dataCoach.areas.err == '' ? '' : 'error'">
         <input
@@ -71,9 +72,10 @@
           id="career"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="career">Career Deverloper</label>
+        <label for="career">{{ $t("devC") }}</label>
       </div>
       <p v-if="dataCoach.areas.err">{{ dataCoach.areas.err }}</p>
+      <p v-if="errNote">{{ errNote }}</p>
     </div>
     <item-button @click.prevent="handleSubmit()" type="submit"> Register </item-button>
   </form>
@@ -110,6 +112,8 @@ export default {
       },
 
       check: "",
+      errNote: "",
+      locale: this.$store.state.locale,
     };
   },
   methods: {
@@ -136,6 +140,8 @@ export default {
           data: dataCoach,
         });
         this.$router.push("/coaches");
+      } else {
+        this.errNote = this.$i18n.messages[this.getLocale].errNote;
       }
     },
     handleCheckAll() {
@@ -144,14 +150,15 @@ export default {
       });
     },
     handleCheckErrItem(item, key) {
+      let locale = this.getLocale;
       switch (item) {
         case "firstname":
           if (key.value == "") {
-            key.err = "First name must not be empty.";
+            key.err = this.$i18n.messages[locale].errfirstname_1;
             this.check = false;
           } else {
             if (key.value.charAt(0).toUpperCase() !== key.value.charAt(0)) {
-              key.err = "First name must capitalize the first letter";
+              key.err = this.$i18n.messages[locale].errfirstname_2;
               this.check = false;
             } else {
               key.err = "";
@@ -162,11 +169,11 @@ export default {
         case "lastname":
           if (key.value == "") {
             this.check = false;
-            key.err = "Last name must not be empty.";
+            key.err = this.$i18n.messages[locale].errlastname_1;
           } else {
             if (key.value.length < 3) {
               this.check = false;
-              key.err = "Last name must more than three chars.";
+              key.err = this.$i18n.messages[locale].errlastname_2;
             } else {
               key.err = "";
               this.check = true;
@@ -176,11 +183,11 @@ export default {
         case "description":
           if (key.value.length == 0) {
             this.check = false;
-            key.err = "Description must not be empty.";
+            key.err = this.$i18n.messages[locale].errdescription_1;
           } else {
             if (key.value.length > 100) {
               this.check = false;
-              key.err = "You can only enter a maximum of 100 characters.";
+              key.err = this.$i18n.messages[locale].errdescription_2;
             } else {
               (key.err = ""), (this.check = true);
             }
@@ -189,11 +196,11 @@ export default {
         case "hRate":
           if (key.value.length == 0) {
             this.check = false;
-            key.err = "Rate must be greater than 0.";
+            key.err = this.$i18n.messages[locale].errhRate_1;
           } else {
             if (key.value < 0) {
               this.check = false;
-              key.err = "The number must be greater than 0";
+              key.err = this.$i18n.messages[locale].errhRate_2;
             } else {
               (key.err = ""), (this.check = true);
             }
@@ -202,7 +209,7 @@ export default {
         case "areas":
           if (key.value.length == 0) {
             this.check = false;
-            key.err = "At least one expertise must be selected.";
+            key.err = this.$i18n.messages[locale].errareasOf;
           } else {
             key.err = "";
             this.check = true;
@@ -211,6 +218,16 @@ export default {
         default:
           this.check;
       }
+    },
+  },
+  computed: {
+    getLocale() {
+      return this.$store.state.locale;
+    },
+  },
+  watch: {
+    getLocale: function () {
+      this.handleSubmit();
     },
   },
 };

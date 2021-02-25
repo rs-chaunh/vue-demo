@@ -65,9 +65,9 @@
           "firstName": "Firstname must capitalize the first letter.",
           "lastName": "LastName must be over 3 characters.",
           "description": "The description must be less than 100 characters long."
-        }
-      },
-      "message": "Please fix the above errors and submit again."
+        },
+        "general": "Please fix the above errors and submit again."
+      }
     }
   },
   "contact": {

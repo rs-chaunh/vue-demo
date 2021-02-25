@@ -1,135 +1,129 @@
 <template>
   <form @submit.prevent="register">
-    <div class="form-control">
-      <label for="firstname" :class="errorFirstName ? 'errorWord' : ''">{{
-        $t("register.inputText.firstName")
-      }}</label>
+    <div :class="['form-control', { error: dataValidate.firstName.error }]">
+      <label>{{ $t("register.inputText.firstName") }}</label>
       <input
         type="text"
         id="firstName"
-        v-model="firstName"
-        @blur="checkFirstName"
-        :class="errorFirstName ? 'errorBorder' : ''"
+        v-model="dataValidate.firstName.value"
+        @blur="validateRegister('firstName')"
       />
-      <p v-if="errorFirstName">
-        {{ messErrorFirstName }}
+      <p v-if="dataValidate.firstName.error">
+        {{ dataValidate.firstName.errorMess }}
       </p>
     </div>
-    <div class="form-control">
-      <label for="lastname" :class="errorLastName ? 'errorWord' : ''">{{
-        $t("register.inputText.lastName")
-      }}</label>
+    <div :class="['form-control', { error: dataValidate.lastName.error }]">
+      <label>{{ $t("register.inputText.lastName") }}</label>
       <input
         type="text"
         id="lastName"
-        v-model="lastName"
-        @blur="checkLastName"
-        :class="errorLastName ? 'errorBorder' : ''"
+        v-model="dataValidate.lastName.value"
+        @blur="validateRegister('lastName')"
       />
-      <p v-if="errorLastName">
-        {{ messErrorLastName }}
+      <p v-if="dataValidate.lastName.error">
+        {{ dataValidate.lastName.errorMess }}
       </p>
     </div>
-    <div class="form-control">
-      <label for="description" :class="errorDescription ? 'errorWord' : ''">{{
-        $t("register.inputText.description")
-      }}</label>
+    <div :class="['form-control', { error: dataValidate.description.error }]">
+      <label>{{ $t("register.inputText.description") }}</label>
       <textarea
         id="description"
         rows="5"
-        v-model="description"
-        @blur="checkDescription"
-        :class="errorDescription ? 'errorBorder' : ''"
+        v-model="dataValidate.description.value"
+        @blur="validateRegister('description')"
       ></textarea>
-      <p v-if="errorDescription">
-        {{ messErrorDescription }}
+      <p v-if="dataValidate.description.error">
+        {{ dataValidate.description.errorMess }}
       </p>
     </div>
-    <div class="form-control">
-      <label for="rate" :class="errorHourlyRate ? 'errorWord' : ''">{{
-        $t("register.inputText.hourlyRate")
-      }}</label>
+    <div :class="['form-control', { error: dataValidate.hourlyRate.error }]">
+      <label>{{ $t("register.inputText.hourlyRate") }}</label>
       <input
         type="number"
         id="rate"
-        v-model="hourlyRate"
-        @blur="checkHourlyRate"
-        :class="errorHourlyRate ? 'errorBorder' : ''"
+        v-model="dataValidate.hourlyRate.value"
+        @blur="validateRegister('hourlyRate')"
       />
-      <p v-if="errorHourlyRate">
-        {{ messErrorHourlyRate }}
+      <p v-if="dataValidate.hourlyRate.error">
+        {{ dataValidate.hourlyRate.errorMess }}
       </p>
     </div>
-    <div class="form-control">
+    <div :class="['form-control', { error: dataValidate.areas.error }]">
       <h3>{{ $t("register.inputText.areas") }}</h3>
       <div class="card__option">
         <input
           type="checkbox"
           class="card__option-item"
           value="frontend"
-          v-model="areas"
-          @blur="checkAreas"
+          v-model="dataValidate.areas.value"
+          @blur="validateRegister('areas')"
         />
-        <label for="frontend" :class="errorAreas ? 'errorWord' : ''">{{
-          $t("register.inputText.frontendDev")
-        }}</label>
+        <label>{{ $t("register.inputText.frontendDev") }}</label>
       </div>
       <div class="card__option">
         <input
           type="checkbox"
           class="card__option-item"
           value="backend"
-          v-model="areas"
-          @blur="checkAreas"
+          v-model="dataValidate.areas.value"
+          @blur="validateRegister('areas')"
         />
-        <label for="backend" :class="errorAreas ? 'errorWord' : ''">{{
-          $t("register.inputText.backendDev")
-        }}</label>
+        <label>{{ $t("register.inputText.backendDev") }}</label>
       </div>
       <div class="card__option">
         <input
           type="checkbox"
           class="card__option-item"
           value="fullstack"
-          v-model="areas"
-          @blur="checkAreas"
+          v-model="dataValidate.areas.value"
+          @blur="validateRegister('areas')"
         />
-        <label for="fullstack" :class="errorAreas ? 'errorWord' : ''">{{
-          $t("register.inputText.fullstackDev")
-        }}</label>
+        <label>{{ $t("register.inputText.fullstackDev") }}</label>
       </div>
-      <p v-if="errorAreas">{{ messErrorAreas }}</p>
-      <p v-if="errorGeneral">{{ $t("register.error.message") }}</p>
+      <p v-if="dataValidate.areas.error">{{ dataValidate.areas.errorMess }}</p>
+      <p v-if="dataValidate.general.error">
+        {{ $t("register.error.validate.general") }}
+      </p>
     </div>
-    <my-button>{{ $t("register.button.register") }}</my-button>
+    <button class="my-button">{{ $t("register.button.register") }}</button>
   </form>
 </template>
 
 <script>
-import MyButton from "../common/MyButton";
-import axios from "axios";
-
 export default {
   name: "CoachesRegisterForm",
-  components: { MyButton },
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      description: "",
-      hourlyRate: null,
-      areas: [],
-      errorFirstName: false,
-      messErrorFirstName: "",
-      errorLastName: false,
-      messErrorLastName: "",
-      errorDescription: false,
-      messErrorDescription: "",
-      errorHourlyRate: false,
-      messErrorHourlyRate: "",
-      errorAreas: false,
-      messErrorAreas: "",
-      errorGeneral: false,
+      dataValidate: {
+        firstName: {
+          error: false,
+          errorMess: "",
+          value: "",
+        },
+        lastName: {
+          error: false,
+          errorMess: "",
+          value: "",
+        },
+        description: {
+          error: false,
+          errorMess: "",
+          value: "",
+        },
+        hourlyRate: {
+          error: false,
+          errorMess: "",
+          value: null,
+        },
+        areas: {
+          error: false,
+          errorMess: "",
+          value: [],
+        },
+        general: {
+          error: false,
+        },
+      },
     };
   },
   computed: {
@@ -143,121 +137,107 @@ export default {
   watch: {
     language() {
       var errors = {
-        FirstName: this.errorFirstName,
-        LastName: this.errorLastName,
-        Description: this.errorDescription,
-        HourlyRate: this.errorHourlyRate,
-        Areas: this.errorAreas,
+        firstName: this.dataValidate.firstName.error,
+        lastName: this.dataValidate.lastName.error,
+        description: this.dataValidate.description.error,
+        hourlyRate: this.dataValidate.hourlyRate.error,
+        areas: this.dataValidate.areas.error,
       };
       Object.values(errors).forEach((e, i) => {
         if (e) {
-          let fn = "check" + Object.keys(errors)[i];
-          this[fn]();
+          this.validateRegister(Object.keys(errors)[i]);
         }
       });
-      // if (this.errorFirstName) {
-      //   this.checkFirstName();
-      // }
-      // if (this.errorLastName) {
-      //   this.checkLastName();
-      // }
-      // if (this.errorDescription) {
-      //   this.checkDescription();
-      // }
-      // if (this.errorHourlyRate) {
-      //   this.checkHourlyRate();
-      // }
-      // if (this.errorAreas) {
-      //   this.checkAreas();
-      // }
     },
   },
   methods: {
     register() {
-      this.checkFirstName();
-      this.checkLastName();
-      this.checkDescription();
-      this.checkHourlyRate();
-      this.checkAreas();
+      Object.keys(this.dataValidate).forEach((e) => {
+        this.validateRegister(e);
+      });
       if (
-        !this.errorFirstName &&
-        !this.errorLastName &&
-        !this.errorDescription &&
-        !this.errorHourlyRate &&
-        !this.errorAreas
+        !this.dataValidate.firstName.error &&
+        !this.dataValidate.lasttName.error &&
+        !this.dataValidate.description.error &&
+        !this.dataValidate.hourlyRate.error &&
+        !this.dataValidate.areas.error
       ) {
-        axios
-          .post("https://my-coaches-default-rtdb.firebaseio.com/coaches.json", {
-            id: localStorage.getItem("userID"),
-            areas: this.areas,
-            description: this.description,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            hourlyRate: this.hourlyRate,
-          })
-          .catch((error) => console.log(error));
-        this.$store.commit("SET_IS_REGISTER", true);
-        this.$router.push({ name: "Coaches" });
-        this.$store.dispatch("getCoaches");
+        this.dataValidate.general.error = false;
+        this.$store.dispatch("registerCoaches", {
+          id: localStorage.getItem("userID"),
+          areas: this.dataValidate.areas.value,
+          description: this.dataValidate.description.value,
+          firstName: this.dataValidate.firstName.value,
+          lastName: this.dataValidate.lastName.value,
+          hourlyRate: this.dataValidate.hourlyRate.value,
+        });
       } else {
-        this.errorGeneral = true;
+        this.dataValidate.general.error = true;
       }
     },
-    checkFirstName() {
-      if (this.firstName == "") {
-        this.errorFirstName = true;
-        this.messErrorFirstName = this.i18n.nonValue.firstName;
-        console.log(this.i18n.nonValue.firstName);
-      } else {
-        let firstCharactersAscii = this.firstName.split("")[0].charCodeAt(0);
-        if (firstCharactersAscii >= 97 && firstCharactersAscii <= 122) {
-          this.errorFirstName = true;
-          this.messErrorFirstName = this.i18n.wrongFormat.firstName;
-        } else {
-          this.errorFirstName = false;
-        }
-      }
-    },
-    checkLastName() {
-      if (this.lastName == "") {
-        this.errorLastName = true;
-        this.messErrorLastName = this.i18n.nonValue.lastName;
-      } else {
-        if (this.lastName.length <= 3) {
-          this.errorLastName = true;
-          this.messErrorLastName = this.i18n.wrongFormat.lastName;
-        } else {
-          this.errorLastName = false;
-        }
-      }
-    },
-    checkDescription() {
-      if (this.description == "") {
-        this.errorDescription = true;
-        this.messErrorDescription = this.i18n.nonValue.description;
-      } else {
-        if (this.description.length >= 100) {
-          this.errorDescription = true;
-          this.messErrorDescription = this.i18n.wrongFormat.description;
-        } else {
-          this.errorDescription = false;
-        }
-      }
-    },
-    checkHourlyRate() {
-      if (this.hourlyRate <= 0) {
-        this.errorHourlyRate = true;
-        this.messErrorHourlyRate = this.i18n.nonValue.hourlyRate;
-      } else {
-        this.errorHourlyRate = false;
-      }
-    },
-    checkAreas() {
-      if (this.areas.length == 0) {
-        this.errorAreas = true;
-        this.messErrorAreas = this.i18n.nonValue.areas;
-      } else {
-        this.errorAreas = false;
+    validateRegister(name) {
+      switch (name) {
+        case "firstName":
+          if (this.dataValidate.firstName.value == "") {
+            this.dataValidate.firstName.error = true;
+            this.dataValidate.firstName.errorMess = this.i18n.nonValue.firstName;
+          } else {
+            let firstCharactersAscii = this.dataValidate.firstName.value
+              .split("")[0]
+              .charCodeAt(0);
+            if (firstCharactersAscii >= 97 && firstCharactersAscii <= 122) {
+              this.dataValidate.firstName.error = true;
+              this.dataValidate.firstName.errorMess = this.i18n.wrongFormat.firstName;
+            } else {
+              this.dataValidate.firstName.error = false;
+            }
+          }
+          break;
+        case "lastName":
+          if (this.dataValidate.lastName.value == "") {
+            this.dataValidate.lastName.error = true;
+            this.dataValidate.lastName.errorMess = this.i18n.nonValue.lastName;
+          } else {
+            if (this.dataValidate.lastName.value.length <= 3) {
+              this.dataValidate.lastName.error = true;
+              this.dataValidate.lastName.errorMess = this.i18n.wrongFormat.lastName;
+            } else {
+              this.dataValidate.lastName.error = false;
+            }
+          }
+          break;
+
+        case "description":
+          if (this.dataValidate.description.value == "") {
+            this.dataValidate.description.error = true;
+            this.dataValidate.description.errorMess = this.i18n.nonValue.description;
+          } else {
+            if (this.dataValidate.description.value.length >= 100) {
+              this.dataValidate.description.error = true;
+              this.dataValidate.description.errorMess = this.i18n.wrongFormat.description;
+            } else {
+              this.dataValidate.description.error = false;
+            }
+          }
+          break;
+
+        case "hourlyRate":
+          if (this.dataValidate.hourlyRate.value <= 0) {
+            this.dataValidate.hourlyRate.error = true;
+            this.dataValidate.hourlyRate.errorMess = this.i18n.nonValue.hourlyRate;
+          } else {
+            this.dataValidate.hourlyRate.error = false;
+          }
+          break;
+
+        case "areas":
+          if (this.dataValidate.areas.value.length == 0) {
+            this.dataValidate.areas.error = true;
+            this.dataValidate.areas.errorMess = this.i18n.nonValue.areas;
+          } else {
+            this.dataValidate.areas.error = false;
+          }
+          break;
       }
     },
   },
@@ -320,11 +300,13 @@ p {
   margin-inline-end: 0px;
 }
 
-.errorBorder {
+.error > input,
+.error > textarea {
   border: 1px solid red;
 }
 
-.errorWord {
+.error > label,
+.error > div > label {
   color: red;
 }
 </style>

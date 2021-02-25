@@ -1,25 +1,21 @@
 <template>
   <li class="card-item">
     <h3 class="card__name-item">
-      {{ listItem.firstName + " " + listItem.lastName }}
+      {{ fullName }}
     </h3>
     <h4 class="card__price-item">
-      ${{ listItem.hourlyRate }}/{{ $t("common.text.hour") }}
+      ${{ list.hourlyRate }}/{{ $t("common.text.hour") }}
     </h4>
     <div class="card-badge">
-      <my-badge
-        v-for="(area, index) in listItem.areas"
-        :key="index"
-        :area="area"
-      >
+      <my-badge v-for="(area, index) in list.areas" :key="index" :area="area">
         {{ area.toUpperCase() }}
       </my-badge>
     </div>
     <div class="action">
-      <button-link :link="`/coaches/${listItem.id}/contact`" class="outline">{{
+      <button-link :name="'ContactCoach'" :id="list.id" class="outline">{{
         $t("common.button.contact")
       }}</button-link>
-      <button-link :link="`/coaches/${listItem.id}`">{{
+      <button-link :name="'ViewDetail'" :id="list.id">{{
         $t("common.button.viewDetail")
       }}</button-link>
     </div>
@@ -33,6 +29,14 @@ export default {
   name: "CardItem",
   components: { MyBadge, ButtonLink },
   props: ["listItem"],
+  computed: {
+    list() {
+      return this.listItem;
+    },
+    fullName() {
+      return this.listItem.firstName + " " + this.listItem.lastName;
+    },
+  },
 };
 </script>
 

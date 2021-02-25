@@ -1,23 +1,23 @@
 <template>
   <section>
-    <my-card>
+    <div class="card">
       <div class="controls">
-        <my-button class="outline" @click="$store.dispatch('getCoaches')">
+        <button
+          @click="$store.dispatch('getCoaches')"
+          class="my-button outline"
+        >
           {{ $t("common.button.refresh") }}
-        </my-button>
-        <template v-if="isRegister"> </template>
-        <template v-else>
-          <template v-if="auth">
-            <button-link :link="'/register'">
-              {{ $t("common.button.registerCoaches") }}
-            </button-link>
-          </template>
-          <template v-else>
-            <button-link :link="'/auth'" :query="'register'">
-              {{ $t("common.button.loginToRegister") }}
-            </button-link>
-          </template>
-        </template>
+        </button>
+
+        <div v-if="isRegister"></div>
+        <div v-else>
+          <button-link :name="'Register'" v-if="auth">
+            {{ $t("common.button.registerCoaches") }}
+          </button-link>
+          <button-link :name="'Auth'" :query="'register'" v-else>
+            {{ $t("common.button.loginToRegister") }}
+          </button-link>
+        </div>
       </div>
       <template v-if="loading">
         <my-loading></my-loading>
@@ -25,22 +25,20 @@
       <template v-else>
         <card-list></card-list>
       </template>
-    </my-card>
+    </div>
   </section>
 </template>
 
 <script>
-import MyCard from "../common/MyCard";
 import CardList from "../card/CardList";
-import MyButton from "../common/MyButton";
 import ButtonLink from "../common/ButtonLink";
 import MyLoading from "../loading/MyLoading";
 import { mapState } from "vuex";
 export default {
   name: "FindCoachesList",
-  components: { MyCard, CardList, MyButton, ButtonLink, MyLoading },
+  components: { CardList, ButtonLink, MyLoading },
   computed: {
-    ...mapState(["auth", "loading", "isRegister", "isFindCoaches"]),
+    ...mapState(["auth", "loading", "isRegister"]),
   },
 };
 </script>
@@ -49,5 +47,15 @@ export default {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+.outline {
+  background-color: transparent;
+  border-color: #270041;
+  color: #270041;
+}
+
+.outline:hover {
+  background-color: #edd2ff;
 }
 </style>

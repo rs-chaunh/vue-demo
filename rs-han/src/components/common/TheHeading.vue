@@ -17,17 +17,16 @@
             }}</router-link>
           </li>
           <li class="header__menu-item">
-            <my-button @click="logout" :isOutline="true">{{
-              $t("common.button.logout")
-            }}</my-button>
+            <button @click="logout" class="my-button" :isOutline="true">
+              {{ $t("common.button.logout") }}
+            </button>
           </li>
         </template>
-
         <template v-else>
           <li class="header__menu-item">
-            <router-link :to="{ name: 'Auth' }">{{
-              $t("common.button.login")
-            }}</router-link>
+            <router-link :to="{ name: 'Auth' }">
+              {{ $t("common.button.login") }}
+            </router-link>
           </li>
         </template>
         <select-language />
@@ -37,19 +36,15 @@
 </template>
 
 <script>
-import MyButton from "../common/MyButton";
-import SelectLanguage from "./SelectLanguage";
 import { mapGetters } from "vuex";
+import SelectLanguage from "./SelectLanguage";
 export default {
   name: "TheHeading",
-  components: { MyButton, SelectLanguage },
+  components: { SelectLanguage },
   computed: mapGetters(["checkLogin"]),
   methods: {
     logout() {
-      // this.$store.commit("TOGGLE_AUTH");
-      // localStorage.removeItem("userID");
       this.$store.dispatch("logout");
-      this.$router.push({ name: "Coaches" });
     },
   },
 };

@@ -51,4 +51,7 @@ textarea:focus {
   border: 1px solid #3d008d !important;
   background-color: rgba(61, 0, 141, 0.2);
 }
+.app {
+  margin-bottom: 7rem;
+}
 </style>

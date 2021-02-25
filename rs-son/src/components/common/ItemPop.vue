@@ -1,3 +1,4 @@
+//TODO tên file k rõ
 <template>
   <transition name="popup" appear>
     <dialog open>
@@ -8,7 +9,7 @@
         <slot></slot>
       </section>
       <div class="menu">
-        <item-button @click.prevent="togglePopup()">Close</item-button>
+        <item-button @click.prevent="togglePopup()">  {{ $t("close") }} </item-button>
       </div>
     </dialog>
   </transition>
@@ -18,7 +19,7 @@
 import ItemButton from "./ItemButton.vue";
 export default {
   components: { ItemButton },
-  props: ["titlePopup"],
+  props: ["titlePopup"], //TODO đúng ngữ pháp sẽ là popupTitle
   data() {
     return {};
   },

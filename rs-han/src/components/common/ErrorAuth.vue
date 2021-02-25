@@ -3,22 +3,22 @@
     <div :class="[openDialog ? 'backdrop' : '']"></div>
     <transition name="dialog">
       <dialog :open="openDialog" v-if="openDialog">
-        <header>
-          <template v-if="authenDialog">
+        <span v-if="loadingDialog">
+          <header>
             <h2>{{ $t("auth.error.dialog.titleLoading") }}</h2>
-          </template>
-          <template v-else>
-            <h2>{{ $t("auth.error.dialog.titleAuth") }}</h2>
-          </template>
-        </header>
-        <section>
-          <template v-if="loadingDialog">
+          </header>
+          <section>
             <my-loading></my-loading>
-          </template>
-          <template v-else>
-            <p>{{ $t("auth.error.dialog.message") }}</p>
-          </template>
-        </section>
+          </section>
+        </span>
+        <span v-else>
+          <header>
+            <h2>{{ $t("auth.error.dialog.titleAuth") }}</h2>
+          </header>
+          <section>
+            <p>{{ errorAuth }}</p>
+          </section>
+        </span>
         <menu>
           <button @click="closeDialog">
             {{ $t("common.button.close") }}
@@ -35,7 +35,12 @@ import { mapState } from "vuex";
 export default {
   name: "ErrorAuth",
   components: { MyLoading },
-  computed: mapState(["openDialog", "authenDialog", "loadingDialog"]),
+  computed: mapState([
+    "openDialog",
+    "authenDialog",
+    "loadingDialog",
+    "errorAuth",
+  ]),
   methods: {
     closeDialog() {
       this.$store.commit("SET_OPEN_DIALOG", false);

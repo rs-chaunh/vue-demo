@@ -70,17 +70,6 @@ const router = createRouter({
 
 //guard navigation
 router.beforeEach((to, _, next) => {
-  // if (to.matched.some((record) => record.meta.authRequired)) {
-  //   if (!store.state.user && !!store.state.token) {
-  //     next({
-  //       name: "Auth",
-  //     });
-  //   } else {
-  //     next();
-  //   }
-  // } else {
-  //   next();
-  // }
   if (to.meta.requiresAuth && !store.getters["auth/isLogin"]) {
     next("/auth");
   } else if (to.meta.requiresUnauth && store.getters["auth/isLogin"]) {

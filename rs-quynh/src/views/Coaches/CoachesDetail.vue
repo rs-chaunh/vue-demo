@@ -3,15 +3,14 @@
     <section>
         <card>
             <h2>{{ coach.firstName + " " + coach.lastName}}</h2>
-            <h3>${{ coach.hourlyRate }}/hour</h3>
+            <h3>${{ coach.hourlyRate }}/{{ $t('common.unit_price') }}</h3>
         </card>
     </section>
-   
    <section>
        <card>
             <header>
-                <h2>Interested? Reach out now!</h2>
-                <button-purple :href="`/coaches/${$route.params.id}/contact`">Contact</button-purple>
+                <h2>{{ $t('coach.contact.title') }}</h2>
+                <button-purple :href="`/coaches/${$route.params.id}/contact`">{{ $t('coach.buttons.contact') }}</button-purple>
             </header>
 
             <router-view></router-view>

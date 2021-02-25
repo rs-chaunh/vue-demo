@@ -1,55 +1,48 @@
 <template>
   <div>
     <section>
-      <my-card>
-        <h2>{{ listCoaches.firstName + " " + listCoaches.lastName }}</h2>
-        <h3>{{ listCoaches.hourlyRate }}$/{{ $t("common.text.hour") }}</h3>
-      </my-card>
+      <div class="card">
+        <h2>{{ fullName }}</h2>
+        <h3>{{ infoCoaches.hourlyRate }}$/{{ $t("common.text.hour") }}</h3>
+      </div>
     </section>
     <section>
-      <my-card>
+      <div class="card">
         <header>
           <h2>{{ $t("contact.title") }}</h2>
-          <button-link :link="`${$route.params.id}/contact`">{{
+          <button-link :name="'ContactCoach'" :id="$route.params.id">{{
             $t("common.button.contact")
           }}</button-link>
         </header>
-      </my-card>
+      </div>
     </section>
     <section>
-      <my-card>
-        <my-badge v-for="area in listCoaches.areas" :key="area" :area="area">{{
+      <div class="card">
+        <my-badge v-for="area in infoCoaches.areas" :key="area" :area="area">{{
           area.toUpperCase()
         }}</my-badge>
-        <p>{{ listCoaches.description }}</p>
-      </my-card>
+        <p>{{ infoCoaches.description }}</p>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
-import MyCard from "../components/common/MyCard";
 import ButtonLink from "../components/common/ButtonLink";
 import MyBadge from "../components/common/MyBadge";
-import axios from "axios";
 export default {
   name: "ViewDetail",
-  components: { MyCard, ButtonLink, MyBadge },
-  data() {
-    return {
-      listCoaches: [],
-    };
+  components: { ButtonLink, MyBadge },
+  computed: {
+    infoCoaches() {
+      return this.$store.state.infoCoaches;
+    },
+    fullName() {
+      return this.infoCoaches.firstName + " " + this.infoCoaches.lastName;
+    },
   },
   created() {
-    axios
-      .get(
-        "https://my-coaches-default-rtdb.firebaseio.com/coaches/" +
-          this.$route.params.id +
-          ".json"
-      )
-      .then((response) => {
-        this.listCoaches = response.data;
-      });
+    this.$store.dispatch("infoCoaches", this.$route.params.id);
   },
   beforeRouteLeave() {
     console.log("good bye!");

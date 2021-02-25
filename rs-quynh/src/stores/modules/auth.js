@@ -33,6 +33,7 @@ const actions = {
   login({ commit }, payload) {
     commit("SET_IS_AUTHENTICATING", true);
     commit("SET_IS_LOADING", true);
+    commit("SET_ERRORS", false);
 
     axios
       .post(
@@ -61,6 +62,9 @@ const actions = {
       });
   },
   signup({ commit }, payload) {
+    commit("SET_ERRORS", false);
+    commit("SET_IS_LOADING", true);
+
     axios
       .post(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
@@ -80,7 +84,10 @@ const actions = {
           router.push({ name: "Coaches" });
         }
       })
-      .catch((errors) => console.log(errors));
+      .catch(() => {
+        commit("SET_IS_LOADING", false);
+        commit("SET_ERRORS", true);
+      });
   },
   logout({ commit }) {
     commit("TOGGLE_AUTH");

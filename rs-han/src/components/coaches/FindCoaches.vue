@@ -1,57 +1,34 @@
 <template>
   <section class="find__coaches">
-    <my-card>
+    <div class="card">
       <h2 class="card__title">{{ $t("common.text.findYourCoaches") }}</h2>
-      <span class="card__option">
+      <span class="card__option" v-for="data in hardData" :key="data">
         <input
           type="checkbox"
           class="card__option-item"
-          value="frontend"
+          :value="`${data.value}`"
           @change="FILTER_COACHES(areas)"
           v-model="areas"
         />
-        <label for="frontend">Frontend</label>
+        <label>{{ data.label }}</label>
       </span>
-      <span class="card__option">
-        <input
-          type="checkbox"
-          class="card__option-item"
-          value="backend"
-          @change="FILTER_COACHES(areas)"
-          v-model="areas"
-        />
-        <label for="backend">Backend</label>
-      </span>
-      <span class="card__option">
-        <input
-          type="checkbox"
-          class="card__option-item"
-          value="fullstack"
-          @change="FILTER_COACHES(areas)"
-          v-model="areas"
-        />
-        <label for="fullstack">Fullstack</label>
-      </span>
-    </my-card>
+    </div>
   </section>
 </template>
 
 <script>
-import MyCard from "../common/MyCard";
-import FilterCoach from "../filter/FilterCoach";
 import { mapMutations } from "vuex";
 export default {
   name: "FindCoaches",
-  components: { MyCard, FilterCoach },
   data() {
     return {
       areas: ["frontend", "backend", "fullstack"],
+      hardData: [
+        { value: "frontend", label: "Frontend" },
+        { value: "backend", label: "Backend" },
+        { value: "fullstack", label: "Fullstack" },
+      ],
     };
-  },
-  computed: {
-    allAreas() {
-      return this.$store.getters.allAreas;
-    },
   },
   methods: mapMutations(["FILTER_COACHES"]),
 };

@@ -1,18 +1,15 @@
 <template>
-  <my-card>
-    <div class="card">
-      <h2>{{ $t("register.title") }}</h2>
-      <coaches-register-form />
-    </div>
-  </my-card>
+  <div class="card">
+    <h2>{{ $t("register.title") }}</h2>
+    <coaches-register-form />
+  </div>
 </template>
 
 <script>
-import MyCard from "../common/MyCard";
 import CoachesRegisterForm from "./CoachesRegisterForm";
 export default {
   name: "CoachesRegister",
-  components: { MyCard, CoachesRegisterForm },
+  components: { CoachesRegisterForm },
   beforeRouteLeave() {
     console.log("good bye!");
   },

@@ -65,9 +65,9 @@
           "firstName": "Tên phải viết hoa chữ cái đầu tiên.",
           "lastName": "Họ phải trên 3 ký tự.",
           "description": "Mô tả phải dưới 100 ký tự."
-        }
-      },
-      "message": "Vui lòng sửa các lỗi trên và gửi lại."
+        },
+        "general": "Vui lòng sửa các lỗi trên và gửi lại."
+      }
     }
   },
   "contact": {

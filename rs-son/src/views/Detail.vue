@@ -4,18 +4,18 @@
       <section>
         <item-card>
           <h2>{{ getDataDetail.firstName }}</h2>
-          <h3>${{ getDataDetail.hourlyRate }}/hour</h3>
+          <h3>${{ getDataDetail.hourlyRate }}/ {{$t('hour')}} </h3>
         </item-card>
       </section>
       <section>
         <item-card>
           <header>
-            <h2>Interested? Reach out now!</h2>
+            <h2>{{$t('interested')}} </h2>
             <item-link
               :linkTo="{
                 name: 'Contact',
               }"
-              >Contact</item-link
+              >{{$t('contact')}}</item-link
             >
           </header>
         </item-card>

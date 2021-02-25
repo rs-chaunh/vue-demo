@@ -1,20 +1,18 @@
 <template>
   <section>
-    <my-card>
+    <div class="card">
       <h2>{{ $t("fileNotFound.title") }}</h2>
       <p>
         {{ $t("fileNotFound.message") }}
         <a href="/coaches" class="">{{ $t("common.text.linkCoaches") }}</a>
         .
       </p>
-    </my-card>
+    </div>
   </section>
 </template>
 
 <script>
-import MyCard from "../components/common/MyCard";
 export default {
-  components: { MyCard },
   name: "CoachesRequest",
 };
 </script>

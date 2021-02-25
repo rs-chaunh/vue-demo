@@ -7,6 +7,7 @@ export default {
   state: {
     user: localStorage.getItem("user") || null,
     token: localStorage.getItem("token") || null,
+    language: localStorage.getItem("lang") || null,
   },
   mutations,
   actions,

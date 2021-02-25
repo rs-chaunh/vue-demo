@@ -1,7 +1,7 @@
 <template>
   <div>
     <coach-card>
-      <h2>Requests Received</h2>
+      <h2>{{$t('requestReceived')}}</h2>
         <coach-loading v-if="loading"></coach-loading>
       <div
         class="list-message"
@@ -9,12 +9,12 @@
       >
         <div class="box" v-for="request in requests" :key="request.id">
           <a :href="mailTo(request.userEmail)"
-            >Email: {{ request.userEmail }}</a
+            >{{$t('email')}}: {{ request.userEmail }}</a
           >
-          <h4>Message: {{ request.userMessage }}</h4>
+          <h4>{{$t('message')}}: {{ request.userMessage }}</h4>
         </div>
       </div>
-      <h3 v-else>You haven't received any requests yet!</h3>
+      <h3 v-else> {{$t('responseMessage')}}</h3>
     </coach-card>
   </div>
 </template>

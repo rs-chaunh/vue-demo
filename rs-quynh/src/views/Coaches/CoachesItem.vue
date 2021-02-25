@@ -1,13 +1,13 @@
 <template>
     <li>
         <h3>{{ coach.firstName + " " + coach.lastName}}</h3>
-        <h4>${{ coach.hourlyRate }}/hour</h4>
+        <h4>${{ coach.hourlyRate }}/{{ $t('common.unit_price') }}</h4>
         <div>
             <badge v-for="(area, index) of coach.areas" :area="area" :key="index" ></badge>
         </div>
         <coaches-action>
-            <button-outline :href="'/coaches/' + coach.id + '/contact'">Contact</button-outline>
-            <button-purple :href="'/coaches/' + coach.id ">View Details</button-purple>
+            <button-outline :href="'/coaches/' + coach.id + '/contact'">{{ $t('coach.buttons.contact') }}</button-outline>
+            <button-purple :href="'/coaches/' + coach.id ">{{ $t('coach.buttons.view_details') }}</button-purple>
         </coaches-action>
     </li>
 </template>
