@@ -1,224 +1,231 @@
 <template>
   <form @submit.prevent="register">
-    <div class="form-control">
-      <label for="firstname" :class="errorFirstName ? 'errorWord' : ''"
-        >Firstname</label
-      >
+    <div :class="['form-control', { error: dataValidate.firstName.error }]">
+      <label>Firstname</label>
       <input
         type="text"
         id="firstName"
-        v-model="firstName"
-        @blur="checkFirstName"
-        :class="errorFirstName ? 'errorBorder' : ''"
+        v-model="dataValidate.firstName.value"
+        @blur="validateRegister('firstName')"
       />
-      <p v-if="errorFirstName">
-        {{ messErrorFirstName }}
+      <p v-if="dataValidate.firstName.error">
+        {{ dataValidate.firstName.errorMess }}
       </p>
     </div>
-    <div class="form-control">
-      <label for="lastname" :class="errorLastName ? 'errorWord' : ''"
-        >Lastname</label
-      >
+    <div :class="['form-control', { error: dataValidate.lastName.error }]">
+      <label>Lastname</label>
       <input
         type="text"
         id="lastName"
-        v-model="lastName"
-        @blur="checkLastName"
-        :class="errorLastName ? 'errorBorder' : ''"
+        v-model="dataValidate.lastName.value"
+        @blur="validateRegister('lastName')"
       />
-      <p v-if="errorLastName">
-        {{ messErrorLastName }}
+      <p v-if="dataValidate.lastName.error">
+        {{ dataValidate.lastName.errorMess }}
       </p>
     </div>
-    <div class="form-control">
-      <label for="description" :class="errorDescription ? 'errorWord' : ''"
-        >Description</label
-      >
+    <div :class="['form-control', { error: dataValidate.description.error }]">
+      <label>Description</label>
       <textarea
         id="description"
         rows="5"
-        v-model="description"
-        @blur="checkDescription"
-        :class="errorDescription ? 'errorBorder' : ''"
+        v-model="dataValidate.description.value"
+        @blur="validateRegister('description')"
       ></textarea>
-      <p v-if="errorDescription">
-        {{ messErrorDescription }}
+      <p v-if="dataValidate.description.error">
+        {{ dataValidate.description.errorMess }}
       </p>
     </div>
-    <div class="form-control">
-      <label for="rate" :class="errorHourlyRate ? 'errorWord' : ''"
-        >Hourly Rate</label
-      >
+    <div :class="['form-control', { error: dataValidate.hourlyRate.error }]">
+      <label>Hourly Rate</label>
       <input
         type="number"
         id="rate"
-        v-model="hourlyRate"
-        @blur="checkHourlyRate"
-        :class="errorHourlyRate ? 'errorBorder' : ''"
+        v-model="dataValidate.hourlyRate.value"
+        @blur="validateRegister('hourlyRate')"
       />
-      <p v-if="errorHourlyRate">
-        {{ messErrorHourlyRate }}
+      <p v-if="dataValidate.hourlyRate.error">
+        {{ dataValidate.hourlyRate.errorMess }}
       </p>
     </div>
-    <div class="form-control">
+    <div :class="['form-control', { error: dataValidate.areas.error }]">
       <h3>Areas of Expertise</h3>
       <div class="card__option">
         <input
           type="checkbox"
           class="card__option-item"
           value="frontend"
-          v-model="areas"
-          @blur="checkAreas"
+          v-model="dataValidate.areas.value"
+          @blur="validateRegister('areas')"
         />
-        <label for="frontend" :class="errorAreas ? 'errorWord' : ''"
-          >Frontend Development</label
-        >
+        <label>Frontend Development</label>
       </div>
       <div class="card__option">
         <input
           type="checkbox"
           class="card__option-item"
           value="backend"
-          v-model="areas"
-          @blur="checkAreas"
+          v-model="dataValidate.areas.value"
+          @blur="validateRegister('areas')"
         />
-        <label for="backend" :class="errorAreas ? 'errorWord' : ''"
-          >Backend Development</label
-        >
+        <label>Backend Development</label>
       </div>
       <div class="card__option">
         <input
           type="checkbox"
           class="card__option-item"
           value="fullstack"
-          v-model="areas"
-          @blur="checkAreas"
+          v-model="dataValidate.areas.value"
+          @blur="validateRegister('areas')"
         />
-        <label for="fullstack" :class="errorAreas ? 'errorWord' : ''"
-          >Fullstack Development</label
-        >
+        <label>Fullstack Development</label>
       </div>
-      <p v-if="errorAreas">{{ messErrorAreas }}</p>
-      <p v-if="errorGeneral">Please fix the above errors and submit again.</p>
+      <p v-if="dataValidate.areas.error">{{ dataValidate.areas.errorMess }}</p>
+      <p v-if="dataValidate.general.error">
+        {{ dataValidate.general.errorMess }}
+      </p>
     </div>
-    <my-button>Register</my-button>
+    <button class="my-button">Register</button>
   </form>
 </template>
 
 <script>
-import MyButton from "../common/MyButton";
-import axios from "axios";
-
 export default {
   name: "CoachesRegisterForm",
-  components: { MyButton },
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      description: "",
-      hourlyRate: null,
-      areas: [],
-      errorFirstName: false,
-      messErrorFirstName: "",
-      errorLastName: false,
-      messErrorLastName: "",
-      errorDescription: false,
-      messErrorDescription: "",
-      errorHourlyRate: false,
-      messErrorHourlyRate: "",
-      errorAreas: false,
-      messErrorAreas: "",
-      errorGeneral: false,
+      dataValidate: {
+        firstName: {
+          error: false,
+          errorMess: "",
+          value: "",
+        },
+        lastName: {
+          error: false,
+          errorMess: "",
+          value: "",
+        },
+        description: {
+          error: false,
+          errorMess: "",
+          value: "",
+        },
+        hourlyRate: {
+          error: false,
+          errorMess: "",
+          value: null,
+        },
+        areas: {
+          error: false,
+          errorMess: "",
+          value: [],
+        },
+        general: {
+          error: false,
+          errorMess: "",
+        },
+      },
     };
   },
   methods: {
     register() {
-      this.checkFirstName();
-      this.checkLastName();
-      this.checkDescription();
-      this.checkHourlyRate();
-      this.checkAreas();
+      Object.keys(this.dataValidate).forEach((e) => {
+        this.validateRegister(e);
+      });
       if (
-        !this.errorFirstName &&
-        !this.errorLastName &&
-        !this.errorDescription &&
-        !this.errorHourlyRate &&
-        !this.errorAreas
+        !this.dataValidate.firstName.error &&
+        !this.dataValidate.lasttName.error &&
+        !this.dataValidate.description.error &&
+        !this.dataValidate.hourlyRate.error &&
+        !this.dataValidate.areas.error
       ) {
-        axios
-          .post("https://my-coaches-default-rtdb.firebaseio.com/coaches.json", {
-            id: localStorage.getItem("userID"),
-            areas: this.areas,
-            description: this.description,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            hourlyRate: this.hourlyRate,
-          })
-          .catch((error) => console.log(error));
-        this.$store.commit("SET_IS_REGISTER", true);
-        this.$router.push({ name: "Coaches" });
-        this.$store.dispatch("getCoaches");
+        this.$store.dispatch("registerCoaches", {
+          id: localStorage.getItem("userID"),
+          areas: this.dataValidate.areas.value,
+          description: this.dataValidate.description.value,
+          firstName: this.dataValidate.firstName.value,
+          lastName: this.dataValidate.lastName.value,
+          hourlyRate: this.dataValidate.hourlyRate.value,
+        });
       } else {
-        this.errorGeneral = true;
+        this.dataValidate.general.error = true;
+        this.dataValidate.general.errorMess =
+          "Please fix the above errors and submit again.";
       }
     },
-    checkFirstName() {
-      if (this.firstName == "") {
-        this.errorFirstName = true;
-        this.messErrorFirstName = "Firstname must not be empty.";
-      } else {
-        let firstCharactersAscii = this.firstName.split("")[0].charCodeAt(0);
-        if (firstCharactersAscii >= 97 && firstCharactersAscii <= 122) {
-          this.errorFirstName = true;
-          this.messErrorFirstName =
-            "firstname must capitalize the first letter.";
-        } else {
-          this.errorFirstName = false;
-        }
-      }
-    },
-    checkLastName() {
-      if (this.lastName == "") {
-        this.errorLastName = true;
-        this.messErrorLastName = "Lastname must not be empty.";
-      } else {
-        if (this.lastName.length <= 3) {
-          this.errorLastName = true;
-          this.messErrorLastName = "lastName must be over 3 characters";
-        } else {
-          this.errorLastName = false;
-        }
-      }
-    },
-    checkDescription() {
-      if (this.description == "") {
-        this.errorDescription = true;
-        this.messErrorDescription = "Description must not be empty.";
-      } else {
-        if (this.description.length >= 100) {
-          this.errorDescription = true;
-          this.messErrorDescription =
-            "The description must be less than 100 characters long";
-        } else {
-          this.errorDescription = false;
-        }
-      }
-    },
-    checkHourlyRate() {
-      if (this.hourlyRate <= 0) {
-        this.errorHourlyRate = true;
-        this.messErrorHourlyRate = "Rate must be greater than 0.";
-      } else {
-        this.errorHourlyRate = false;
-      }
-    },
-    checkAreas() {
-      if (this.areas.length == 0) {
-        this.errorAreas = true;
-        this.messErrorAreas = "At least one expertise must be selected.";
-      } else {
-        this.errorAreas = false;
+    validateRegister(name) {
+      switch (name) {
+        case "firstName":
+          if (this.dataValidate.firstName.value == "") {
+            this.dataValidate.firstName.error = true;
+            this.dataValidate.firstName.errorMess =
+              "Firstname must not be empty.";
+          } else {
+            let firstCharactersAscii = this.dataValidate.firstName.value
+              .split("")[0]
+              .charCodeAt(0);
+            if (firstCharactersAscii >= 97 && firstCharactersAscii <= 122) {
+              this.dataValidate.firstName.error = true;
+              this.dataValidate.firstName.errorMess =
+                "firstname must capitalize the first letter.";
+            } else {
+              this.dataValidate.firstName.error = false;
+            }
+          }
+          break;
+        case "lastName":
+          if (this.dataValidate.lastName.value == "") {
+            this.dataValidate.lastName.error = true;
+            this.dataValidate.lastName.errorMess =
+              "Lastname must not be empty.";
+          } else {
+            if (this.dataValidate.lastName.value.length <= 3) {
+              this.dataValidate.lastName.error = true;
+
+              this.dataValidate.lastName.errorMess =
+                "lastname must be over 3 characters";
+            } else {
+              this.dataValidate.lastName.error = false;
+            }
+          }
+          break;
+
+        case "description":
+          if (this.dataValidate.description.value == "") {
+            this.dataValidate.description.error = true;
+            this.dataValidate.description.errorMess =
+              "Description must not be empty.";
+          } else {
+            if (this.dataValidate.description.value.length >= 100) {
+              this.dataValidate.description.error = true;
+              this.dataValidate.description.errorMess =
+                "The description must be less than 100 characters long";
+            } else {
+              this.dataValidate.description.error = true;
+            }
+          }
+          break;
+
+        case "hourlyRate":
+          if (this.dataValidate.hourlyRate.value <= 0) {
+            this.dataValidate.hourlyRate.error = true;
+
+            this.dataValidate.hourlyRate.errorMess =
+              "Rate must be greater than 0.";
+          } else {
+            this.dataValidate.hourlyRate.error = false;
+          }
+          break;
+
+        case "areas":
+          if (this.dataValidate.areas.value.length == 0) {
+            this.dataValidate.areas.error = true;
+            this.dataValidate.areas.errorMess =
+              "At least one expertise must be selected.";
+          } else {
+            this.dataValidate.areas.error = false;
+          }
+          break;
       }
     },
   },
@@ -281,11 +288,13 @@ p {
   margin-inline-end: 0px;
 }
 
-.errorBorder {
+.error > input,
+.error > textarea {
   border: 1px solid red;
 }
 
-.errorWord {
+.error > label,
+.error > div > label {
   color: red;
 }
 </style>
