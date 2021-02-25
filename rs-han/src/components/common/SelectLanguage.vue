@@ -11,26 +11,15 @@
 <script>
 export default {
   name: "SelectLanguage",
-  computed: {
-    language: {
-      get() {
-        return this.$store.getters.lang;
-      },
-      set(val) {
-        this.$store.dispatch("changLanguage", val);
-        // localStorage.setItem("lang", val);
-        // this.$store.commit("SET_LANGUAGE", val);
-        // this.$i18n.locale = val;
-      },
-    },
+  data() {
+    return {
+      language: this.$store.state.lang,
+    };
   },
   watch: {
-    // language() {
-    //   console.log("ladasasd");
-    //   // localStorage.setItem("lang", this.language);
-    //   // this.$store.commit("SET_LANGUAGE", this.language);
-    //   // this.$i18n.locale = this.language;
-    // },
+    language() {
+      this.$store.dispatch("changLanguage", this.language);
+    },
   },
 };
 </script>

@@ -27,7 +27,6 @@ export default createStore({
       );
     },
     checkLogin: (state) => state.auth != null,
-    lang: (state) => state.lang,
   },
   actions: {
     async getCoaches({ commit }) {
@@ -199,9 +198,7 @@ export default createStore({
     changLanguage({ commit }, payload) {
       localStorage.setItem("lang", payload);
       commit("SET_LANGUAGE", payload);
-      i18n.locale = payload;
-
-      console.log("locale", i18n.locale);
+      i18n.global.locale = payload;
     },
 
     errorLoginAndSignup({ commit }, payload) {
