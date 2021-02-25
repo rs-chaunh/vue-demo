@@ -16,7 +16,7 @@
           {{ $t("regAsCoach") }}
         </item-link>
       </div>
-      <item-lazy-load v-if="$store.state.loading"></item-lazy-load>
+      <item-lazy-load v-if="$store.state.coach.loading"></item-lazy-load>
       <ul v-else>
         <coach-detail
           v-for="item in Object.entries(dataCoachDefault)"
@@ -30,54 +30,48 @@
 </template>
 
 <script>
-import ItemButton from "../Common/ItemButton";
-import ItemCard from "../Common/ItemCard";
-import ItemLazyLoad from "../Common/ItemLazyLoad";
-import ItemLink from "../Common/ItemLink";
+
 import CoachDetail from "./CoachDetail";
-import { mapState, mapGetters } from "vuex";
 
 export default {
-  components: { CoachDetail, ItemButton, ItemLink, ItemCard, ItemLazyLoad },
+  components: { CoachDetail },
   data() {
     return {
       textLink: "",
     };
   },
   computed: {
-    ...mapState(["coaches", "status", "coachesTemp", "areas","tokenId"]),
-    ...mapGetters(["getLinkTo"]),
     dataCoachDefault() {
-      if (this.coaches != null) {
-        return this.coaches;
+      if (this.$store.state.coach.coaches != null) {
+        return this.$store.state.coach.coaches;
       } else {
         return "";
       }
     },
     tokenId() {
-      if (this.tokenId != null) {
-        return this.tokenId;
+      if (this.$store.state.auth.tokenId != null) {
+        return this.$store.state.auth.tokenId;
       } else {
         return "";
       }
     },
     linkTo() {
-      if (this.getLinkTo != null) {
-        return this.getLinkTo;
+      if (this.$store.getters["auth/getLinkTo"] != null) {
+        return this.$store.getters["auth/getLinkTo"];
       } else {
         return "/coaches";
       }
     },
     resultPost() {
-      if (this.status) {
+      if (this.$store.state.auth.status) {
         return this.status;
       } else {
         return "";
       }
     },
     isCheckCoach() {
-      let coachArr = this.coachesTemp; // FIXED
-      let userId = this.tokenId;
+      let coachArr = this.$store.state.coach.coachesTemp; // FIXED
+      let userId = this.$store.state.auth.tokenId;
       let index = -1;
       if (userId != null && coachArr != null) {
         index = Object.keys(coachArr).findIndex((item) => item == userId.localId);
@@ -86,28 +80,28 @@ export default {
       return index;
     },
     locale() {
-      return this.$store.state.locale;
+      return this.$store.state.auth.locale;
     },
   },
   mounted() {
-    this.$store.commit("SET_LOADING", true);
-    this.$store.dispatch("getDefaultData");
+    this.$store.commit('coach/SET_LOADING',true)
+    this.$store.dispatch("coach/getDefaultData");
   },
   methods: {
     handleRefresh() {
-      this.$store.commit("SET_LOADING", true);
+      this.$store.commit("coach/SET_LOADING", true);
       setTimeout(() => {
-        this.$store.commit("SET_LOADING", false);
+        this.$store.commit("coach/SET_LOADING", false);
       }, 300);
       this.$store.dispatch({
-        type: "getDatafilter",
-        listFilter: this.areas,
+        type: "coach/getDatafilter",
+        listFilter: this.$store.state.coach.areas,
       });
     },
   },
   watch: {
     resultPost: function () {
-      this.$store.dispatch("getDefaultData");
+      this.$store.dispatch("coach/getDefaultData");
     },
   },
 };

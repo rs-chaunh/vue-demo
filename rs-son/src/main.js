@@ -14,15 +14,18 @@ import ItemPopUp from "./components/Common/ItemPopUp";
 import ItemModal from "./components/Common/ItemModal";
 import ItemLazyLoad from "./components/Common/ItemLazyLoad";
 import ItemCard from "./components/Common/ItemCard";
+import ItemBadge from "./components/Common/ItemBadge";
+import ItemLink from "./components/Common/ItemLink";
 
 const app = createApp(App);
-
 
 app.component('ItemButton', ItemButton)
 app.component('ItemPopUp', ItemPopUp)
 app.component('ItemModal', ItemModal)
 app.component('ItemLazyLoad', ItemLazyLoad)
 app.component('ItemCard', ItemCard)
+app.component('ItemBadge', ItemBadge)
+app.component('ItemLink', ItemLink)
 
 app.use(store)
 app.use(router)

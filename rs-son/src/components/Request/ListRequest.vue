@@ -1,5 +1,5 @@
 <template>
-  <item-lazy-load v-if="$store.state.loading"></item-lazy-load>
+  <item-lazy-load v-if="$store.state.coach.loading"></item-lazy-load>
   <div>
     <ul v-if="dataRequest != ''">
       <li v-for="(item, index) in dataRequest" :key="index">
@@ -17,16 +17,16 @@
 export default {
   computed: {
     dataRequest() {
-      if (this.$store.state.request) {
-        return Object.values(this.$store.state.request);
+      if (this.$store.state.auth.request) {
+        return Object.values(this.$store.state.auth.request);
       } else {
         return "";
       }
     },
   },
   created() {
-    this.$store.commit("SET_LOADING", true);
-    this.$store.dispatch("getDataRequest");
+    this.$store.commit("coach/SET_LOADING", true);
+    this.$store.dispatch("coach/getDataRequest");
   },
 };
 </script>

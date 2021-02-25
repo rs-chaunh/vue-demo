@@ -43,21 +43,21 @@ export default {
   methods: {
     handleLogout() {
       localStorage.clear();
-      this.$store.commit("SET_TOKEN_ID", "");
-      this.$store.commit("SET_LOADING", false);
+      this.$store.commit("auth/SET_TOKEN_ID", "");
+      this.$store.commit("auth/SET_LOADING", false);
       this.$router.push({ path: "/coaches" });
     },
   },
   computed: {
     tokenId() {
-      return this.$store.state.tokenId;
+      return this.$store.state.auth.tokenId;
     },
   },
   watch: {
     language: function () {
       localStorage.setItem("lang", this.language);
       this.$i18n.locale = this.language;
-      this.$store.commit("SET_LOCALE", this.language);
+      this.$store.commit("auth/SET_LOCALE", this.language);
     },
   },
 };

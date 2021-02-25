@@ -12,13 +12,13 @@ export default {
   },
   methods: {
     togglePopup() {
-      this.$store.commit("SET_LOADING", false);
-      this.$store.commit("SET_CHECK_LOGIN", true);
+      this.$store.commit("auth/SET_LOADING", false);
+      this.$store.commit("auth/SET_CHECK_LOGIN", true);
     },
   },
   computed: {
     checkLoading() {
-      return this.$store.state.loading;
+      return this.$store.state.auth.loading;
     },
   },
 };

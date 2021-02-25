@@ -2,17 +2,17 @@
 <template>
   <teleport to="body">
     <transition name="popup">
-      <item-pop-up :popupTitle="loadingMessage" v-if="$store.state.loading">
+      <item-pop-up :popupTitle="loadingMessage" v-if="$store.state.auth.loading">
         <item-lazy-load></item-lazy-load>
       </item-pop-up>
     </transition>
     <transition name="popup">
-      <item-pop-up :popupTitle="titleErr" v-if="$store.state.checkLogin == false">
+      <item-pop-up :popupTitle="titleErr" v-if="$store.state.auth.checkLogin == false">
         <p>{{ textErr }}</p>
       </item-pop-up>
     </transition>
     <item-modal
-      v-if="$store.state.checkLogin == false || $store.state.loading == true"
+      v-if="$store.state.auth.checkLogin == false || $store.state.auth.loading == true"
     ></item-modal>
   </teleport>
 
@@ -70,7 +70,7 @@ export default {
         if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
           // SIGN UP
           let result = await this.$store.dispatch({
-            type: "handleSignUp",
+            type: "auth/handleSignUp",
             data: dataPost,
           });
           if (result) {
@@ -84,26 +84,20 @@ export default {
               });
             }
           } else {
-            this.$store.commit("SET_CHECK_LOGIN", false);
+            this.$store.commit("auth/SET_CHECK_LOGIN", false);
           }
-          this.$store.dispatch({
-            type: "handleSignUp",
-            data: dataPost,
-            route: this.$route,
-            router: this.$router,
-          });
           //FIXED
         } else {
           // LOGIN
           console.log("LOGIN");
           let result = await this.$store.dispatch({
-            type: "handleLogin",
+            type: "auth/handleLogin",
             data: dataPost,
           });
           if (result) {
             // CHECK LINK TO LOGIN OR REGISTER
-            let arrCoachesTemp = this.$store.state.coachesTemp;
-            let userId = this.$store.state.tokenId;
+            let arrCoachesTemp = this.$store.state.coach.coachesTemp;
+            let userId = this.$store.state.auth.tokenId;
             let index = -1;
             if (userId != null && arrCoachesTemp != null) {
               index = Object.keys(arrCoachesTemp).findIndex(
@@ -112,16 +106,18 @@ export default {
             }
             // DON'T TO REGISTER PAGE IF HAVE ACCOUNT
             if (this.$route.query.redirect && index == -1) {
+              console.log('a');
               this.$router.push({
                 path: "/register",
               });
             } else {
+              console.log('b');
               this.$router.push({
                 path: "/coaches",
               });
             }
           } else {
-            this.$store.commit("SET_CHECK_LOGIN", false);
+            this.$store.commit("auth/SET_CHECK_LOGIN", false);
           }
         }
       }
@@ -133,13 +129,13 @@ export default {
   computed: {
     textErr() {
       let text = "";
-      if (!this.$store.state.checkLogin) {
+      if (!this.$store.state.auth.checkLogin) {
         text = this.$i18n.messages[this.locale].errLoginContent;
       }
       return text;
     }, //FIXED
     locale() {
-      return this.$store.state.locale;
+      return this.$store.state.auth.locale;
     },
     textBtn() {
       // FIXED

@@ -49,13 +49,13 @@ export default {
   mounted() {
     this.id = this.$route.params.id;
     this.$store.dispatch({
-      type: "getDataDetail",
+      type: "coach/getDataDetail",
       url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`,
     });
   },
   computed: {
     getDataDetail() {
-      return this.$store.state.dataDetail;
+      return this.$store.state.coach.dataDetail;
     },
   },
   beforeRouteLeave() {

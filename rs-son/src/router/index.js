@@ -37,7 +37,7 @@ const routes = [{
     name: 'RegisterCoach',
     beforeEnter: (to, from, next) => {
       let indexOfCoach = localStorage.getItem('checkCoach');
-      if (store.state.tokenId != null) {
+      if (store.state.auth.tokenId != null) {
         if (indexOfCoach > 0) { //FIXED
           next('/coaches');
         } else {

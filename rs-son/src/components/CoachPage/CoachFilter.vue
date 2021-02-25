@@ -45,9 +45,7 @@
 </template>
 
 <script>
-import ItemCard from "../Common/ItemCard.vue";
 export default {
-  components: { ItemCard },
   data() {
     return {
       list: ["frontend", "backend", "career"],
@@ -56,7 +54,7 @@ export default {
   methods: {
     handlegetDatafilter() {
       return this.$store.dispatch({
-        type: "getDatafilter",
+        type: "coach/getDatafilter",
         listFilter: this.list,
       });
     },

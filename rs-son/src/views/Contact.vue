@@ -51,25 +51,14 @@ export default {
     getDetail() {
       this.id = this.$route.params.id;
       this.$store.dispatch({
-        type: "getDataDetail",
+        type: "coach/getDataDetail",
         url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`,
       });
-      // this.id = this.$route.params.id;
-      // axios
-      //   .get(
-      //     `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`
-      //   )
-      //   .then((res) => {
-      //     this.detailCoach = res.data;
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     },
   },
   computed: {
     getDataDetail() {
-      return this.$store.state.dataDetail;
+      return this.$store.state.coach.dataDetail;
     },
   },
   beforeRouteLeave() {

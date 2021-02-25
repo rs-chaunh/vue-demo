@@ -25,13 +25,13 @@ export default {
   },
   methods: {
     togglePopup() {
-      this.$store.commit("SET_LOADING", false);
-      this.$store.commit("SET_CHECK_LOGIN", true);
+      this.$store.commit("auth/SET_LOADING", false);
+      this.$store.commit("auth/SET_CHECK_LOGIN", true);
     },
   },
   computed: {
     checkLogin() {
-      return this.$store.state.checkLogin;
+      return this.$store.state.auth.checkLogin;
     },
   },
 };

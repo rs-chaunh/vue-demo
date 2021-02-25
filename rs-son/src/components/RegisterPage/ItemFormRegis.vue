@@ -110,7 +110,7 @@ export default {
 
       check: "",
       errNote: "",
-      locale: this.$store.state.locale,
+      locale: this.$store.state.auth.locale,
     };
   },
   methods: {
@@ -132,7 +132,7 @@ export default {
         };
         // console.log(dataCoach);
         this.$store.dispatch({
-          type: "handlePostDataCoach",
+          type: "auth/handlePostDataCoach",
           user : user,
           data: dataCoach,
         });
@@ -219,7 +219,7 @@ export default {
   },
   computed: {
     localeDefault() {
-      return this.$store.state.locale;
+      return this.$store.state.auth.locale;
     },
   },
   watch: {

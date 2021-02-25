@@ -36,7 +36,7 @@ export default {
         this.errors = true;
       } else {
         this.$store.dispatch({
-          type: "handlePostDataRequest",
+          type: "auth/handlePostDataRequest",
           requestId : this.$route.params.id,
           data: dataPostRequest,
         });
