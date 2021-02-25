@@ -1,66 +1,69 @@
 <template>
-  <!-- First Dialog -->
-  <coach-dialog :show="loading" title="Authenticating...">
-    <coach-loading></coach-loading>
-  </coach-dialog>
+  <div>
+    <!-- First Dialog -->
+    <coach-dialog :show="loading" title="Authenticating...">
+      <coach-loading></coach-loading>
+    </coach-dialog>
 
-  <!-- Second Dialog -->
-  <coach-dialog
-    :show="!!error"
-    title="An error occurred"
-    @close="closeErrorForm"
-    isChecking
-  >
-    <p>{{ error }}</p>
-  </coach-dialog>
+    <!-- Second Dialog -->
+    <coach-dialog
+      :show="!!error"
+      title="An error occurred"
+      @close="clearError"
+      isChecking
+    >
+      <p>{{ error }}</p>
+    </coach-dialog>
 
-  <form @submit.prevent="checkClick == 1 ? onLogin() : onRegister()">
-    <div class="input-group">
-      <label for="email">E-Mail</label>
-      <input type="email" name="email" id="email" v-model="email" />
-    </div>
-    <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" v-model="password" />
-    </div>
-    <p v-if="message">
-      Please enter a valid email and password (must be at least 6 characters
-      long).
-    </p>
-    <div class="button-group">
-      <div v-if="checkClick">
-        <button type="submit" id="btn-login" v-if="checkClick == 1">
-          Login
-        </button>
-        <button type="submit" id="btn-login" v-else>
-          Sign Up
-        </button>
-        <button
-          type="button"
-          @click.prevent="onChangeClick"
-          id="btn-signup"
-          v-if="checkClick == 1"
-        >
-          Signup instead
-        </button>
-        <button
-          type="button"
-          @click.prevent="onChangeClickTwo"
-          id="btn-signup"
-          v-else
-        >
-          Login instead
-        </button>
+    <form @submit.prevent="checkClick == 1 ? onLogin() : onRegister()">
+      <div class="input-group">
+        <label for="email">{{ $t("email") }}</label>
+        <input type="email" name="email" id="email" v-model="email" />
       </div>
-    </div>
-  </form>
+      <div class="input-group">
+        <label for="password">{{ $t("password") }}</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          v-model="password"
+        />
+      </div>
+      <p v-if="formIsInvalid">
+        {{ $t("messageAuth") }}
+      </p>
+      <div class="button-group">
+        <div v-if="checkClick">
+          <button type="submit" id="btn-login" v-if="checkClick == 1">
+            {{ $t("menu.login") }}
+          </button>
+          <button type="submit" id="btn-login" v-else>
+            {{ $t("signup") }}
+          </button>
+          <button
+            type="button"
+            @click.prevent="onChangeClick(2)"
+            id="btn-signup"
+            v-if="checkClick == 1"
+          >
+            {{ $t("signupInstead") }}
+          </button>
+          <button
+            type="button"
+            @click.prevent="onChangeClick(1)"
+            id="btn-signup"
+            v-else
+          >
+            {{ $t("loginInstead") }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 <script>
 import CoachDialog from "../common/CoachDialog.vue";
 import CoachLoading from "../common/CoachLoading.vue";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-// import mapMutations from "vuex";
 
 export default {
   components: { CoachDialog, CoachLoading },
@@ -70,7 +73,7 @@ export default {
       email: "",
       password: "",
       checkClick: 1,
-      message: false,
+      formIsInvalid: false,
       error: null,
       loading: false,
     };
@@ -88,11 +91,8 @@ export default {
     },
   },
   methods: {
-    onChangeClick() {
-      return (this.checkClick = 2);
-    },
-    onChangeClickTwo() {
-      return (this.checkClick = 1);
+    onChangeClick(number) {
+      this.checkClick = number;
     },
     // ...mapMutations(["setCurrentUser"]),
     async onLogin() {
@@ -101,7 +101,7 @@ export default {
         !this.email.includes("@") ||
         this.password.length < 6
       ) {
-        this.message = true;
+        this.formIsInvalid = true;
         return;
       }
       this.loading = true;
@@ -118,7 +118,9 @@ export default {
         const redirectTo = "/" + (this.$route.query.redirect || "coaches");
         this.$router.replace(redirectTo);
       } catch (err) {
-        this.error = "Failed to authenticate. Check your login data.";
+        this.error =
+          err.response.data.error.message ||
+          "Failed to authenticate. Check your login data.";
       }
       this.loading = false;
     },
@@ -128,7 +130,7 @@ export default {
         !this.email.includes("@") ||
         this.password.length < 6
       ) {
-        this.message = true;
+        this.formIsInvalid = true;
         return;
       }
       this.loading = true;
@@ -140,12 +142,14 @@ export default {
         const redirectTo = "/" + (this.$route.query.redirect || "coaches");
         this.$router.replace(redirectTo);
       } catch (err) {
-        this.error = "Failed to authenticate. Check your login data.";
+        this.error =
+          err.response.data.error.message ||
+          "Failed to authenticate. Check your login data.";
       }
       this.loading = false;
     },
 
-    closeErrorForm() {
+    clearError() {
       this.error = null;
     },
   },

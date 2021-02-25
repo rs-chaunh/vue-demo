@@ -11,7 +11,7 @@ export default {
       returnSecureToken: true,
     });
 
-    if (response.status !== "200") {
+    if (response.status !== 200) {
       //error
     }
 
@@ -35,7 +35,7 @@ export default {
       returnSecureToken: true,
     });
 
-    if (response.status !== "200") {
+    if (response.status !== 200) {
       //error
     }
 
