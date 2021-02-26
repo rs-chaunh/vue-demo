@@ -184,8 +184,6 @@ export default {
       if (index === -1) 
         this.coach.areas.value.push(area);
       else this.coach.areas.value.splice(index, 1);
-    console.log(this.coach.areas.value)
-
     },
     setValueType(type, value) {
         this.coach[type].value = value;
@@ -193,6 +191,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

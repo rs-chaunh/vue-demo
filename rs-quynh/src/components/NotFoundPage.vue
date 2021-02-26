@@ -8,7 +8,3 @@ export default {
   components: { NotFound },
 }
 </script>
-
-<style>
-
-</style>
