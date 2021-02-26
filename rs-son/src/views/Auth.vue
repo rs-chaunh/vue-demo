@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ItemCard from "../components/common/ItemCard.vue";
+import ItemCard from "../components/Common/ItemCard";
 import ItemFormAuth from "../components/AuthPage/ItemFormAuth.vue";
 export default {
   components: { ItemCard, ItemFormAuth },

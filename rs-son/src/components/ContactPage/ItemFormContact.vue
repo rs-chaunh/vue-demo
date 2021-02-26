@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ItemButton from "../common/ItemButton.vue";
+import ItemButton from "../Common/ItemButton";
 import firebase from "firebase/app";
 import "firebase/messaging";
 import axios from "axios";
@@ -51,25 +51,38 @@ export default {
     // },
     // SEND REQUEST
     handleSubmitRequest() {
-      // sendNotification();
-      // SEND TOKEN
-      axios.post(
-        `https://coaches-project-8d77f-default-rtdb.firebaseio.com/token.json`,
-        {
-          token : this.token,
-          uid : this.$route.params.id
-        }
-      );
-      // SEND NOTIFICATION
-        let dataPostRequest = {
-        userEmail: `Request from ${this.email}`,
-        message: this.messages,
-      };
-      axios.post(
-        `https://coaches-project-8d77f-default-rtdb.firebaseio.com/notification.json`,
-        dataPostRequest
-      );
-      // var registrationToken = this.token;
+      // let dataPostRequest = {
+      //   userEmail: `Request from ${this.email}`,
+      //   message: this.messages,
+      // };
+
+      let API_KEY =
+        "AAAAxIOvnHg:APA91bFXkdc6nmHwV10NDuY8FlwSX5oTLxWrX89zSlbtaMlhQP3tbdpFZZZKnzy2gAAsixG_2VfLlYfJeo94RSG3hKvIsI0YifFV1PiNLPwuJ9-9uW40RV65VR19kGTCVMqQ0Y09Xw_n";
+
+      axios
+        .post(
+          " https://fcm.googleapis.com/fcm/send",
+          {
+            notification: {
+              title: "Portugal vs. Denmark",
+              body: "Great match!",
+              click_action: "https://google.com",
+              icon: "favicon.png",
+              sound: "default",
+            },
+            to: this.token,
+          },
+          {
+            headers: {
+              authorization: `key=${API_KEY}`,
+              "content-type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
     },
   },
   mounted() {

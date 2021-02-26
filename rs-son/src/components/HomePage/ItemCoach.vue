@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import ItemBadge from "../common/ItemBadge.vue";
-import ItemLink from "../common/ItemLink.vue";
+import ItemBadge from "../Common/ItemBadge";
+import ItemLink from "../Common/ItemLink";
 
 export default {
   components: { ItemLink, ItemBadge },

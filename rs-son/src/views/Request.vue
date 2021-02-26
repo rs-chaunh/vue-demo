@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ItemCard from "../components/common/ItemCard.vue";
+import ItemCard from "../components/Common/ItemCard";
 import ListRequest from "../components/Request/ListRequest.vue";
 export default {
   components: { ItemCard, ListRequest },

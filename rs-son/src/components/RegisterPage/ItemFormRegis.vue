@@ -82,7 +82,7 @@
 
 <script>
 // import axios from 'axios';
-import ItemButton from "../common/ItemButton.vue";
+import ItemButton from "../Common/ItemButton.vue";
 export default {
   components: { ItemButton },
   data() {

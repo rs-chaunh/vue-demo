@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import ItemButton from "./common/ItemButton.vue";
+import ItemButton from "./Common/ItemButton";
 export default {
   components: { ItemButton },
   data() {

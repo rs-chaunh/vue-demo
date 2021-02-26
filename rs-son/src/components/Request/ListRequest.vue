@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import itemLazyLoad from "../common/itemLazyLoad.vue";
+import itemLazyLoad from "../Common/itemLazyLoad";
 export default {
   components: { itemLazyLoad },
   computed: {

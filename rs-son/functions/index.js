@@ -21,7 +21,7 @@ exports.sendNotification = functions.firestore
         title: title,
         body: content,
       },
-      token: "dW9xuvq2pEkrWhvFr_1bAF:APA91bGavB6iir8wnJFTow7osz6b6SXefwcEV8QnmpwpHt1IaIKOoaHdPiMg52bZvUDznPp5kt-9yyv4iOD63mIbI5II8RsMzieZ_mEyZKruAUhCZ3NbdsHgf9xvYdkO37s2LSD4ad9R",
+      token: "eya7X4Pq0OTwUMD3mouNHc:APA91bG4EIAtSd_8mysTtpbG4wKb1xBMaAXAg23ygDjBQepJSu0fSx_aXEgQBbOZ4Q2HTSodik5-SbJsG6MnTBooh9HYPyR-esI32xr3TD7ylsCsdk8Tid5g2gGaT4l9_fF3gOdnAWAR",
     };
 
     let response = await admin.messaging().send(message);

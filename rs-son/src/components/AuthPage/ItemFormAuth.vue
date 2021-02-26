@@ -36,11 +36,11 @@
 
 <script>
 // import axios from "axios";
-import ItemButton from "../common/ItemButton.vue";
-import ItemLink from "../common/ItemLink.vue";
-import ItemPop from "../common/ItemPop.vue";
-import ItemModal from "../common/ItemModal.vue";
-import ItemLazyLoad from "../common/itemLazyLoad.vue";
+import ItemButton from "../Common/ItemButton";
+import ItemLink from "../Common/ItemLink";
+import ItemPop from "../Common/ItemPop";
+import ItemModal from "../Common/ItemModal";
+import ItemLazyLoad from "../Common/itemLazyLoad";
 export default {
   components: { ItemButton, ItemLink, ItemPop, ItemModal, ItemLazyLoad },
   data() {

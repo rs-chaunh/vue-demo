@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import ItemButton from "../common/ItemButton.vue";
-import ItemCard from "../common/ItemCard.vue";
-import ItemLazyLoad from "../common/itemLazyLoad.vue";
-import ItemLink from "../common/ItemLink.vue";
+import ItemButton from "../Common/ItemButton.vue";
+import ItemCard from "../Common/ItemCard.vue";
+import ItemLazyLoad from "../Common/itemLazyLoad.vue";
+import ItemLink from "../Common/ItemLink.vue";
 import ItemCoach from "./ItemCoach.vue";
 import { mapState, mapGetters } from "vuex";
 

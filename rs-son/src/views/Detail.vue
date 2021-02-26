@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import ItemBadge from "../components/common/ItemBadge.vue";
-import ItemCard from "../components/common/ItemCard.vue";
-import ItemLink from "../components/common/ItemLink.vue";
+import ItemBadge from "../components/Common/ItemBadge";
+import ItemCard from "../components/Common/ItemCard";
+import ItemLink from "../components/Common/ItemLink";
 // import axios from "axios";
 export default {
   components: { ItemCard, ItemBadge, ItemLink },

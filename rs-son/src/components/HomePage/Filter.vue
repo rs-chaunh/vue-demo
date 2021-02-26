@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import ItemCard from "../common/ItemCard.vue";
+import ItemCard from "../Common/ItemCard";
 export default {
   components: { ItemCard },
   data() {
