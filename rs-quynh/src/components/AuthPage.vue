@@ -53,6 +53,8 @@ export default {
             password: this.valueForm.password,
           });
         }
+
+        this.$store.dispatch("notificationNewRequest")
       }
     },
     handlerCloseModal() {

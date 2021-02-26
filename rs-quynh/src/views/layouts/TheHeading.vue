@@ -24,6 +24,7 @@
         <li>
           <the-heading-language></the-heading-language>
         </li>
+        <li><button @click="hello">Open</button></li>
       </ul>
     </nav>
   </header>
@@ -42,6 +43,9 @@ export default {
     handlerLogout() {
       this.$store.dispatch("logout");
     },
+    hello() {
+      this.$store.dispatch("notificationNewRequest");
+    }
   },
 };
 </script>

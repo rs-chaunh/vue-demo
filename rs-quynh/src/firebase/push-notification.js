@@ -1,5 +1,4 @@
 import firebase from "firebase/app";
-import "firebase/firestore";
 import "firebase/messaging";
 
 export const initializeFirebase = () => {
@@ -15,7 +14,6 @@ export const initializeFirebase = () => {
     measurementId: "G-BKK92N7MKJ",
   };
   firebase.initializeApp(firebaseConfig);
-  firebase.firestore();
 };
 
 export const askForPermissioToReceiveNotifications = async () => {

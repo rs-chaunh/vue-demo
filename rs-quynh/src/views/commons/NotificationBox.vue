@@ -1,14 +1,13 @@
 <template>
   <div>
     <div class="notification-box" :class="notify ? 'open' : null">
-      <a href="#" id="notification-close" @click="() => closed()" title="close"
+      <a href="#" class="notification-close" @click="() => closed()" title="close"
         >x</a
       >
       <div class="notification-data">
         <div class="notification-title">
           <p>{{ title }}</p>
         </div>
-
         <div class="notification-notice">
           <p>{{ message }}</p>
         </div>
@@ -46,7 +45,7 @@ export default {
       try {
         this.messaging.onMessage((payload) => {
           this.currentMessage = payload;
-          this.setNotificationBoxForm(payload.data.title, payload.data.message);
+          this.setNotificationBoxForm(payload.data.title, payload.data.body);
           this.notify = true;
             setTimeout(() => {
               this.notify = false;
@@ -93,7 +92,6 @@ export default {
   right: -100%;
   top: 10px;
   width: 300px;
-//   height: 80px;
   background-color: #07c50e;
   z-index: 999;
   transition: all 0.5s;
@@ -101,7 +99,7 @@ export default {
     right: 5px;
   }
 }
-#notification-close {
+.notification-close {
   position: absolute;
   color: #fff;
   font: 14px;
@@ -115,7 +113,6 @@ export default {
   margin: 0 20px;
   p {
     margin: 10px 0;
-    //   color: #fff;
   }
   .notification-title p {
     font-size: 18px;

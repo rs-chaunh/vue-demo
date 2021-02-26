@@ -1,5 +1,7 @@
 import axios from "axios";
 import router from "../../router";
+import { sendFcmMessage } from "../../firebase/send-message";
+import { askForPermissioToReceiveNotifications } from "../../firebase/push-notification";
 
 const state = {
   requests: [],
@@ -8,8 +10,11 @@ const state = {
 const getters = {
   getRequests: (state) => state.requests,
   filterRequestsByUserId: (state) => (id) => {
+    console.log(id)
     return state.requests.find((request) => {
-      return request.userId === id
+      console.log(request.userId, id)
+      console.log(request.userId === id);
+      return request.userId === id;
     });
   },
 };
@@ -28,7 +33,7 @@ const mutations = {
       }
       return item;
     });
-  }
+  },
 };
 
 const actions = {
@@ -83,6 +88,56 @@ const actions = {
           router.push({ name: "Coaches" });
         })
         .catch((err) => console.log(err));
+    }
+  },
+  notificationNewRequest({ dispatch, getters }) {
+    askForPermissioToReceiveNotifications();
+    dispatch("getAllRequests");
+    console.log(localStorage.getItem("userId"));
+    const request = getters.filterRequestsByUserId(
+      "yOuqABUQm1YZvMFcqMcrIjBOxCg1"
+    );
+    console.log(request);
+
+    let listNotificationNotSend;
+    if (request) {
+      listNotificationNotSend = request.listRequest.filter(
+        (item) => item.isSendNotification === false
+      );
+
+      if (listNotificationNotSend.length > 0) {
+        listNotificationNotSend.forEach((notification) => {
+          axios
+            .get(
+              "https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/devicesToken.json"
+            )
+            .then((res) => {
+              console.log(res.data);
+              const deviceTokenByUser = Object.values(res.data);
+              console.log(deviceTokenByUser);
+              let listActiveDevices = [];
+              if (deviceTokenByUser.length > 0) {
+                let deviceToken = deviceTokenByUser.find(
+                  (item) => item.userId === localStorage.getItem("userId")
+                );
+                listActiveDevices = deviceToken
+                  ? deviceToken.activeDevices
+                  : [];
+              }
+              console.log("List: ", listActiveDevices);
+              if (listActiveDevices.length > 0) {
+                listActiveDevices.forEach((device) => {
+                  sendFcmMessage(
+                    notification.email,
+                    notification.message,
+                    device
+                  );
+                });
+              }
+            })
+            .catch((err) => console.log(err));
+        });
+      }
     }
   },
 };
