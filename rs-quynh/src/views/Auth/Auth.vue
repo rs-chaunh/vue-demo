@@ -2,22 +2,39 @@
   <div>
     <card>
       <form @submit.prevent="handlerSubmitAuthForm">
-        <form-control :id="'email'" :label="'E-Mail'">
+        <form-control 
+          :error="dataForm.email.error ? true : false"
+          :id="'email'" 
+          :label="'E-Mail'"
+        >
           <input 
             type="email" 
             id="email" 
             name="email" 
-            v-model="email" />
+            v-model="email" 
+            @blur="validateEmail"
+          />
+          <p v-if="dataForm.email.error">
+            {{ dataForm.email.error }}
+          </p>
         </form-control>
-        <form-control :id="'password'" :label="'Password'">
+        <form-control 
+          :error="dataForm.password.error ? true : false"
+          :id="'password'" 
+          :label="'Password'"
+        >
           <input
             type="password"
             id="password"
             name="password"
             v-model="password"
+            @blur="validatePassword"
           />
+          <p v-if="dataForm.password.error">
+            {{ dataForm.password.error }}
+          </p>
         </form-control>
-        <p v-if="errors">
+        <p v-if="isError">
           Please enter a valid email and password (must be at least 6 characters
           long).
         </p>
@@ -45,12 +62,15 @@ export default {
   components: { Card, FormControl, ButtonPurple, ButtonTransparent, AuthModal },
   data() {
     return {
-      email: this.emailProp,
-      password: this.passwordProp
+      email: this.dataForm.email.value,
+      password: this.dataForm.password.value
     }
   },
   props: {
-    errors: {
+    dataForm: {
+      type: Object,
+    },
+    isError: {
       type: Boolean,
       default: false
     },
@@ -62,13 +82,11 @@ export default {
       type: Boolean,
       default: true
     },
-    emailProp: {
-      type: String,
-      default: ""
+    validateEmail: {
+      type: Function,
     },
-    passwordProp: {
-      type: String,
-      default: ""
+    validatePassword: {
+      type: Function,
     },
     handlerChangeType: {
       type: Function
@@ -100,6 +118,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.form-control.error {
+  input,
+  textarea {
+    border: 1px solid red;
+  }
+}
 form {
   margin: 1rem;
   padding: 1rem;
