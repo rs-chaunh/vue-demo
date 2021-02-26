@@ -25,27 +25,19 @@ export default {
 
         filterCoaches() {
             return this.getCoaches.filter((coach) => {
-                let check = false;
-                if (coach.areas) {
-                    coach.areas.forEach((area) => {
-                        if (this.filterOption.indexOf(area) !== -1) 
-                            check = true;
-                    });
-                }
-                return check;
+                return coach.areas && coach.areas.forEach(area => this.filterOption.indexOf(area) !== -1)
             });
         },
 
         isHadRegisterACoach() {
             const userId = localStorage.getItem("userId");
-            let check = false;
             if (userId) {
                 this.getCoaches.forEach((coach) => {
                     if (coach.userId === userId)
-                        check = true;
+                        return true;
                 })
             }
-            return check;
+            return false;
         }
     },
     methods: {
@@ -62,7 +54,7 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('getAllCoaches')
+        this.refreshPage()
     },
 }
 </script>
