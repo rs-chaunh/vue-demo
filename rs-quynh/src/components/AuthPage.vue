@@ -15,6 +15,8 @@
 
 <script>
 import Auth from "../views/Auth/Auth.vue";
+import { checkErrors } from "../assets/js/validate";
+
 export default {
   components: { Auth },
   data() {
@@ -45,56 +47,19 @@ export default {
     },
   },
   methods: {
-    checkErrors(type, message, rule, valueRule = "") {
-      const value = this.dataForm[type].value;
-
-      switch (rule) {
-        case "isRequired":
-          {
-            if (value.length === 0) this.dataForm[type].error = message;
-            else this.dataForm[type].error = "";
-          }
-          break;
-        case "isEmail":
-          {
-            if (value.length > 0) {
-              if (
-                value.indexOf("@") < 1 ||
-                value.lastIndexOf(".") < 1 ||
-                value.length - value.lastIndexOf(".") < 2 ||
-                value.lastIndexOf(".") - value.indexOf("@") < 2
-              ) {
-                this.dataForm[type].error = message;
-              } else {
-                this.dataForm[type].error = "";
-              }
-            }
-          }
-          break;
-        case "minLength":
-          {
-            if (value.length !== 0) {
-              if (value.length <= valueRule)
-                this.dataForm[type].error = message;
-              else this.dataForm[type].error = "";
-            }
-          }
-          break;
-      }
-    },
     validateEmail() {
-      this.checkErrors("email", "Email must not be empty.", "isRequired");
-      this.checkErrors(
-        "email",
+      checkErrors(this.dataForm.email, "Email must not be empty.", "isRequired");
+      checkErrors(
+        this.dataForm.email,
         "Email must be included with an '@' ",
         "isEmail"
       );
     },
     validatePassword() {
-      this.checkErrors("password", "Password must not be empty", "isRequired");
-      this.checkErrors(
-        "password",
-        "Password must be over 6 characters.",
+      checkErrors(this.dataForm.password, "Password must not be empty", "isRequired");
+      checkErrors(
+        this.dataForm.password,
+        "Password must be at least 6 characters long.",
         "minLength",
         6
       );
