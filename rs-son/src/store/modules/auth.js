@@ -44,6 +44,9 @@ const auth = {
         SET_TOKEN_ID(state, tokenId) {
             return state.tokenId = tokenId;
         },
+        SET_DATA_REQUEST(state, request) {
+            return state.request = request;
+        },
 
     },
 
@@ -113,6 +116,20 @@ const auth = {
                 console.log(err);
                 return false;
             }
+        },
+        // GET DATA REQUEST FOR MEM FROM API
+        getDataRequest(store) {
+            let userId = store.state.tokenId.localId;
+            axios
+                .get(`${firebase.API_DATA_JSON}/request/${userId}.json`)
+                .then((res) => {
+                    store.commit('SET_DATA_REQUEST', res.data);
+                    store.commit('SET_LOADING', false);
+                    console.log(res.data);
+                }).catch((err) => {
+                    console.log(err);
+                    store.commit('SET_LOADING', false);
+                })
         },
     }
 }

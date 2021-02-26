@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -218,8 +219,9 @@ export default {
     },
   },
   computed: {
+    ...mapState(["auth"]),
     localeDefault() {
-      return this.$store.state.auth.locale;
+      return this.auth.locale;
     },
   },
   watch: {

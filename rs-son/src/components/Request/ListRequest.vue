@@ -14,19 +14,21 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   computed: {
+    ...mapState(["auth"]),
     dataRequest() {
-      if (this.$store.state.auth.request) {
-        return Object.values(this.$store.state.auth.request);
+      if (this.auth.request) {
+        return Object.values(this.auth.request);
       } else {
         return "";
       }
     },
   },
   created() {
-    this.$store.commit("coach/SET_LOADING", true);
-    this.$store.dispatch("coach/getDataRequest");
+    this.$store.commit("auth/SET_LOADING",true);
+    this.$store.dispatch("auth/getDataRequest");
   },
 };
 </script>

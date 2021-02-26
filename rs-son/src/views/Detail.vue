@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -54,8 +55,9 @@ export default {
     });
   },
   computed: {
+    ...mapState(["coach"]),
     getDataDetail() {
-      return this.$store.state.coach.dataDetail;
+      return this.coach.dataDetail;
     },
   },
   beforeRouteLeave() {

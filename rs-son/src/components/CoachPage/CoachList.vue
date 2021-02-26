@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
 
 import CoachDetail from "./CoachDetail";
 
@@ -41,16 +42,17 @@ export default {
     };
   },
   computed: {
+    ...mapState(["auth", "coach"]),
     dataCoachDefault() {
-      if (this.$store.state.coach.coaches != null) {
-        return this.$store.state.coach.coaches;
+      if (this.coach.coaches != null) {
+        return this.coach.coaches;
       } else {
         return "";
       }
     },
     tokenId() {
-      if (this.$store.state.auth.tokenId != null) {
-        return this.$store.state.auth.tokenId;
+      if (this.auth.tokenId != null) {
+        return this.auth.tokenId;
       } else {
         return "";
       }
@@ -63,15 +65,15 @@ export default {
       }
     },
     resultPost() {
-      if (this.$store.state.auth.status) {
+      if (this.auth.status) {
         return this.status;
       } else {
         return "";
       }
     },
     isCheckCoach() {
-      let coachArr = this.$store.state.coach.coachesTemp; // FIXED
-      let userId = this.$store.state.auth.tokenId;
+      let coachArr = this.coach.coachesTemp; // FIXED
+      let userId = this.auth.tokenId;
       let index = -1;
       if (userId != null && coachArr != null) {
         index = Object.keys(coachArr).findIndex((item) => item == userId.localId);
@@ -80,22 +82,23 @@ export default {
       return index;
     },
     locale() {
-      return this.$store.state.auth.locale;
+      return this.auth.locale;
     },
   },
   mounted() {
-    this.$store.commit('coach/SET_LOADING',true)
+    this.$store.commit("coach/SET_LOADING", true);
     this.$store.dispatch("coach/getDefaultData");
   },
   methods: {
+    ...mapMutations(["coach"]),
     handleRefresh() {
-      this.$store.commit("coach/SET_LOADING", true);
+      this.$store.commit("coach/SET_LOADING",true);
       setTimeout(() => {
-        this.$store.commit("coach/SET_LOADING", false);
+        this.$store.commit("coach/SET_LOADING",false);
       }, 300);
       this.$store.dispatch({
         type: "coach/getDatafilter",
-        listFilter: this.$store.state.coach.areas,
+        listFilter: this.coach.areas,
       });
     },
   },

@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import ItemButton from "./ItemButton.vue";
 export default {
   components: { ItemButton },
@@ -24,14 +25,16 @@ export default {
     return {};
   },
   methods: {
+    ...mapMutations(["auth"]),
     togglePopup() {
       this.$store.commit("auth/SET_LOADING", false);
       this.$store.commit("auth/SET_CHECK_LOGIN", true);
     },
   },
   computed: {
+    ...mapState(["auth"]),
     checkLogin() {
-      return this.$store.state.auth.checkLogin;
+      return this.auth.checkLogin;
     },
   },
 };

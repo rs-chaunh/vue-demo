@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 import ItemFormContact from "../components/ContactPage/ItemFormContact.vue";
 
@@ -57,8 +58,9 @@ export default {
     },
   },
   computed: {
+    ...mapState(["coach"]),
     getDataDetail() {
-      return this.$store.state.coach.dataDetail;
+      return this.coach.dataDetail;
     },
   },
   beforeRouteLeave() {

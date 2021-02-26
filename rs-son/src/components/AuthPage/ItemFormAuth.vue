@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -50,6 +51,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["auth"]),
     handleChangeAction() {
       this.doLogin = !this.doLogin;
     },
@@ -84,7 +86,7 @@ export default {
               });
             }
           } else {
-            this.$store.commit("auth/SET_CHECK_LOGIN", false);
+            this.$store.commit("auth/SET_CHECK_LOGIN",false);
           }
           //FIXED
         } else {
@@ -96,8 +98,8 @@ export default {
           });
           if (result) {
             // CHECK LINK TO LOGIN OR REGISTER
-            let arrCoachesTemp = this.$store.state.coach.coachesTemp;
-            let userId = this.$store.state.auth.tokenId;
+            let arrCoachesTemp = this.coach.coachesTemp;
+            let userId = this.auth.tokenId;
             let index = -1;
             if (userId != null && arrCoachesTemp != null) {
               index = Object.keys(arrCoachesTemp).findIndex(
@@ -106,18 +108,18 @@ export default {
             }
             // DON'T TO REGISTER PAGE IF HAVE ACCOUNT
             if (this.$route.query.redirect && index == -1) {
-              console.log('a');
+              console.log("a");
               this.$router.push({
                 path: "/register",
               });
             } else {
-              console.log('b');
+              console.log("b");
               this.$router.push({
                 path: "/coaches",
               });
             }
           } else {
-            this.$store.commit("auth/SET_CHECK_LOGIN", false);
+            this.$store.commit("auth/SET_CHECK_LOGIN",false);
           }
         }
       }
@@ -127,15 +129,16 @@ export default {
     this.handleChangeAction();
   },
   computed: {
+    ...mapState(["auth", "coach"]),
     textErr() {
       let text = "";
-      if (!this.$store.state.auth.checkLogin) {
+      if (!this.auth.checkLogin) {
         text = this.$i18n.messages[this.locale].errLoginContent;
       }
       return text;
     }, //FIXED
     locale() {
-      return this.$store.state.auth.locale;
+      return this.auth.locale;
     },
     textBtn() {
       // FIXED

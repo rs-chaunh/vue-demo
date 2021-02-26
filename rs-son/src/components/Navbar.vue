@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -41,23 +43,25 @@ export default {
     };
   },
   methods: {
+    ...mapMutations("auth", ["SET_TOKEN_ID", "SET_LOCALE"]),
     handleLogout() {
       localStorage.clear();
-      this.$store.commit("auth/SET_TOKEN_ID", "");
-      this.$store.commit("auth/SET_LOADING", false);
+      this.SET_TOKEN_ID("");
+      this.$store.commit("auth/SET_LOADING",false);
       this.$router.push({ path: "/coaches" });
     },
   },
   computed: {
+    ...mapState(["auth"]),
     tokenId() {
-      return this.$store.state.auth.tokenId;
+      return this.auth.tokenId;
     },
   },
   watch: {
     language: function () {
       localStorage.setItem("lang", this.language);
       this.$i18n.locale = this.language;
-      this.$store.commit("auth/SET_LOCALE", this.language);
+      this.SET_LOCALE(this.language);
     },
   },
 };

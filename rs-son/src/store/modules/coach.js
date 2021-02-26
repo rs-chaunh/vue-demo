@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as firebase from '../../env'
+// import * as firebase from '../../env'
 
 const coach = {
     namespaced: true,
@@ -33,9 +33,6 @@ const coach = {
         SET_DATA_DETAIL(state, dataDetail) {
             return state.dataDetail = dataDetail;
         },
-        SET_DATA_REQUEST(state, request) {
-            return state.request = request;
-        },
     },
     actions: {
         // GET DATA COACHES DEFAUT FROM API
@@ -60,7 +57,7 @@ const coach = {
                 }).catch(err => console.log(err));
         }, // GET DATA TEMP TO SS WITH FILTER
         getDatafilter(store, payLoad) {
-            console.log(store);
+            // console.log(store);
             store.commit('SET_DATA_FILTER', payLoad.listFilter)
             let temp = Object.values(store.state.coachesTemp).filter((item) => {
                 let check;
@@ -73,17 +70,7 @@ const coach = {
             })
             store.state.coaches = temp;
         },
-        // GET DATA REQUEST FOR MEM FROM API
-        getDataRequest(store) {
-            let userId = store.state.tokenId.localId;
-            axios
-                .get(`${firebase.API_DATA_JSON}/request/${userId}.json`)
-                .then((res) => {
-                    store.commit('SET_DATA_REQUEST', res.data);
-                    store.commit('SET_LOADING', false);
-                    console.log(res.data);
-                }).catch(err => console.log(err));
-        },
+        
     },
 }
 
