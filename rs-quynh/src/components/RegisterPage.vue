@@ -58,11 +58,13 @@ export default {
   },
   methods: {
     handlerRegister() {
-      this.validateFirstName();
-      this.validateLastName();
-      this.validateDescription();
-      this.validateHourlyRate();
-      this.validateAreas();
+      [
+        this.validateFirstName,
+        this.validateFirstName,
+        this.validateDescription,
+        this.validateHourlyRate,
+        this.validateAreas,
+      ].forEach((func) => func());
 
       if (!this.isHadError) {
         this.$store.dispatch("addNewCoach", {
@@ -72,8 +74,6 @@ export default {
           description: this.coach.description.value,
           areas: this.coach.areas.value,
         });
-      } else {
-        console.log(this.isHadError);
       }
     },
     validateFirstName() {

@@ -9,20 +9,20 @@
         </form-control>
         <p class="error" v-if="error">Please enter a valid email and non-empty message.</p>
         <coaches-action>
-            <button-purple>Send Message</button-purple>
+            <custom-button type="purple">Send Message</custom-button>
         </coaches-action>
     </form>
 </div>
 </template>
 
 <script>
-import ButtonPurple from '../commons/Button/ButtonPurple.vue';
+import CustomButton from '../commons/CustomButton';
 import FormControl from '../commons/FormControl.vue';
 import CoachesAction from './CoachesAction.vue';
 
 export default {
     components: { 
-        ButtonPurple,
+        CustomButton,
         FormControl,
         CoachesAction,
     },

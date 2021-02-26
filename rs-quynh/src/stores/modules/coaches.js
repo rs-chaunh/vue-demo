@@ -56,8 +56,7 @@ const actions = {
           userId: localStorage.getItem("userId")
         }
       )
-      .then((response) => {
-        console.log(response.data);
+      .then(() => {
         commit("ADD_NEW_COACH", {
           id: localStorage.getItem("userId"),
           ...coach,

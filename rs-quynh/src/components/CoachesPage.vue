@@ -25,7 +25,7 @@ export default {
 
         filterCoaches() {
             return this.getCoaches.filter((coach) => {
-                return coach.areas && coach.areas.forEach(area => this.filterOption.indexOf(area) !== -1)
+                return coach.areas && coach.areas.filter(area => { this.filterOption.indexOf(area) !== -1 })
             });
         },
 

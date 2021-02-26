@@ -1,13 +1,13 @@
 <template>
     <li>
-        <h3>{{ coach.firstName + " " + coach.lastName}}</h3>
+        <h3>{{ fullname }}</h3>
         <h4>${{ coach.hourlyRate }}/hour</h4>
         <div>
             <badge v-for="(area, index) of coach.areas" :area="area" :key="index" ></badge>
         </div>
         <coaches-action>
-            <button-outline :href="'/coaches/' + coach.id + '/contact'">Contact</button-outline>
-            <button-purple :href="'/coaches/' + coach.id ">View Details</button-purple>
+            <custom-button type="outline" :href="'/coaches/' + coach.id + '/contact'">Contact</custom-button>
+            <custom-button type="purple" :href="'/coaches/' + coach.id ">View Details</custom-button>
         </coaches-action>
     </li>
 </template>
@@ -15,13 +15,17 @@
 <script>
 import CoachesAction from './CoachesAction.vue'
 import Badge from '../commons/Badge.vue'
-import ButtonOutline from '../commons/Button/ButtonOutline.vue'
-import ButtonPurple from '../commons/Button/ButtonPurple.vue'
+import CustomButton from '../commons/CustomButton.vue'
 export default {
-    components: { Badge, CoachesAction, ButtonOutline, ButtonPurple },
+    components: { Badge, CoachesAction, CustomButton },
     props: {
         coach: {
             type: Object,
+        }
+    },
+    computed: {
+        fullname() {
+            return this.coach.firstName + " " + this.coach.lastName;
         }
     }
     

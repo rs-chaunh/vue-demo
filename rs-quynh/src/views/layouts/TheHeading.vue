@@ -16,7 +16,7 @@
             <router-link to="/requests" class="btn">Requests</router-link>
           </li>
           <li>
-            <button @click.prevent="handlerLogout" class="btn">Logout</button>
+            <custom-button @click.prevent="handlerLogout" type="purple">Logout</custom-button>
           </li>
         </template>
       </ul>
@@ -25,7 +25,9 @@
 </template>
 
 <script>
+import CustomButton from '../commons/CustomButton';
 export default {
+  components: { CustomButton },
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;

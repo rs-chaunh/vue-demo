@@ -12,17 +12,18 @@
       </section>
 
       <menu>
-        <button-purple @click="handlerCloseModal">Close</button-purple>
+        <custom-button @click="handlerCloseModal" type="purple">Close</custom-button>
       </menu>
     </section>
   </teleport>
 </template>
 
 <script>
-import ButtonPurple from "../commons/Button/ButtonPurple.vue";
+import CustomButton from '../commons/CustomButton';
 import Loading from "../commons/Loading.vue";
+
 export default {
-  components: { ButtonPurple, Loading },
+  components: { Loading, CustomButton },
   props: {
     handlerCloseModal: {
       type: Function,

@@ -71,8 +71,7 @@ export default {
       this.dataForm[type].value = valueInput;
     },
     handlerSubmitAuthForm() {
-      this.validateEmail();
-      this.validatePassword();
+      [this.validateEmail, this.validatePassword].forEach((func) => func())
 
       if (!this.isError) {
         this.isOpenModal = true;

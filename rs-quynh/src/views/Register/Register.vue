@@ -81,7 +81,7 @@
           </p>
         </form-control>
         <p v-if="isHadError">Please fix the above errors and submit again.</p>
-        <button-purple>Register</button-purple>
+        <custom-button type="purple">Register</custom-button>
       </form>
     </card>
   </section>
@@ -91,10 +91,10 @@
 import Card from "../commons/Card.vue";
 import FormControl from "../commons/FormControl.vue";
 import FilterOption from "../commons/FilterOption.vue";
-import ButtonPurple from "../commons/Button/ButtonPurple.vue";
+import CustomButton from "../commons/CustomButton.vue";
 
 export default {
-  components: { Card, FormControl, FilterOption, ButtonPurple },
+  components: { Card, FormControl, FilterOption, CustomButton },
   data() {
     return {
       firstName: this.coach.firstName.value,

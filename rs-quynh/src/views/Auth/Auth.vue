@@ -2,25 +2,25 @@
   <div>
     <card>
       <form @submit.prevent="handlerSubmitAuthForm">
-        <form-control 
+        <form-control
           :error="dataForm.email.error ? true : false"
-          :id="'email'" 
+          :id="'email'"
           :label="'E-Mail'"
         >
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            v-model="email" 
+          <input
+            type="email"
+            id="email"
+            name="email"
+            v-model="email"
             @blur="validateEmail"
           />
           <p v-if="dataForm.email.error">
             {{ dataForm.email.error }}
           </p>
         </form-control>
-        <form-control 
+        <form-control
           :error="dataForm.password.error ? true : false"
-          :id="'password'" 
+          :id="'password'"
           :label="'Password'"
         >
           <input
@@ -38,33 +38,35 @@
           Please enter a valid email and password (must be at least 6 characters
           long).
         </p>
-        
-        <button-purple v-if="isHasAccount">Login</button-purple>
-        <button-purple v-else>Signup</button-purple>
 
-        <button-transparent @click="handlerChangeType">{{
+        <custom-button v-if="isHasAccount" type="purple">Login</custom-button>
+        <custom-button v-else type="purple">Signup</custom-button>
+
+        <custom-button @click="handlerChangeType" type="transparent">{{
           isHasAccount ? "Signup instead" : "Login instead"
-        }}</button-transparent>
+        }}</custom-button>
       </form>
     </card>
-    <auth-modal v-if="isOpenModal" :handlerCloseModal="handlerCloseModal"></auth-modal>
+    <auth-modal
+      v-if="isOpenModal"
+      :handlerCloseModal="handlerCloseModal"
+    ></auth-modal>
   </div>
 </template>
 
 <script>
-import ButtonPurple from "../commons/Button/ButtonPurple.vue";
-import ButtonTransparent from '../commons/Button/ButtonTransparent.vue';
+import CustomButton from "../commons/CustomButton";
 import Card from "../commons/Card";
 import FormControl from "../commons/FormControl.vue";
-import AuthModal from './AuthModal.vue';
+import AuthModal from "./AuthModal.vue";
 
 export default {
-  components: { Card, FormControl, ButtonPurple, ButtonTransparent, AuthModal },
+  components: { Card, FormControl, CustomButton, AuthModal },
   data() {
     return {
       email: this.dataForm.email.value,
-      password: this.dataForm.password.value
-    }
+      password: this.dataForm.password.value,
+    };
   },
   props: {
     dataForm: {
@@ -72,15 +74,15 @@ export default {
     },
     isError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isOpenModal: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isHasAccount: {
       type: Boolean,
-      default: true
+      default: true,
     },
     validateEmail: {
       type: Function,
@@ -89,31 +91,31 @@ export default {
       type: Function,
     },
     handlerChangeType: {
-      type: Function
+      type: Function,
     },
     handlerChangeInput: {
-      type: Function
+      type: Function,
     },
     handlerSubmitAuthForm: {
-      type: Function
+      type: Function,
     },
     handlerCloseModal: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   computed: {
     isAuthenticating() {
       return this.$store.getters.isAuthenticating;
-    }
+    },
   },
   watch: {
-    email: function(){
-      this.$emit("handlerChangeInput", "email", this.email)
+    email: function () {
+      this.$emit("handlerChangeInput", "email", this.email);
     },
-    password: function() {
-      this.$emit("handlerChangeInput", "password", this.password)
-    }
-  }
+    password: function () {
+      this.$emit("handlerChangeInput", "password", this.password);
+    },
+  },
 };
 </script>
 
