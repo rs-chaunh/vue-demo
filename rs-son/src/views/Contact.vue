@@ -53,7 +53,7 @@ export default {
       this.id = this.$route.params.id;
       this.$store.dispatch({
         type: "coach/getDataDetail",
-        url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`,
+        id : this.id,
       });
     },
   },

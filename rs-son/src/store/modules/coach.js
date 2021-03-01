@@ -1,5 +1,5 @@
 import axios from "axios";
-// import * as firebase from '../../env'
+import * as firebase from '../../env'
 
 const coach = {
     namespaced: true,
@@ -40,7 +40,7 @@ const coach = {
             commit
         }) {
             axios
-                .get("https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches.json")
+                .get(`${firebase.API_DATA_JSON}/coaches.json`)
                 .then((res) => {
                     commit('SET_DEFAULT_DATA', res.data);
                     commit('SET_TEMP_DATA', res.data)
@@ -51,7 +51,7 @@ const coach = {
             commit
         }, payLoad) {
             axios
-                .get(payLoad.url)
+                .get(`${firebase.API_DATA_JSON}/coaches/${payLoad.id}.json`)
                 .then((res) => {
                     commit('SET_DATA_DETAIL', res.data);
                 }).catch(err => console.log(err));
