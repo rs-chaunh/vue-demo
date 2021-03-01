@@ -27,6 +27,8 @@ const mutations = {
 const actions = {
   login({ commit }, payload) {
     commit("SET_IS_LOADING", true);
+    commit("SET_IS_ERROR", false);
+
 
     axios
       .post(

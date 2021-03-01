@@ -25,3 +25,32 @@
     transform: translateY(50px);
     opacity: 0;
 }
+
+.modal-enter-from {
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+.modal-enter-to {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-enter-active {
+    transition: all .4s;
+}
+
+.modal-leave-from {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-leave-active {
+    transition: all .4s;
+}
+
+.modal-leave-to {
+    transform: scale(0.5);
+    opacity: 0;
+}
+

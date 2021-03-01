@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-import store from "./stores";
+import store from "../stores";
 
 function authenticated(to, from, next) {
   if (to.path === "/auth") {
@@ -21,42 +21,42 @@ const routes = [
   {
     path: "/coaches",
     name: "Coaches",
-    component: () => import("./components/CoachesPage.vue"),
+    component: () => import("../components/CoachesPage.vue"),
   },
   {
     path: "/coaches/:id",
     name: "CoachesDetail",
-    component: () => import("./components/CoachesDetailPage.vue"),
+    component: () => import("../components/CoachesDetailPage.vue"),
     children: [
       {
         path: "contact",
         name: "CoachesDetailContact",
-        component: () => import("./components/CoachesDetailContactPage.vue"),
+        component: () => import("../components/CoachesDetailContactPage.vue"),
       },
     ],
   },
   {
     path: "/auth",
     name: "Auth",
-    component: () => import("./components/AuthPage.vue"),
+    component: () => import("../components/AuthPage.vue"),
     beforeEnter: authenticated,
   },
   {
     path: "/register",
     name: "Register",
-    component: () => import("./components/RegisterPage.vue"),
+    component: () => import("../components/RegisterPage.vue"),
     beforeEnter: authenticated,
   },
   {
     path: "/requests",
     name: "Requests",
-    component: () => import("./components/RequestsPage.vue"),
+    component: () => import("../components/RequestsPage.vue"),
     beforeEnter: authenticated,
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
-    component: () => import("./components/NotFoundPage.vue"),
+    component: () => import("../components/NotFoundPage.vue"),
   },
 ];
 

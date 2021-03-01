@@ -1,25 +1,38 @@
 <template>
   <teleport to="body">
     <div class="backdrop"></div>
-    <section class="modal">
-      <header>
-        <h2>{{ isLoading ? "Authenticating" : "An error occurred" }}</h2>
-      </header>
+    <transition name="modal">
+        <section v-if="isLoading" class="modal">
+          <header><h2>Authenticating</h2></header>
+          <section>
+            <loading></loading>
+          </section>
+          <menu>
+            <custom-button @click="handlerCloseModal" type="purple"
+              >Close</custom-button
+            >
+          </menu>
+        </section>
 
-      <section>
-        <loading v-if="isLoading"></loading>
-        <p v-else-if="errorsAuth">Failed to authenticate. Check your login data.</p>
-      </section>
-
-      <menu>
-        <custom-button @click="handlerCloseModal" type="purple">Close</custom-button>
-      </menu>
-    </section>
+        <section v-else class="modal">
+          <header>
+            <h2>An error occurred</h2>
+          </header>
+          <section>
+            <p>Failed to authenticate. Check your login data.</p>
+          </section>
+          <menu>
+            <custom-button @click="handlerCloseModal" type="purple"
+              >Close</custom-button
+            >
+          </menu>
+        </section>
+    </transition>
   </teleport>
 </template>
 
 <script>
-import CustomButton from '../commons/CustomButton';
+import CustomButton from "../commons/CustomButton";
 import Loading from "../commons/Loading.vue";
 
 export default {
@@ -64,6 +77,7 @@ export default {
   margin: 0;
   overflow: hidden;
   background-color: #fff;
+
 
   header {
     background-color: #3a0061;
