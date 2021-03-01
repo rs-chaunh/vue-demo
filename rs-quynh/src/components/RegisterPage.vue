@@ -15,6 +15,8 @@
 
 <script>
 import Register from "../views/Register/Register.vue";
+import { checkErrors } from "../assets/js/validate";
+
 export default {
   components: { Register },
   data() {
@@ -56,11 +58,13 @@ export default {
   },
   methods: {
     handlerRegister() {
-      this.validateFirstName();
-      this.validateLastName();
-      this.validateDescription();
-      this.validateHourlyRate();
-      this.validateAreas();
+      [
+        this.validateFirstName,
+        this.validateFirstName,
+        this.validateDescription,
+        this.validateHourlyRate,
+        this.validateAreas,
+      ].forEach((func) => func());
 
       if (!this.isHadError) {
         this.$store.dispatch("addNewCoach", {
@@ -70,11 +74,19 @@ export default {
           description: this.coach.description.value,
           areas: this.coach.areas.value,
         });
-      } else {
-        console.log(this.isHadError);
       }
     },
     validateFirstName() {
+<<<<<<< HEAD
+      checkErrors(
+        this.coach.firstName,
+        "Firstname must not be empty.",
+        "isRequired"
+      );
+      checkErrors(
+        this.coach.firstName,
+        "Firstname must capitalize the first letter",
+=======
       this.checkErrors(
         "firstName",
         this.$t('register.errors.empty', {field: this.$t('register.labels.firstname')}),
@@ -83,10 +95,21 @@ export default {
       this.checkErrors(
         "firstName",
         this.$t('register.errors.capitalize_letter', {field: this.$t('register.labels.firstname')}),
+>>>>>>> master
         "capitalizeText"
       );
     },
     validateLastName() {
+<<<<<<< HEAD
+      checkErrors(
+        this.coach.lastName,
+        "Lastname must not be empty.",
+        "isRequired"
+      );
+      checkErrors(
+        this.coach.lastName,
+        "Lastname must be over 3 characters.",
+=======
       this.checkErrors(
         "lastName", 
         this.$t('register.errors.empty', {field: this.$t('register.labels.lastname')}),
@@ -94,11 +117,22 @@ export default {
       this.checkErrors(
         "lastName",
         this.$t('register.errors.min_length', {field: this.$t('register.labels.lastname'), number: 3}),
+>>>>>>> master
         "minLength",
         3
       );
     },
     validateDescription() {
+<<<<<<< HEAD
+      checkErrors(
+        this.coach.description,
+        "Description must not be empty.",
+        "isRequired"
+      );
+      checkErrors(
+        this.coach.description,
+        "Description must be less than 100 characters.",
+=======
       this.checkErrors(
         "description",
         this.$t('register.errors.empty', {field: this.$t('register.labels.description')}),
@@ -107,11 +141,22 @@ export default {
       this.checkErrors(
         "description",
         this.$t('register.errors.max_length', {field: this.$t('register.labels.description'), number: 100}),
+>>>>>>> master
         "maxLength",
         100
       );
     },
     validateHourlyRate() {
+<<<<<<< HEAD
+      checkErrors(
+        this.coach.hourlyRate,
+        "Hourly Rate must not be empty.",
+        "isRequired"
+      );
+      checkErrors(
+        this.coach.hourlyRate,
+        "Hourly Rate must be greater than 0.",
+=======
       this.checkErrors(
         "hourlyRate",
         this.$t('register.errors.empty', {field: this.$t('register.labels.hourlyrate')}),
@@ -120,81 +165,37 @@ export default {
       this.checkErrors(
         "hourlyRate",
         this.$t('register.errors.is_number', {field: this.$t('register.labels.hourlyrate')}),
+>>>>>>> master
         "isNumber"
       );
     },
     validateAreas() {
+<<<<<<< HEAD
+      checkErrors(
+        this.coach.areas,
+        "At least one expertise must be selected.",
+=======
       this.checkErrors(
         "areas",
         this.$t('register.errors.selected'),
+>>>>>>> master
         "isRequired"
       );
     },
-    checkErrors(type, message, rule, valueRule = "") {
-      const value = this.coach[type].value;
-
-      switch (rule) {
-        case "isRequired":
-          {
-            if (value.length === 0) this.coach[type].error = message;
-            else this.coach[type].error = "";
-          }
-          break;
-        case "capitalizeText":
-          {
-            if (value.length !== 0) {
-              if (this.capitalizeFirstLetter(value) !== value)
-                this.coach[type].error = message;
-              else this.coach[type].error = "";
-            }
-          }
-          break;
-        case "minLength":
-          {
-            if (value.length !== 0) {
-              if (value.length <= valueRule) this.coach[type].error = message;
-              else this.coach[type].error = "";
-            }
-          }
-          break;
-        case "maxLength":
-          {
-            if (value.length !== 0) {
-              if (value.length >= valueRule) this.coach[type].error = message;
-              else this.coach[type].error = "";
-            }
-          }
-          break;
-        case "isNumber":
-          {
-            if (value.length !== 0) {
-              if (value <= 0) this.coach[type].error = message;
-              else this.coach[type].error = "";
-            }
-          }
-          break;
-      }
-    },
-    capitalizeFirstLetter(string) {
-      const arrayWords = string.split(" ");
-      const uppercaseArrayWords = arrayWords.map(
-        (item) => item.charAt(0).toUpperCase() + item.slice(1)
-      );
-      return uppercaseArrayWords.join(" ");
-    },
     toggleAreas(area) {
       const index = this.coach.areas.value.indexOf(area);
+<<<<<<< HEAD
+      if (index === -1) this.coach.areas.value.push(area);
+=======
       this.coach.areas.error = "";
       if (index === -1) 
         this.coach.areas.value.push(area);
+>>>>>>> master
       else this.coach.areas.value.splice(index, 1);
     },
     setValueType(type, value) {
-        this.coach[type].value = value;
-    }
+      this.coach[type].value = value;
+    },
   },
 };
 </script>
-
-<style>
-</style>

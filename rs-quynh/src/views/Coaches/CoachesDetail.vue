@@ -1,6 +1,13 @@
 <template>
-<div>    
+  <div>
     <section>
+<<<<<<< HEAD
+      <div class="card">
+        <h2>{{ fullname }}</h2>
+        <h3>${{ coach && coach.hourlyRate }}/hour</h3>
+      </div>
+    </section>
+=======
         <card>
             <h2>{{ coach.firstName + " " + coach.lastName}}</h2>
             <h3>${{ coach.hourlyRate }}/{{ $t('common.unit_price') }}</h3>
@@ -12,49 +19,66 @@
                 <h2>{{ $t('coach.contact.title') }}</h2>
                 <button-purple :href="`/coaches/${$route.params.id}/contact`">{{ $t('coach.buttons.contact') }}</button-purple>
             </header>
+>>>>>>> master
 
-            <router-view></router-view>
-       </card>
-   </section>
+    <section>
+      <div class="card">
+        <header>
+          <h2>Interested? Reach out now!</h2>
+          <custom-button
+            type="purple"
+            :href="{ name: 'CoachesDetailContact', params: { id: $route.params.id }}"
+            >Contact</custom-button
+          >
+        </header>
 
-   <section>
-       <card>
-            <badge v-for="(area, index) of coach.areas" :area="area" :key="index" ></badge>
-            <p>{{ coach.description}}</p>
-       </card>
-   </section>
-</div>
+        <router-view></router-view>
+      </div>
+    </section>
+
+    <section>
+      <div class="card" v-if="coach">
+        <div class="badge" :class="area"
+          v-for="(area, index) of coach.areas"
+          :area="area"
+          :key="index"
+        >{{ area }}</div>
+        <p>{{ coach.description }}</p>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-import Card from '../commons/Card.vue';
-import ButtonPurple from '../commons/Button/ButtonPurple.vue';
-import Badge from '../commons/Badge.vue';
+import CustomButton from "../commons/CustomButton";
 
 export default {
-    props: {
-        coach: {
-            type: Object,
-            require: true
-        }
+  props: {
+    coach: {
+      type: Object,
+      require: true,
     },
-    components: { 
-        Card,
-        ButtonPurple,
-        Badge,
+  },
+  components: {
+    CustomButton,
+  },
+  computed: {
+    fullname() {
+      return this.coach ? this.coach.firstName + " " + this.coach.lastName : "";
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    form {
-        margin: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 12px;
-        padding: 1rem;
+form {
+  margin: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1rem;
 
-        .actions {
-            justify-content: center;
-        }
-    }
+  .actions {
+    justify-content: center;
+  }
+}
 </style>

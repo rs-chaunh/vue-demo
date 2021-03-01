@@ -16,9 +16,13 @@
             <router-link to="/requests" class="btn">{{ $t("common.buttons.requests") }}</router-link>
           </li>
           <li>
+<<<<<<< HEAD
+            <custom-button @click.prevent="handlerLogout" type="purple">Logout</custom-button>
+=======
             <button @click.prevent="handlerLogout" class="btn">
               {{ $t("auth.buttons.logout") }}
             </button>
+>>>>>>> master
           </li>
         </template>
         <li>
@@ -31,9 +35,15 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+import CustomButton from '../commons/CustomButton';
+export default {
+  components: { CustomButton },
+=======
 import TheHeadingLanguage from "./TheHeadingLanguage.vue";
 export default {
   components: { TheHeadingLanguage },
+>>>>>>> master
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
