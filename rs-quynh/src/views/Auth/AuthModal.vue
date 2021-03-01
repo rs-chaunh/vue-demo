@@ -13,8 +13,9 @@
             >
           </menu>
         </section>
-
-        <section v-else class="modal">
+    </transition>
+    <transition name="modal">
+        <section v-if="errorsAuth" class="modal">
           <header>
             <h2>An error occurred</h2>
           </header>
@@ -72,7 +73,6 @@ export default {
   z-index: 100;
   border-radius: 12px;
   border: none;
-  // box-shadow: 0 2px 8px rgba(0 0 0 / 26%);
   padding: 0;
   margin: 0;
   overflow: hidden;
