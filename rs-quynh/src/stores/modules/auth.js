@@ -27,12 +27,7 @@ const mutations = {
 const actions = {
   login({ commit }, payload) {
     commit("SET_IS_LOADING", true);
-<<<<<<< HEAD
     commit("SET_IS_ERROR", false);
-
-=======
-    commit("SET_ERRORS", false);
->>>>>>> master
 
     axios
       .post(
@@ -61,10 +56,7 @@ const actions = {
       });
   },
   signup({ commit }, payload) {
-<<<<<<< HEAD
-=======
-    commit("SET_ERRORS", false);
->>>>>>> master
+    commit("SET_IS_ERROR", false);
     commit("SET_IS_LOADING", true);
 
     axios
@@ -89,11 +81,7 @@ const actions = {
       })
       .catch(() => {
         commit("SET_IS_LOADING", false);
-<<<<<<< HEAD
         commit("SET_IS_ERROR", true);
-=======
-        commit("SET_ERRORS", true);
->>>>>>> master
       });
   },
   logout({ commit }) {
