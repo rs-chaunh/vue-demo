@@ -1,12 +1,17 @@
 <template>
   <section>
+<<<<<<< HEAD
     <div class="card">
       <h2>Register as a coach now!</h2>
+=======
+    <card>
+      <h2>{{ $t('register.title') }}</h2>
+>>>>>>> master
       <form @submit.prevent="handlerRegister">
         <form-control
           :error="coach.firstName.error"
           :id="'firstname'"
-          :label="'Firstname'"
+          :label="$t('register.labels.firstname') "
         >
           <input
             v-model="firstName"
@@ -18,7 +23,7 @@
         <form-control
           :error="coach.lastName.error"
           :id="'lastname'"
-          :label="'Listname'"
+          :label="$t('register.labels.lastname')"
         >
           <input
             v-model="lastName"
@@ -30,7 +35,7 @@
         <form-control
           :error="coach.description.error"
           :id="'description'"
-          :label="'Description'"
+          :label="$t('register.labels.description')"
         >
           <textarea
             v-model="description"
@@ -42,7 +47,7 @@
         <form-control
           :error="coach.hourlyRate.error"
           :id="'hourlyRate'"
-          :label="'Hourly Rate'"
+          :label="$t('register.labels.hourlyrate')"
         >
           <input
             v-model="hourlyRate"
@@ -54,7 +59,7 @@
         <form-control
           :error="coach.areas.error"
           :id="'areas'"
-          :label="'Areas of Expertise'"
+          :label="$t('register.labels.areas')"
         >
           <filter-option
             v-for="area in dataAreas"
@@ -65,8 +70,13 @@
             @change="toggleAreas(area.id)"
           ></filter-option>
         </form-control>
+<<<<<<< HEAD
         <p v-if="isHadError">Please fix the above errors and submit again.</p>
         <custom-button type="purple">Register</custom-button>
+=======
+        <p v-if="isHadError">{{ $t('register.errors.all') }}</p>
+        <button-purple>{{ $t('register.buttons.submit') }}</button-purple>
+>>>>>>> master
       </form>
     </div>
   </section>
@@ -125,6 +135,7 @@ export default {
   methods: {
     toggleAreas(option) {
       this.$emit("toggleAreas", option);
+      
     },
   },
   watch: {

@@ -1,6 +1,7 @@
 <template>
   <teleport to="body">
     <div class="backdrop"></div>
+<<<<<<< HEAD
     <transition name="modal">
         <section v-if="isLoading" class="modal">
           <header><h2>Authenticating</h2></header>
@@ -29,6 +30,22 @@
           </menu>
         </section>
     </transition>
+=======
+    <section class="modal">
+      <header>
+        <h2>{{ isLoading ? $t('auth.labels.authenticating') :  $t('auth.labels.errors') }}</h2>
+      </header>
+
+      <section>
+        <p v-if="errorsAuth">{{ $t('auth.errors.authen') }}</p>
+        <loading v-else></loading>
+      </section>
+
+      <menu>
+        <button-purple @click="handlerCloseModal">{{ $t('auth.buttons.close') }}</button-purple>
+      </menu>
+    </section>
+>>>>>>> master
   </teleport>
 </template>
 

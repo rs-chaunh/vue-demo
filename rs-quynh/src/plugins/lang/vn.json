@@ -1,0 +1,72 @@
+{
+  "common": {
+    "select_lang": "Ngôn ngữ",
+    "unit_price": "giờ",
+    "buttons": {
+      "refresh": "Làm mới",
+      "requests": "Yêu cầu",
+      "all_coaches": "Người hướng dẫn",
+      "login_to_register": "Đăng nhập để tham gia đội ngũ người hướng dẫn",
+      "register": "Đăng ký trở thành người hướng dẫn"
+    },
+    "form": {
+      "email": "E-Mail",
+      "message": "Lời nhắn",
+      "password": "Mật khẩu"
+    }
+  },
+  "auth": {
+    "buttons": {
+      "login": "Đăng nhập",
+      "signup": "Đăng ký",
+      "logout": "Đăng xuất",
+      "instead": "Chuyển sang {action}",
+      "close": "Đóng"
+    },
+    "labels": {
+      "authenticating": "Đang xác thực",
+      "errors": "Đã xảy ra lỗi"
+    },
+    "errors": {
+      "form": "Vui lòng nhập địa chỉ email và mật khẩu hợp lệ (ít nhất 6 ký tự).",
+      "authen": "Không xác thực được. Kiểm tra dữ liệu đăng nhập của bạn."
+    }
+  },
+  "requests": {
+    "title": "Yêu cầu đã nhận",
+    "not_requests": "Bạn không nhận được yêu cầu nào!" 
+  },
+  "coach": {
+    "buttons": {
+      "contact": "Liên hệ",
+      "view_details": "Xem chi tiết",
+      "send_messages": "Gửi lời nhắn"
+    },
+    "contact": {
+      "title": "Bạn có quan tâm? Hãy liên hệ ngay!"
+    },
+    "not_coach": "Không tìm thấy người hướng dẫn."
+  },
+  "register": {
+    "title": "Đăng ký ngay để trở thành người hướng dẫn!",
+    "labels": {
+      "firstname": "Tên",
+      "lastname": "Họ",
+      "description": "Giới thiệu bản thân",
+      "hourlyrate": "Mức lương theo giờ",
+      "areas": "Lĩnh vực chuyên môn"
+    },
+    "buttons": {
+      "submit": "Đăng ký"
+    },
+    "errors": {
+      "empty": "{field} không được để trống.",
+      "capitalize_letter": "{field} phải ghi hoa chữ cái đầu tiên.",
+      "min_length": "{field} phải có ít nhất {number} ký tự.",
+      "max_length": "{field} chỉ được có nhiều nhất {number} ký tự.",
+      "is_number": "{field} phải là một số lớn hơn 0.",
+      "selected": "Ít nhất một chuyên môn phải được chọn.",
+      "all": "Vui lòng kiểm tra tất cả các lỗi trên và gửi lại."
+    }
+  }
+}

@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <div class="card">
       <form>
         <form-control
@@ -20,6 +21,18 @@
           :id="'password'"
           :label="'Password'"
         >
+=======
+    <card>
+      <form @submit.prevent="handlerSubmitAuthForm">
+        <form-control :id="'email'" :label="$t('common.form.email')">
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            v-model="email" />
+        </form-control>
+        <form-control :id="'password'" :label="$t('common.form.password')">
+>>>>>>> master
           <input
             type="password"
             id="password"
@@ -28,6 +41,7 @@
             @blur="validatePassword"
           />
         </form-control>
+<<<<<<< HEAD
         <p v-if="isError">
           Please enter a valid email and password (must be at least 6 characters
           long).
@@ -38,6 +52,20 @@
         <custom-button @click.prevent="handlerChangeType" type="transparent">{{
           isHasAccount ? "Signup instead" : "Login instead"
         }}</custom-button>
+=======
+        <p v-if="errors">
+         {{ $t('auth.errors.form') }}
+        </p>
+        
+        <button-purple v-if="isHasAccount">{{ $t('auth.buttons.login') }}</button-purple>
+        <button-purple v-else>{{ $t('auth.buttons.signup') }}</button-purple>
+
+        <button-transparent @click="handlerChangeType">
+          {{ $t('auth.buttons.instead', { 
+            action: isHasAccount ? $t('auth.buttons.signup') :  $t('auth.buttons.login')
+          }) }}
+        </button-transparent>
+>>>>>>> master
       </form>
     </div>
     <auth-modal

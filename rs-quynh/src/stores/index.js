@@ -4,6 +4,7 @@ import coaches from "./modules/coaches";
 import loading from "./modules/loading";
 import requests from "./modules/requests"
 
+
 const store = new createStore({
   modules: {
     auth,
