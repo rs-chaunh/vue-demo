@@ -1,3 +1,4 @@
+//TODO đặt tên file là CoachRegister thì hợp lí hơn
 <template>
   <div id="coach-create">
     <coach-card>
@@ -14,7 +15,9 @@ export default {
   methods: {
     registerCoach(data) {
       this.$store.dispatch("coaches/registerCoach", data);
-      this.$router.replace("/coaches");
+      this.$router.replace("/coaches"); 
+      //TODO tại sao lại dùng router replace
+      //TODO nên redirect theo name của URL, url path sau này có thể bị thay đổi
     },
   },
 };
