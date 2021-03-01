@@ -3,7 +3,7 @@
     <section>
       <card>
         <h2>{{ fullname }}</h2>
-        <h3>${{ coach.hourlyRate }}/hour</h3>
+        <h3>${{ coach && coach.hourlyRate }}/hour</h3>
       </card>
     </section>
 
@@ -13,7 +13,7 @@
           <h2>Interested? Reach out now!</h2>
           <custom-button
             type="purple"
-            :href="`/coaches/${$route.params.id}/contact`"
+            :href="{ name: 'CoachesDetailContact', params: { id: $route.params.id }}"
             >Contact</custom-button
           >
         </header>
@@ -23,7 +23,7 @@
     </section>
 
     <section>
-      <card>
+      <card v-if="coach">
         <badge
           v-for="(area, index) of coach.areas"
           :area="area"
@@ -37,7 +37,7 @@
 
 <script>
 import Card from "../commons/Card.vue";
-import CustomButton from "../commons/CustomButton.vue";
+import CustomButton from "../commons/CustomButton";
 import Badge from "../commons/Badge.vue";
 
 export default {
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     fullname() {
-      return this.coach.firstName + " " + this.coach.lastName;
+      return this.coach ? this.coach.firstName + " " + this.coach.lastName : "";
     },
   },
 };

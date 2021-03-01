@@ -7,8 +7,8 @@
       </header>
 
       <section>
-        <p v-if="errorsAuth">Failed to authenticate. Check your login data.</p>
-        <loading v-else></loading>
+        <loading v-if="isLoading"></loading>
+        <p v-else-if="errorsAuth">Failed to authenticate. Check your login data.</p>
       </section>
 
       <menu>
@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     errorsAuth() {
-      return this.$store.getters.errors;
+      return this.$store.getters.isError;
     },
     isLoading() {
       return this.$store.getters.getIsLoading;

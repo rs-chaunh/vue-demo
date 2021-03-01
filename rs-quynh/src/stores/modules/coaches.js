@@ -3,6 +3,7 @@ import router from "../../router";
 
 const state = {
   coaches: [],
+  coachDetail: [],
   dataAreas: [
     { id: "frontend", name: "Frontend Development" },
     { id: "backend", name: "Backend Development" },
@@ -13,9 +14,10 @@ const state = {
 const getters = {
   getCoaches: (state) => state.coaches,
   getDataAreas: (state) => state.dataAreas,
+  getCoachDetail: (state) => state.coachDetail,
   getCoachById: (state) => (id) => {
-    return state.coaches.find((coach) => coach.id === id)
-  }
+    return state.coaches.find((coach) => coach.id === id);
+  },
 };
 
 const mutations = {
@@ -24,6 +26,9 @@ const mutations = {
   },
   ADD_NEW_COACH(state, coach) {
     state.coaches.push(coach);
+  },
+  SET_COACH_DETAIL(state, coach) {
+    state.coachDetail = coach;
   },
 };
 
@@ -47,13 +52,23 @@ const actions = {
         console.log(e);
       });
   },
+  getCoachById({ commit }, id) {
+    axios
+      .get(
+        `https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/coaches/${id}.json`
+      )
+      .then((response) => {
+        commit("SET_COACH_DETAIL", { ...response.data, id: id });
+      })
+      .catch((e) => console.log(e));
+  },
   addNewCoach({ commit }, coach) {
     axios
       .post(
         `https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/coaches.json`,
         {
           ...coach,
-          userId: localStorage.getItem("userId")
+          userId: localStorage.getItem("userId"),
         }
       )
       .then(() => {

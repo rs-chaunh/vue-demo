@@ -23,13 +23,13 @@
           <custom-button
             v-if="!isAuthenticated"
             type="purple"
-            :href="'/auth?redirect=register'"
+            :href="{ name: 'Auth', query: { redirect: 'register' }}"
             >Login to Register as Coach</custom-button
           >
           <custom-button
             v-else-if="!isHadRegisterACoach"
             type="purple"
-            :href="'/register'"
+            :href="{ name: 'Register' }"
             >Register as Coach</custom-button
           >
         </div>
@@ -48,7 +48,7 @@
 
 <script>
 import Card from "../commons/Card.vue";
-import CustomButton from "../commons/CustomButton.vue";
+import CustomButton from "../commons/CustomButton";
 import FilterOption from "../commons/FilterOption.vue";
 import CoachesItem from "./CoachesItem.vue";
 import Loading from "../commons/Loading.vue";

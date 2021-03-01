@@ -1,7 +1,7 @@
 <template>
   <div>
     <card>
-      <form @submit.prevent="handlerSubmitAuthForm">
+      <form>
         <form-control
           :error="dataForm.email.error ? true : false"
           :id="'email'"
@@ -39,10 +39,9 @@
           long).
         </p>
 
-        <custom-button v-if="isHasAccount" type="purple">Login</custom-button>
-        <custom-button v-else type="purple">Signup</custom-button>
+        <custom-button @click.prevent="handlerSubmitAuthForm" type="purple">{{ isHasAccount ? "Login " : "Signup" }}</custom-button>
 
-        <custom-button @click="handlerChangeType" type="transparent">{{
+        <custom-button @click.prevent="handlerChangeType" type="transparent">{{
           isHasAccount ? "Signup instead" : "Login instead"
         }}</custom-button>
       </form>
@@ -101,11 +100,6 @@ export default {
     },
     handlerCloseModal: {
       type: Function,
-    },
-  },
-  computed: {
-    isAuthenticating() {
-      return this.$store.getters.isAuthenticating;
     },
   },
   watch: {
