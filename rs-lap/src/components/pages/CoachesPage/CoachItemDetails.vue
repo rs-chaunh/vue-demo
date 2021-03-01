@@ -3,13 +3,17 @@
         <section>
             <base-card>
                 <h2>{{ fullName }}</h2>
-                <h3>${{ coachDetails.hourlyRate }}/hour</h3>
+                <h3>
+                    ${{ coachDetails.hourlyRate }}/{{
+                        $t("common.labels.hour")
+                    }}
+                </h3>
             </base-card>
         </section>
         <section>
             <base-card>
                 <header>
-                    <h2>Interested? Reach out now!</h2>
+                    <h2>{{ $t("coach_item.labels.interested") }}</h2>
                     <base-button
                         :type="'link'"
                         :path="'/coaches/' + $route.params.id + '/contact'"
@@ -18,7 +22,7 @@
                             id: $route.params.id
                         }"
                     >
-                        Contact
+                        {{ $t("common.buttons.contact") }}
                     </base-button>
                 </header>
                 <transition name="animate-child">
@@ -49,8 +53,8 @@ import BaseButton from "../../commons/BaseButton";
 export default {
     data() {
         return {
-            coachDetails: {},
-        }
+            coachDetails: {}
+        };
     },
     components: {
         BaseCard,
@@ -59,7 +63,8 @@ export default {
     },
     computed: {
         fullName() {
-            var name = this.coachDetails.firstName + " " + this.coachDetails.lastName;
+            var name =
+                this.coachDetails.firstName + " " + this.coachDetails.lastName;
             return name
                 .split(" ")
                 .filter(e => e)
@@ -68,10 +73,15 @@ export default {
                         e.substr(0, 1).toUpperCase() + e.substr(1).toLowerCase()
                 )
                 .join(" ");
-        },
+        }
     },
     created() {
-        axios.get("https://find-your-coach-d614f-default-rtdb.firebaseio.com/coaches/" + this.$route.params.id + ".json")
+        axios
+            .get(
+                "https://find-your-coach-d614f-default-rtdb.firebaseio.com/coaches/" +
+                    this.$route.params.id +
+                    ".json"
+            )
             .then(response => {
                 this.coachDetails = response.data;
             })

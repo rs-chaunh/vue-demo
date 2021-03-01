@@ -9,7 +9,7 @@
             <base-card>
                 <div class="controls">
                     <base-button @click="refreshData" class="outline">
-                        Refresh
+                        {{ $t("common.buttons.refresh") }}
                     </base-button>
                     <base-button
                         v-if="!auth"
@@ -19,7 +19,7 @@
                             redirect: 'register'
                         }"
                     >
-                        Login to Register as Coach
+                        {{ $t("common.buttons.login_to_register") }}
                     </base-button>
                     <base-button
                         v-else-if="!isRegistered"
@@ -27,7 +27,7 @@
                         :path="'/register'"
                         :name="'RegisterAsCoach'"
                     >
-                        Register as Coach
+                        {{ $t("common.buttons.register_as_coach") }}
                     </base-button>
                 </div>
                 <base-loading v-if="$store.state.loading"></base-loading>
@@ -38,7 +38,7 @@
                         :coach="coach"
                     ></coach-item>
                 </ul>
-                <h1 v-else>No coaches found.</h1>
+                <h1 v-else>{{ $t('common.labels.no_coach') }}</h1>
             </base-card>
         </section>
     </div>
@@ -59,13 +59,16 @@ export default {
         BaseCard,
         BaseLoading,
         CoachItem,
-        CoachFilter,
+        CoachFilter
     },
     computed: {
         filterCoaches() {
             return this.$store.state.coaches.filter(item => {
                 for (let i = 0; i < item.areas.length; i++) {
-                    if (this.$store.state.filterOption.indexOf(item.areas[i]) != -1)
+                    if (
+                        this.$store.state.filterOption.indexOf(item.areas[i]) !=
+                        -1
+                    )
                         return true;
                 }
                 return false;
@@ -85,7 +88,7 @@ export default {
     },
     created() {
         this.$store.dispatch("getAllCoach");
-    },
+    }
 };
 </script>
 

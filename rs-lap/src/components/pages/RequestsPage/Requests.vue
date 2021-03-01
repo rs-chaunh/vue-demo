@@ -1,7 +1,7 @@
 <template>
     <base-card>
         <header>
-            <h2>Requests Received</h2>
+            <h2>{{ $t("requests.requests_received") }}</h2>
         </header>
         <base-loading v-if="loading"></base-loading>
         <template v-else>
@@ -14,7 +14,7 @@
                 </request-item>
             </ul>
             <h3 v-else>
-                You haven't received any requests yet!
+                {{ $t('requests.no_request') }}
             </h3>
         </template>
     </base-card>

@@ -1,0 +1,81 @@
+{
+    "common": {
+        "buttons": {
+            "login_to_register": "Login to Register as Coach",
+            "register_as_coach": "Register as Coach",
+            "refresh": "Refresh",
+            "contact": "Contact",
+            "view_details": "View Details"
+        },
+        "labels": {
+            "hour": "hour",
+            "title": "Find Your Coach",
+            "no_coach": "No coaches found."
+        }
+    },
+    "header": {
+        "all_coaches": "All Coaches",
+        "logout": "Logout",
+        "requests": "Requests"
+    },
+    "auth": {
+        "buttons": {
+            "login": "Login",
+            "signup": "Signup",
+            "signup_instead": "Signup instead",
+            "login_instead": "Login instead",
+            "close": "Close"
+        },
+        "labels": {
+            "email": "E-Mail",
+            "password": "Password",
+            "title_error": "An error occurred",
+            "title_loading": "Authenticating..."
+        },
+        "errors": {
+            "validate_form": "Please enter a valid email and password (must be at least 6 characters long).",
+            "login_failed": "Failed to authenticate. Please check your data."
+        }
+    },
+    "requests": {
+        "requests_received": "Requests Received",
+        "no_request": "You haven't received any requests yet!"
+    },
+    "coach_item": {
+        "labels": {
+            "interested": "Interested? Reach out now!"
+        },
+        "buttons": {
+            "send_message": "Send Message"
+        },
+        "form_contact": {
+            "labels": {
+                "email": "Your E-Mail",
+                "message": "Message"
+            },
+            "error": "Please enter a valid email and non-empty message."
+        }
+    },
+    "register": {
+        "labels": {
+            "title": "Register as a coach now!",
+            "firstname": "Firstname",
+            "lastname": "Lastname",
+            "description": "Description",
+            "hourly_rate": "Hourly Rate",
+            "areas_of_expertise": "Areas of Expertise"
+        },
+        "buttons": {
+            "register": "Register"
+        },
+        "errors": {
+            "not_empty": "{field} must not be empty.",
+            "capital": "{field} must capitalize the first letter.",
+            "min_length": "{field} must be over {number} characters.",
+            "max_length": "{field} must be less than {number} characters.",
+            "is_number": "{field} must be greater than 0.",
+            "selected": "At least one expertise must be selected.",
+            "has_error": "Please fix the above errors and submit again."
+        }
+    }
+}
