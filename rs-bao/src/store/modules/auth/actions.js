@@ -2,6 +2,7 @@ import axios from "axios";
 export default {
   //SIGNUP
   async signUp({ commit }, payload) {
+    //TODO đoạn url lặp lại nhiều lần thì nên bỏ vào file env, sau này có sửa thì chỉ cần sửa 1 chỗ
     const url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCqaYP7DBqX6GSKLUxrD4qbcURoXxDhV24";
 

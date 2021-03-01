@@ -5,6 +5,7 @@ import axios from "axios";
 //Để dispatch các action và commit các mutation trong global namespace, truyền { root: true } như là tham số thứ 3 vào dispatch và commit
 // import axios from "axios";
 
+//TODO cái này liên quan đến Coach thì bỏ vào file Coach hợp lí hơn chứ nhỉ
 export default {
   //send request to an email
   async contact({ commit }, payload) {

@@ -7,7 +7,7 @@ const routes = [
     path: "/coaches",
     name: "Coaches",
     component: () =>
-      import(/* webpackChunkName: "Coaches" */ "../views/coaches/Coaches.vue"),
+      import(/* webpackChunkName: "Coaches" */ "../views/coaches/Coaches.vue"), //TODO mục đích để chữ webpackChunkName là gì
   },
   {
     path: "/coaches/:id",
@@ -30,19 +30,19 @@ const routes = [
   },
   {
     path: "/register",
-    name: "register",
+    name: "register", //TODO name chỗ viết hoa chỗ không, sửa lại cho đồng bộ
     component: () =>
       import(
         /* webpackChunkName: "CoachCreate" */ "../views/coaches/CoachCreate.vue"
       ),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }, //TODO requiresAuth là động từ, sửa lại là danh từ authRequired
   },
   {
     path: "/auth",
     name: "Auth",
     component: () =>
       import(/* webpackChunkName: "Auth" */ "../views/auth/Auth.vue"),
-    meta: { requiresUnauth: true },
+    meta: { requiresUnauth: true }, //TODO tương tự phía trên
   },
   {
     path: "/requests",
@@ -71,7 +71,7 @@ const router = createRouter({
 //guard navigation
 router.beforeEach((to, _, next) => {
   if (to.meta.requiresAuth && !store.getters["auth/isLogin"]) {
-    next("/auth");
+    next("/auth"); 
   } else if (to.meta.requiresUnauth && store.getters["auth/isLogin"]) {
     next("/coaches");
   } else {

@@ -1,3 +1,5 @@
+//TODO đặt tên chưa đúng theo guildline => CoachList
+//TODO không load được data, api k chạy
 <template>
   <div>
     <section>
@@ -71,7 +73,7 @@ export default {
     };
   },
   computed: {
-    isLogin() {
+    isLogin() { //TODO login là động từ, không ai gọi là isLogin cả => isAuthenticated hoặc isAuth
       return this.$store.getters["auth/isLogin"];
     },
 
@@ -82,7 +84,7 @@ export default {
     hasCoaches() {
       return !this.loading && this.$store.getters["coaches/hasCoaches"];
     },
-    filteredCoaches() {
+    filteredCoaches() { //TODO bị lặp code
       const coaches = this.$store.getters["coaches/allCoaches"];
       return coaches.filter((coach) => {
         //check phần tử có tồn tại trong mảng ko
@@ -104,17 +106,19 @@ export default {
   },
   methods: {
     onChangeFilter(data) {
-      this.coachesFilter = data;
+      this.coachesFilter = data; //TODO filter mới là cái số nhiều, coachesFilter => coachFilters
     },
     async fetchCoaches() {
       this.loading = true;
       try {
         await this.$store.dispatch("coaches/fetchCoaches").then(() => {
-          setTimeout(() => {
+          setTimeout(() => { //TODO vì sao phải chờ 300ms
             this.loading = false;
           }, 300);
         });
       } catch (err) {
+        //TODO load fail thì cũng phải tắt loading mới show được lỗi chứ
+        //TODO cái error cũng phải có i18
         this.error = "Failed to fetch!";
       }
     },
