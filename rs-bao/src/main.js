@@ -27,15 +27,7 @@ router.beforeEach((to, from, next) => {
   console.log("TO", to.fullPath);
   console.log("FROM", from.fullPath);
   console.log("good bye");
-  // let language = to.params.lang;
-  // if (!language) {
-  //   language = "en";
-  // }
-
-  // i18n.locale = language;
-  next();
 });
-
 createApp(App)
   .use(i18n)
   .use(store)
