@@ -3,21 +3,19 @@
         <h3>{{ fullname }}</h3>
         <h4>${{ coach.hourlyRate }}/hour</h4>
         <div>
-            <badge v-for="(area, index) of coach.areas" :area="area" :key="index" ></badge>
+            <div class="badge" :class="area" v-for="(area, index) of coach.areas" :area="area" :key="index" >{{ area }}</div>
         </div>
-        <coaches-action>
+        <div class="actions">
             <custom-button type="outline" :href="{ name: 'CoachesDetailContact', params: { id: coach.id }}">Contact</custom-button>
             <custom-button type="purple" :href="{ name: 'CoachesDetail', params: { id: coach.id }} ">View Details</custom-button>
-        </coaches-action>
+        </div>
     </li>
 </template>
 
 <script>
-import CoachesAction from './CoachesAction.vue'
-import Badge from '../commons/Badge.vue'
 import CustomButton from '../commons/CustomButton'
 export default {
-    components: { Badge, CoachesAction, CustomButton },
+    components: { CustomButton },
     props: {
         coach: {
             type: Object,
@@ -50,7 +48,8 @@ export default {
         }
 
         div {
-            margin: .5rem 0;
+            margin-top: .5rem;
+            margin-bottom: .5rem;
         }
     }
 </style>

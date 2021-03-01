@@ -1,9 +1,9 @@
 <template>
   <div>
-    <card>
+    <div class="card">
       <form>
         <form-control
-          :error="dataForm.email.error ? true : false"
+          :error="dataForm.email.error"
           :id="'email'"
           :label="'E-Mail'"
         >
@@ -14,12 +14,9 @@
             v-model="email"
             @blur="validateEmail"
           />
-          <p v-if="dataForm.email.error">
-            {{ dataForm.email.error }}
-          </p>
         </form-control>
         <form-control
-          :error="dataForm.password.error ? true : false"
+          :error="dataForm.password.error"
           :id="'password'"
           :label="'Password'"
         >
@@ -30,9 +27,6 @@
             v-model="password"
             @blur="validatePassword"
           />
-          <p v-if="dataForm.password.error">
-            {{ dataForm.password.error }}
-          </p>
         </form-control>
         <p v-if="isError">
           Please enter a valid email and password (must be at least 6 characters
@@ -45,7 +39,7 @@
           isHasAccount ? "Signup instead" : "Login instead"
         }}</custom-button>
       </form>
-    </card>
+    </div>
     <auth-modal
       v-if="isOpenModal"
       :handlerCloseModal="handlerCloseModal"
@@ -55,12 +49,11 @@
 
 <script>
 import CustomButton from "../commons/CustomButton";
-import Card from "../commons/Card";
 import FormControl from "../commons/FormControl.vue";
 import AuthModal from "./AuthModal.vue";
 
 export default {
-  components: { Card, FormControl, CustomButton, AuthModal },
+  components: { FormControl, CustomButton, AuthModal },
   data() {
     return {
       email: this.dataForm.email.value,

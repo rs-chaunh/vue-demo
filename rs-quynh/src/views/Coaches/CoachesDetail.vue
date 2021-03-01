@@ -1,14 +1,14 @@
 <template>
   <div>
     <section>
-      <card>
+      <div class="card">
         <h2>{{ fullname }}</h2>
         <h3>${{ coach && coach.hourlyRate }}/hour</h3>
-      </card>
+      </div>
     </section>
 
     <section>
-      <card>
+      <div class="card">
         <header>
           <h2>Interested? Reach out now!</h2>
           <custom-button
@@ -19,26 +19,24 @@
         </header>
 
         <router-view></router-view>
-      </card>
+      </div>
     </section>
 
     <section>
-      <card v-if="coach">
-        <badge
+      <div class="card" v-if="coach">
+        <div class="badge" :class="area"
           v-for="(area, index) of coach.areas"
           :area="area"
           :key="index"
-        ></badge>
+        >{{ area }}</div>
         <p>{{ coach.description }}</p>
-      </card>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
-import Card from "../commons/Card.vue";
 import CustomButton from "../commons/CustomButton";
-import Badge from "../commons/Badge.vue";
 
 export default {
   props: {
@@ -48,9 +46,7 @@ export default {
     },
   },
   components: {
-    Card,
     CustomButton,
-    Badge,
   },
   computed: {
     fullname() {

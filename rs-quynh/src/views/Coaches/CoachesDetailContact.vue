@@ -8,9 +8,9 @@
             <textarea rows="5" name="message" id="message" v-model="message"></textarea>
         </form-control>
         <p class="error" v-if="error">Please enter a valid email and non-empty message.</p>
-        <coaches-action>
+        <div class="actions">
             <custom-button type="purple">Send Message</custom-button>
-        </coaches-action>
+        </div>
     </form>
 </div>
 </template>
@@ -18,13 +18,11 @@
 <script>
 import CustomButton from '../commons/CustomButton';
 import FormControl from '../commons/FormControl.vue';
-import CoachesAction from './CoachesAction.vue';
 
 export default {
     components: { 
         CustomButton,
         FormControl,
-        CoachesAction,
     },
     data() {
         return {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <card>
+      <div class="card">
         <h2>Find Your Coach</h2>
         <filter-option
           v-for="area in dataAreas"
@@ -11,11 +11,11 @@
           :key="area.id"
           @change="toggleFilterOption(area.id)"
         ></filter-option>
-      </card>
+      </div>
     </section>
 
     <section>
-      <card>
+      <div class="card">
         <div class="controls">
           <custom-button @click="refreshPage" type="outline"
             >Refresh</custom-button
@@ -41,13 +41,12 @@
             :coach="coach"
           ></coaches-item>
         </ul>
-      </card>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
-import Card from "../commons/Card.vue";
 import CustomButton from "../commons/CustomButton";
 import FilterOption from "../commons/FilterOption.vue";
 import CoachesItem from "./CoachesItem.vue";
@@ -76,7 +75,6 @@ export default {
     },
   },
   components: {
-    Card,
     CustomButton,
     FilterOption,
     CoachesItem,

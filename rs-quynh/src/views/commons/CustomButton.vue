@@ -14,7 +14,7 @@ export default {
       type: String,
     },
     href: {
-      type: String,
+      type: Object,
     },
   },
 };

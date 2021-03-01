@@ -1,10 +1,10 @@
 <template>
   <section>
-    <card>
+    <div class="card">
       <h2>Register as a coach now!</h2>
       <form @submit.prevent="handlerRegister">
         <form-control
-          :error="coach.firstName.error ? true : false"
+          :error="coach.firstName.error"
           :id="'firstname'"
           :label="'Firstname'"
         >
@@ -14,12 +14,9 @@
             id="firstname"
             @blur="validateFirstName"
           />
-          <p v-if="coach.firstName.error">
-            {{ coach.firstName.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.lastName.error ? true : false"
+          :error="coach.lastName.error"
           :id="'lastname'"
           :label="'Listname'"
         >
@@ -29,12 +26,9 @@
             id="lastname"
             @blur="validateLastName"
           />
-          <p v-if="coach.lastName.error">
-            {{ coach.lastName.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.description.error ? true : false"
+          :error="coach.description.error"
           :id="'description'"
           :label="'Description'"
         >
@@ -44,12 +38,9 @@
             rows="5"
             @blur="validateDescription"
           ></textarea>
-          <p v-if="coach.description.error">
-            {{ coach.description.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.hourlyRate.error ? true : false"
+          :error="coach.hourlyRate.error"
           :id="'hourlyRate'"
           :label="'Hourly Rate'"
         >
@@ -59,12 +50,9 @@
             id="hourlyRate"
             @blur="validateHourlyRate"
           />
-          <p v-if="coach.hourlyRate.error">
-            {{ coach.hourlyRate.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.areas.error ? true : false"
+          :error="coach.areas.error"
           :id="'areas'"
           :label="'Areas of Expertise'"
         >
@@ -76,25 +64,21 @@
             :key="area.id"
             @change="toggleAreas(area.id)"
           ></filter-option>
-          <p v-if="coach.areas.error">
-            {{ coach.areas.error }}
-          </p>
         </form-control>
         <p v-if="isHadError">Please fix the above errors and submit again.</p>
         <custom-button type="purple">Register</custom-button>
       </form>
-    </card>
+    </div>
   </section>
 </template>
 
 <script>
-import Card from "../commons/Card.vue";
 import FormControl from "../commons/FormControl.vue";
 import FilterOption from "../commons/FilterOption.vue";
 import CustomButton from "../commons/CustomButton.vue";
 
 export default {
-  components: { Card, FormControl, FilterOption, CustomButton },
+  components: { FormControl, FilterOption, CustomButton },
   data() {
     return {
       firstName: this.coach.firstName.value,
