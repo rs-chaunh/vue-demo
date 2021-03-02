@@ -10,10 +10,7 @@ const state = {
 const getters = {
   getRequests: (state) => state.requests,
   filterRequestsByUserId: (state) => (id) => {
-    console.log(id)
     return state.requests.find((request) => {
-      console.log(request.userId, id)
-      console.log(request.userId === id);
       return request.userId === id;
     });
   },
@@ -37,7 +34,7 @@ const mutations = {
 };
 
 const actions = {
-  getAllRequests({ commit }) {
+  getAllRequests({ commit, state }) {
     axios
       .get(
         "https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/requests.json"
@@ -49,6 +46,7 @@ const actions = {
           arrayData.push({ id: key, ...data[key] });
         }
         commit("SET_REQUESTS", arrayData);
+        console.log(state.requests);
       })
       .catch((err) => console.log(err));
   },
@@ -63,6 +61,7 @@ const actions = {
           {
             userId: payload.userId,
             listRequest: userExist.listRequest,
+            isSendNotification: false
           }
         )
         .then(() => {
@@ -77,6 +76,7 @@ const actions = {
           {
             listRequest: [payload.listRequest],
             userId: payload.userId,
+            isSendNotification: false,
           }
         )
         .then((response) => {
@@ -90,14 +90,14 @@ const actions = {
         .catch((err) => console.log(err));
     }
   },
-  notificationNewRequest({ dispatch, getters }) {
+  async notificationNewRequest({ getters, state }) {
     askForPermissioToReceiveNotifications();
-    dispatch("getAllRequests");
-    console.log(localStorage.getItem("userId"));
-    const request = getters.filterRequestsByUserId(
-      "yOuqABUQm1YZvMFcqMcrIjBOxCg1"
-    );
-    console.log(request);
+    // await dispatch("getAllRequests");
+    // console.log(localStorage.getItem("userId"));
+    const request =
+      state.requests &&
+      getters.filterRequestsByUserId("yOuqABUQm1YZvMFcqMcrIjBOxCg1");
+    // console.log(state.requests);
 
     let listNotificationNotSend;
     if (request) {

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div>
     <section>
       <div class="card">
@@ -19,19 +18,19 @@
       <div class="card">
         <div class="controls">
           <custom-button @click="refreshPage" type="outline"
-            >Refresh</custom-button
+            >{{ $t("common.buttons.refresh") }}</custom-button
           >
           <custom-button
             v-if="!isAuthenticated"
             type="purple"
             :href="{ name: 'Auth', query: { redirect: 'register' }}"
-            >Login to Register as Coach</custom-button
+            >{{ $t("common.buttons.login_to_register") }}</custom-button
           >
           <custom-button
             v-else-if="!isHadRegisterACoach"
             type="purple"
             :href="{ name: 'Register' }"
-            >Register as Coach</custom-button
+            >{{ $t("common.buttons.register") }}</custom-button
           >
         </div>
         <loading v-if="isLoading"></loading>
@@ -42,43 +41,10 @@
             :coach="coach"
           ></coaches-item>
         </ul>
+        <h1 v-else>{{ $t("coach.not_coach") }}</h1>
       </div>
     </section>
   </div>
-=======
-    <div>
-        <section>
-            <card>
-                <h2>Find Your Coach</h2>
-                <filter-option v-for="area in dataAreas"
-                    :checked="true" 
-                    :id="area.id" 
-                    :label="area.name.split(' ')[0]" 
-                    :key="area.id"
-                    @change="toggleFilterOption(area.id)"
-                ></filter-option>
-            </card>
-        </section>
-        
-        <section>
-            <card>
-                <div class="controls">
-                    <button-outline @click="refreshPage">{{ $t("common.buttons.refresh") }}</button-outline>
-                    <button-purple v-if="!isAuthenticated" :href="'/auth?redirect=register'">{{ $t("common.buttons.login_to_register") }}</button-purple>
-                    <button-purple v-else-if="!isHadRegisterACoach" :href="'/register'">{{ $t("common.buttons.register") }}</button-purple>
-                </div>
-                <loading v-if="isLoading"></loading>
-                <ul v-else-if="filterCoaches.length > 0">
-                    <coaches-item v-for="(coach, key) of filterCoaches"
-                        :key="key"
-                        :coach="coach"
-                    ></coaches-item>
-                </ul>
-                <h1 v-else>{{ $t("coach.not_coach") }}</h1>
-            </card>
-        </section>
-    </div>
->>>>>>> master
 </template>
 
 <script>
@@ -132,18 +98,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-<<<<<<< HEAD
 h2 {
   margin: 0.5rem 0;
 }
-=======
-    h1 {
-        text-align: center;
-    }
-    h2 {
-        margin: .5rem 0;
-    }
->>>>>>> master
 
 .controls {
   display: flex;

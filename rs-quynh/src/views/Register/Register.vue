@@ -1,12 +1,7 @@
 <template>
   <section>
-<<<<<<< HEAD
     <div class="card">
-      <h2>Register as a coach now!</h2>
-=======
-    <card>
       <h2>{{ $t('register.title') }}</h2>
->>>>>>> master
       <form @submit.prevent="handlerRegister">
         <form-control
           :error="coach.firstName.error"
@@ -70,13 +65,8 @@
             @change="toggleAreas(area.id)"
           ></filter-option>
         </form-control>
-<<<<<<< HEAD
-        <p v-if="isHadError">Please fix the above errors and submit again.</p>
-        <custom-button type="purple">Register</custom-button>
-=======
         <p v-if="isHadError">{{ $t('register.errors.all') }}</p>
-        <button-purple>{{ $t('register.buttons.submit') }}</button-purple>
->>>>>>> master
+        <custom-button type="purple">{{ $t('register.buttons.submit') }}</custom-button>
       </form>
     </div>
   </section>

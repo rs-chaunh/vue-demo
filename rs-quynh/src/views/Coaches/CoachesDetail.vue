@@ -1,34 +1,20 @@
 <template>
   <div>
     <section>
-<<<<<<< HEAD
       <div class="card">
         <h2>{{ fullname }}</h2>
-        <h3>${{ coach && coach.hourlyRate }}/hour</h3>
+        <h3>${{ coach && coach.hourlyRate }}/{{ $t('common.unit_price') }}</h3>
       </div>
     </section>
-=======
-        <card>
-            <h2>{{ coach.firstName + " " + coach.lastName}}</h2>
-            <h3>${{ coach.hourlyRate }}/{{ $t('common.unit_price') }}</h3>
-        </card>
-    </section>
-   <section>
-       <card>
-            <header>
-                <h2>{{ $t('coach.contact.title') }}</h2>
-                <button-purple :href="`/coaches/${$route.params.id}/contact`">{{ $t('coach.buttons.contact') }}</button-purple>
-            </header>
->>>>>>> master
 
     <section>
       <div class="card">
         <header>
-          <h2>Interested? Reach out now!</h2>
+          <h2>{{ $t('coach.contact.title') }}</h2>
           <custom-button
             type="purple"
             :href="{ name: 'CoachesDetailContact', params: { id: $route.params.id }}"
-            >Contact</custom-button
+            >{{ $t('coach.buttons.contact') }}</custom-button
           >
         </header>
 

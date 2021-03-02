@@ -88,12 +88,15 @@ export default {
           });
         }
 
-        this.$store.dispatch("notificationNewRequest")
+        // this.$store.dispatch("notificationNewRequest")
       }
     },
     handlerCloseModal() {
       this.isOpenModal = false;
     },
   },
+  beforeUnmount() {
+    this.$store.dispatch("getAllRequests")
+  }
 };
 </script>

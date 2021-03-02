@@ -1,16 +1,15 @@
 <template>
   <teleport to="body">
     <div class="backdrop"></div>
-<<<<<<< HEAD
     <transition name="modal">
         <section v-if="isLoading" class="modal">
-          <header><h2>Authenticating</h2></header>
+          <header><h2>{{$t('auth.labels.authenticating')}}</h2></header>
           <section>
             <loading></loading>
           </section>
           <menu>
             <custom-button @click="handlerCloseModal" type="purple"
-              >Close</custom-button
+              >{{ $t('auth.buttons.close') }}</custom-button
             >
           </menu>
         </section>
@@ -18,34 +17,18 @@
     <transition name="modal">
         <section v-if="errorsAuth" class="modal">
           <header>
-            <h2>An error occurred</h2>
+            <h2>{{$t('auth.labels.errors')}}</h2>
           </header>
           <section>
-            <p>Failed to authenticate. Check your login data.</p>
+            <p>{{ $t('auth.errors.authen') }}</p>
           </section>
           <menu>
             <custom-button @click="handlerCloseModal" type="purple"
-              >Close</custom-button
+              >{{ $t('auth.buttons.close') }}</custom-button
             >
           </menu>
         </section>
     </transition>
-=======
-    <section class="modal">
-      <header>
-        <h2>{{ isLoading ? $t('auth.labels.authenticating') :  $t('auth.labels.errors') }}</h2>
-      </header>
-
-      <section>
-        <p v-if="errorsAuth">{{ $t('auth.errors.authen') }}</p>
-        <loading v-else></loading>
-      </section>
-
-      <menu>
-        <button-purple @click="handlerCloseModal">{{ $t('auth.buttons.close') }}</button-purple>
-      </menu>
-    </section>
->>>>>>> master
   </teleport>
 </template>
 
