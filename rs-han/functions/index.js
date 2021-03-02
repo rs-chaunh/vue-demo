@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const axios = require("axios").default;
 admin.initializeApp();
 let fcmToken = "";
 
@@ -25,22 +26,28 @@ exports.sendNotificationToFCMToken = functions.firestore
     console.log("fcmToken", fcmToken);
 
     if (fcmToken !== "") {
-      let message = {
+      let payload = {
         notification: {
           title: title,
           body: content,
+          click_action: "http://localhost:8080/coaches",
+          icon:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdYWXioShgsa3_D3Oxv7xIsB66yFp6a7XNLA&usqp=CAU",
         },
-        token: fcmToken,
+        to: fcmToken,
       };
-
-      await admin
-        .messaging()
-        .send(message)
-        .then((response) => {
+      const configs = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer AAAAWn6wTGs:APA91bHfA4oWTXstS-asMhOYyrAAy11VNtMBwpKbolhcSW0raopfhcww0sfrHAbRHwHW8SSx7EpEVi6fJPSbvX_37ZdhgwbDsk6_C56XR2o49uJwoPh9jyIufC3wYd5kmIltPeDYlp4c",
+        },
+      };
+      axios
+        .post("https://fcm.googleapis.com/fcm/send", payload, configs)
+        .then((res) => {
           fcmToken = "";
         })
-        .catch((error) => {
-          console.log("error sending message", error);
-        });
+        .catch((err) => console.log(err));
     }
   });

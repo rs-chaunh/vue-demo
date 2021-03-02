@@ -34,7 +34,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: "Background Message body.",
     icon: "/firebase-logo.png",
-    click_action: "http://localhost:8080/coaches",
+    click_action: "https://www.google.com.vn/",
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);

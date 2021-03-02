@@ -105,7 +105,6 @@ export default createStore({
     },
 
     addNotification({}, payload) {
-      // let db = firebase.firestore();
       db.collection("messages")
         .add({
           id: payload.id,
@@ -180,7 +179,6 @@ export default createStore({
     },
 
     deleteUsers() {
-      // let db = firebase.firestore();
       db.collection("users")
         .doc(localStorage.getItem("docID"))
         .delete()

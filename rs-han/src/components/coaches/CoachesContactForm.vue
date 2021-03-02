@@ -36,8 +36,6 @@ export default {
         email: this.email,
         message: this.message,
       });
-
-      
     },
   },
 };

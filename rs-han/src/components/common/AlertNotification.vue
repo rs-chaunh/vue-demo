@@ -1,21 +1,21 @@
 <template>
-  <section>
-    <div
-      id="alert"
-      :class="[
-        { alert: isAlert },
-        { hide: isHide },
-        { show: isShow },
-        { showAlert: isAlert },
-      ]"
-    >
-      <i class="far fa-bell"></i>
+  <div
+    id="alert"
+    :class="[
+      { alert: isAlert },
+      { hide: isHide },
+      { show: isShow },
+      { showAlert: isAlert },
+    ]"
+  >
+    <i class="far fa-bell"></i>
+    <router-link :to="{ name: 'CoachesRequest' }" @click="closeNotify()">
       <span class="msg">Notify: You recieved a request!</span>
-      <div class="close-btn" @click="closeNotify()">
-        <i class="fas fa-times"></i>
-      </div>
+    </router-link>
+    <div class="close-btn" @click="closeNotify()">
+      <i class="fas fa-times"></i>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
