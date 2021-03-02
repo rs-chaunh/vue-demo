@@ -38,27 +38,29 @@ exports.sendNotification = functions.firestore
       });
     });
 
-    let API_KEY =
-      "AAAAxIOvnHg:APA91bFXkdc6nmHwV10NDuY8FlwSX5oTLxWrX89zSlbtaMlhQP3tbdpFZZZKnzy2gAAsixG_2VfLlYfJeo94RSG3hKvIsI0YifFV1PiNLPwuJ9-9uW40RV65VR19kGTCVMqQ0Y09Xw_n";
-    axios
-      .post(
-        " https://fcm.googleapis.com/fcm/send", {
-          notification: {
-            title: title,
-            body: content.message,
-            "click_action": "http://localhost:3001/",
-            "icon": "/firebase-logo.png"
-          },
-          to: token,
-        }, {
-          headers: {
-            authorization: `key=${API_KEY}`,
-            "content-type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    if (content.idCoach == idCoachLogin) {
+      let API_KEY =
+        "AAAAxIOvnHg:APA91bFXkdc6nmHwV10NDuY8FlwSX5oTLxWrX89zSlbtaMlhQP3tbdpFZZZKnzy2gAAsixG_2VfLlYfJeo94RSG3hKvIsI0YifFV1PiNLPwuJ9-9uW40RV65VR19kGTCVMqQ0Y09Xw_n";
+      axios
+        .post(
+          " https://fcm.googleapis.com/fcm/send", {
+            notification: {
+              title: title,
+              body: content.message,
+              "click_action": "http://localhost:3001/",
+              "icon": "/firebase-logo.png"
+            },
+            to: token,
+          }, {
+            headers: {
+              authorization: `key=${API_KEY}`,
+              "content-type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    }
   })
