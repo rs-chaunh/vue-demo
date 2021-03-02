@@ -2,35 +2,34 @@
     <form @submit.prevent="handleForm">
         <div class="form-control">
             <label for="email">
-                E-Mail
+                {{ $t("auth.labels.email") }}
             </label>
             <input type="email" id="email" v-model.trim="email" />
         </div>
         <div class="form-control">
             <label for="password">
-                Password
+                {{ $t("auth.labels.password") }}
             </label>
             <input type="password" id="password" v-model.trim="password" />
         </div>
         <p v-if="isError">
-            Please enter a valid email and password (must be at least 6
-            characters long).
+            {{ $t('auth.errors.validate_form') }}
         </p>
         <template v-if="action == 'login' ">
             <base-button>
-                Login
+                {{ $t("auth.buttons.login") }}
             </base-button>
             <base-button class="flat" @click.prevent="changeAction">
-                Signup instead
+                {{ $t("auth.buttons.signup_instead") }}
             </base-button>
         </template>
 
         <template v-else>
             <base-button>
-                Signup
+                {{ $t("auth.buttons.signup") }}
             </base-button>
             <base-button class="flat" @click.prevent="changeAction">
-                Login instead
+                {{ $t("auth.buttons.login_instead") }}
             </base-button>
         </template>
     </form>
@@ -39,14 +38,14 @@
         <transition name="fade">
             <base-dialog v-if="loading">
                 <template v-slot:header>
-                    <h2>Authenticating...</h2>
+                    <h2>{{ $t('auth.labels.title_loading') }}</h2>
                 </template>
                 <template v-slot:content>
                     <base-loading></base-loading>
                 </template>
                 <template v-slot:action>
                     <base-button @click="closeNotify">
-                        Close
+                        {{ $t('auth.buttons.close')}}
                     </base-button>
                 </template>
             </base-dialog>
@@ -54,16 +53,16 @@
         <transition name="fade">
             <base-dialog v-if="!login">
                 <template v-slot:header>
-                    <h2>An error occurred</h2>
+                    <h2>{{ $t('auth.labels.title_error') }}</h2>
                 </template>
                 <template v-slot:content>
                     <p>
-                        Failed to authenticate. Check your login data.
+                        {{ $t('auth.errors.login_failed') }}
                     </p>
                 </template>
                 <template v-slot:action>
                     <base-button @click="closeNotify">
-                        Close
+                        {{ $t('auth.buttons.close')}}
                     </base-button>
                 </template>
             </base-dialog>

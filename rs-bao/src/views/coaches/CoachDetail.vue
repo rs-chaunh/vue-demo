@@ -42,6 +42,7 @@ export default {
     };
   },
   created() {
+    //TODO sao k dùng action, giữ cho component càng đơn giản càng tốt
     axios
       .get(
         `https://coaches-e0de4-default-rtdb.firebaseio.com/coaches/${this.id}.json`

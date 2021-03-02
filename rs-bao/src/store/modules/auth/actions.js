@@ -2,6 +2,7 @@ import axios from "axios";
 export default {
   //SIGNUP
   async signUp({ commit }, payload) {
+    //TODO đoạn url lặp lại nhiều lần thì nên bỏ vào file env, sau này có sửa thì chỉ cần sửa 1 chỗ
     const url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCqaYP7DBqX6GSKLUxrD4qbcURoXxDhV24";
 
@@ -11,7 +12,7 @@ export default {
       returnSecureToken: true,
     });
 
-    if (response.status !== "200") {
+    if (response.status !== 200) {
       //error
     }
 
@@ -35,7 +36,7 @@ export default {
       returnSecureToken: true,
     });
 
-    if (response.status !== "200") {
+    if (response.status !== 200) {
       //error
     }
 

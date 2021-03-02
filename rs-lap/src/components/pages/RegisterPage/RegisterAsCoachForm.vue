@@ -1,8 +1,8 @@
 <template>
-    <h2>Register as a coach now!</h2>
+    <h2>{{ $t("register.labels.title") }}</h2>
     <form @submit.prevent="registerAsCoach">
         <div :class="['form-control', { invalid: coach.firstName.error }]">
-            <label for="firstname">Firstname</label>
+            <label for="firstname">{{ $t("register.labels.firstname") }}</label>
             <input
                 v-model="coach.firstName.value"
                 type="text"
@@ -14,7 +14,7 @@
         </div>
 
         <div :class="['form-control', { invalid: coach.lastName.error }]">
-            <label for="lastname">Lastname</label>
+            <label for="lastname">{{ $t("register.labels.lastname") }}</label>
             <input
                 v-model="coach.lastName.value"
                 type="text"
@@ -26,7 +26,9 @@
         </div>
 
         <div :class="['form-control', { invalid: coach.description.error }]">
-            <label for="description">Description</label>
+            <label for="description">{{
+                $t("register.labels.description")
+            }}</label>
             <textarea
                 v-model="coach.description.value"
                 id="description"
@@ -41,7 +43,7 @@
         </div>
 
         <div :class="['form-control', { invalid: coach.hourlyRate.error }]">
-            <label for="rate">Hourly Rate</label>
+            <label for="rate">{{ $t("register.labels.hourly_rate") }}</label>
             <input
                 v-model="coach.hourlyRate.value"
                 type="number"
@@ -53,7 +55,7 @@
         </div>
 
         <div :class="['form-control', { invalid: coach.areas.error }]">
-            <h3>Areas of Expertise</h3>
+            <h3>{{ $t("register.labels.areas_of_expertise") }}</h3>
             <div>
                 <input
                     v-model="coach.areas.value"
@@ -95,9 +97,9 @@
             </div>
             <p v-if="coach.areas.error">{{ coach.areas.error }}</p>
         </div>
-        <p v-if="checkError">Please fix the above errors and submit again.</p>
+        <p v-if="checkError">{{ $t("register.errors.has_error") }}</p>
         <base-button>
-            Register
+            {{ $t("register.buttons.register") }}
         </base-button>
     </form>
 </template>
@@ -143,10 +145,25 @@ export default {
                 }
             }
             return false;
+        },
+        lang() {
+            return this.$store.state.lang;
+        }
+    },
+    watch: {
+        lang(){
+            let keys = Object.keys(this.coach);
+            keys.forEach(e => {
+                if(this.coach[e].error) {
+                    let fn = "validate" + e[0].toUpperCase() + e.substr(1);
+                    this[fn](); 
+                }
+            })
         }
     },
     methods: {
         registerAsCoach() {
+            console.log(Object.keys(this.coach));
             this.validateAll();
             if (!this.checkError) {
                 this.$store.dispatch("registerAsCoach", {
@@ -168,24 +185,33 @@ export default {
         validateFirstName() {
             this.validate(
                 "firstName",
-                "Firstname must not be empty.",
+                this.$t("register.errors.not_empty", {
+                    field: this.$t("register.labels.firstname")
+                }),
                 "isRequired"
             );
             this.validate(
                 "firstName",
-                "Firstname must capitalize the first letter",
+                this.$t("register.errors.capital", {
+                    field: this.$t("register.labels.firstname")
+                }),
                 "capitalize"
             );
         },
         validateLastName() {
             this.validate(
                 "lastName",
-                "Lastname must not be empty.",
+                this.$t("register.errors.not_empty", {
+                    field: this.$t("register.labels.lastname")
+                }),
                 "isRequired"
             );
             this.validate(
                 "lastName",
-                "Lastname must be over 3 characters.",
+                this.$t("register.errors.min_length", {
+                    field: this.$t("register.labels.lastname"),
+                    num: 3
+                }),
                 "minLength",
                 3
             );
@@ -193,32 +219,41 @@ export default {
         validateDescription() {
             this.validate(
                 "description",
-                "Description must not be empty.",
+                this.$t("register.errors.not_empty", {
+                    field: this.$t("register.labels.description")
+                }),
                 "isRequired"
             ),
-            this.validate(
-                "description",
-                "Description must be less than 100 characters long.",
-                "maxLength",
-                100
-            );
+                this.validate(
+                    "description",
+                    this.$t("register.errors.max_length", {
+                        field: this.$t("register.labels.description"),
+                        num: 100
+                    }),
+                    "maxLength",
+                    100
+                );
         },
         validateHourlyRate() {
             this.validate(
                 "hourlyRate",
-                "Rate must not be empty.",
+                this.$t("register.errors.not_empty", {
+                    field: this.$t("register.labels.hourly_rate")
+                }),
                 "isRequired"
             );
             this.validate(
                 "hourlyRate",
-                "Rate must be greater than 0.",
+                this.$t("register.errors.is_number", {
+                    field: this.$t("register.labels.hourly_rate")
+                }),
                 "isNumber"
             );
         },
         validateAreas() {
             this.validate(
                 "areas",
-                "At least one expertise must be selected.",
+                this.$t("register.errors.selected"),
                 "isRequired"
             );
         },

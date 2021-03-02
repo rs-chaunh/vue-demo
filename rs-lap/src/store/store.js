@@ -2,8 +2,8 @@ import { createStore } from "vuex";
 import axios from "axios";
 import router from "../router/router";
 import firebase from "../firebase/firebaseConfig";
-const DB_REQUESTS = firebase.ref("/requests");
-const DB_COACHES = firebase.ref("/coaches");
+const DB_REQUESTS = firebase.database().ref("/requests");
+const DB_COACHES = firebase.database().ref("/coaches");
 const API_LOGIN =
     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBviMPpTk73p83yhE6hW7swWQ7YZNOYGC8";
 const API_SIGNUP =
@@ -18,6 +18,10 @@ const store = createStore({
             coaches: [],
             requests: [],
             filterOption: ["frontend", "backend", "career"],
+            lang: JSON.parse(localStorage.getItem("lang")) || {
+                content: "English",
+                value: "en"
+            },
             login: true,
             loading: false,
             backdrop: false
@@ -65,6 +69,9 @@ const store = createStore({
         },
         SET_STATE_LOGIN(state, value) {
             state.login = value;
+        },
+        SET_STATE_LANG(state, value) {
+            state.lang = value;
         }
     },
     actions: {

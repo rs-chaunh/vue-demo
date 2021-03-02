@@ -1,0 +1,81 @@
+{
+    "common": {
+        "buttons": {
+            "login_to_register": "Đăng nhập để tham gia đội ngũ huấn luyện viên",
+            "register_as_coach": "Đăng ký trở thành huấn luyện viên",
+            "refresh": "Làm mới",
+            "contact": "Liên hệ",
+            "view_details": "Xem chi tiết"
+        },
+        "labels": {
+            "hour": "giờ",
+            "title": "Tìm kiếm huấn luyện viên của bạn",
+            "no_coach": "Không tìm thấy huấn luyện viên."
+        }
+    },
+    "header": {
+        "all_coaches": "Danh sách huấn luyện viên",
+        "logout": "Đăng xuất",
+        "requests": "Danh sách yêu cầu"
+    },
+    "auth": {
+        "buttons": {
+            "login": "Đăng nhập",
+            "signup": "Đăng ký",
+            "login_instead": "Đăng nhập ngay",
+            "signup_instead": "Đăng ký ngay",
+            "close": "Đóng"
+        },
+        "labels": {
+            "email": "Địa chỉ email",
+            "password": "Mật khẩu",
+            "title_error": "Đã xảy ra lỗi",
+            "title_loading": "Đang xác thực..."
+        },
+        "errors": {
+            "validate_form": "Vui lòng nhập tài khoản email và mật khẩu hợp lệ (phải dài ít nhất 6 ký tự).",
+            "login_failed": "Không xác thực được. Vui lòng kiểm tra dữ liệu của bạn."
+        }
+    },
+    "requests": {
+        "requests_received": "Yêu cầu nhận được",
+        "no_request": "Bạn chưa nhận được yêu cầu nào cả!"
+    },
+    "coach_item": {
+        "labels": {
+            "interested": "Bạn quan tâm? Liên hệ ngay!"
+        },
+        "buttons": {
+            "send_message": "Gửi lời nhắn"
+        },
+        "form_contact": {
+            "labels": {
+                "email": "Email của bạn",
+                "message": "Lời nhắn"
+            },
+            "error": "Vui lòng nhập email hợp lệ và không được để trống tin nhắn."
+        }
+    },
+    "register": {
+        "labels": {
+            "title": "Đăng ký để trở thành huấn luyện viên ngay!",
+            "firstname": "Tên",
+            "lastname": "Họ",
+            "description": "Giới thiệu bản thân",
+            "hourly_rate": "Mức lương theo giờ",
+            "areas_of_expertise": "Lĩnh vực chuyên môn"
+        },
+        "buttons": {
+            "register": "Đăng ký"
+        },
+        "errors": {
+            "not_empty": "{field} không được để trống.",
+            "capital": "{field} phải viết hoa chữ cái đầu.",
+            "min_length": "{field} phải có ít nhất {number} ký tự.",
+            "max_length": "{field} chỉ được có nhiều nhất {number} ký tự.",
+            "is_number": "{field} phải là một số lớn hơn 0.",
+            "selected": "Phải chọn ít nhất một lĩnh vực chuyên môn.",
+            "has_error": "Vui lòng sửa các lỗi ở phía trên và gửi lại."
+        }
+    }
+}
