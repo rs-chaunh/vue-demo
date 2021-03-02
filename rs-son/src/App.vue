@@ -3,14 +3,17 @@
     <navbar></navbar>
   </div>
   <router-view> </router-view>
+  <item-notification></item-notification>
 </template>
 
 <script>
+import ItemNotification from "./components/Common/ItemNotification.vue";
 import Navbar from "./components/Navbar";
 
 export default {
   components: {
     Navbar,
+    ItemNotification,
   },
 };
 </script>

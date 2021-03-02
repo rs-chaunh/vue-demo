@@ -11,7 +11,12 @@
           </router-link>
         </li>
         <li v-if="getTokenId != null && getTokenId != ''">
-          <router-link to="/requests"> {{ $t("request") }} </router-link>
+          <router-link to="/requests" @click.prevent="deleteNotification">
+            {{ $t("request") }}
+            <sup class="text__note">
+            {{ notificaiton.length > 0 ? `+${notificaiton.length}` : "" }}
+            </sup>
+          </router-link>
         </li>
         <li v-if="getTokenId != null && getTokenId != ''">
           <item-button @click="handleLogout()">{{ $t("logout") }}</item-button>
@@ -34,26 +39,71 @@
 
 <script>
 import ItemButton from "./Common/ItemButton";
+import firebase from "firebase/app";
+
 export default {
   components: { ItemButton },
   data() {
     return {
       checkLogin: "",
       language: localStorage.getItem("lang") ? localStorage.getItem("lang") : "gb",
+      notificaiton: [],
     };
   },
   methods: {
     handleLogout() {
-      localStorage.clear();
-      this.$store.commit("SET_TOKEN_ID", "");
-      this.$store.commit("SET_LOADING", false);
-      this.$router.push({ path: "/coaches" });
+      const db = firebase.firestore();
+      let CoachLogin = this.$store.getters.getTokenId;
+      if (CoachLogin) {
+        localStorage.clear();
+        this.$store.commit("SET_TOKEN_ID", "");
+        this.$store.commit("SET_LOADING", false);
+        this.$router.push({ path: "/coaches" });
+        db.collection("user")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if (doc.data().idCoachLogin == CoachLogin.localId) {
+                db.collection("user").doc(`${doc.id}`).delete();
+              }
+            });
+          });
+      }
+    },
+    // GET NOTIFICATION FROM FIRESTORE
+    getNotification() {
+      const db = firebase.firestore();
+      let CoachLogin = this.$store.getters.getTokenId;
+      db.collection("message")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (CoachLogin) {
+              if (doc.data().content.idCoach == CoachLogin.localId) {
+                this.notificaiton.push(doc);
+              }
+            }
+          });
+        });
+    },
+    // DEL NOTIFICATION FROM FIRESTORE WHEN CLICK VIEW REQUEST
+    deleteNotification() {
+      const db = firebase.firestore();
+      this.notificaiton.forEach((item) => {
+        db.collection("message").doc(`${item.id}`).delete();
+        // SET TO 0
+        this.notificaiton = [];
+      });
+      this.$router.push("/requests");
     },
   },
   computed: {
     getTokenId() {
       return this.$store.getters.getTokenId;
     },
+    isNotification(){
+      return this.$store.state.isNotification;
+    }
   },
   watch: {
     language: function () {
@@ -61,6 +111,9 @@ export default {
       this.$i18n.locale = this.language;
       this.$store.commit("SET_LOCALE", this.language);
     },
+  },
+  mounted() {
+    this.getNotification();
   },
 };
 </script>

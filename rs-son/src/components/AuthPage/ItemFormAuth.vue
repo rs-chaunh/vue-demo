@@ -18,7 +18,7 @@
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
       <label for="email">E-mail</label>
-      <input type="email" v-model="email" id="email"/>
+      <input type="email" v-model="email" id="email" />
     </div>
     <div class="form-control">
       <label for="password">{{ $t("pass") }}</label>
@@ -41,6 +41,8 @@ import ItemLink from "../Common/ItemLink";
 import ItemPop from "../Common/ItemPop";
 import ItemModal from "../Common/ItemModal";
 import ItemLazyLoad from "../Common/itemLazyLoad";
+import firebase from "firebase/app";
+
 export default {
   components: { ItemButton, ItemLink, ItemPop, ItemModal, ItemLazyLoad },
   data() {
@@ -55,6 +57,7 @@ export default {
       path: "",
       loading: "",
       check: "",
+      token : ''
     };
   },
   methods: {
@@ -69,7 +72,7 @@ export default {
         this.textLink = this.$i18n.messages[this.getLocale].textBtn;
       }
     },
-    handleSubmit() {
+      handleSubmit() {
       // SET TEXT FOR POPUP
       this.loading = this.$i18n.messages[this.getLocale].loading;
       this.check = this.$i18n.messages[this.getLocale].check;
@@ -86,6 +89,7 @@ export default {
         if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
           // SIGN UP
           console.log("SIGN UP");
+          
           event.preventDefault();
           this.$store.dispatch({
             type: "handleSignUp",
@@ -94,6 +98,7 @@ export default {
             data: dataPost,
             route: this.$route,
             router: this.$router,
+            token : this.token
           });
         } else {
           // LOGIN
@@ -106,12 +111,36 @@ export default {
             data: dataPost,
             route: this.$route,
             router: this.$router,
+            token : this.token
           });
         }
       }
     },
+    
+    handleSetToken() {
+      // GET TOKEN TO SEND MESS
+      const messaging = firebase.messaging();
+      messaging
+        .getToken({
+          vapidKey:
+            "BHfAYLs9Ki2M-6qa_yfRYGJNUp08A3WAjJFGWarwcTIHqir9YheKXhjfPuTmTgMq_X_wGto3DUGmyFQ716ARKaA",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            this.token = currentToken;
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+        });
+    },
   },
   created() {
+    this.handleSetToken();
     this.handleChangeAction();
   },
   computed: {

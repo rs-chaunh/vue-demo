@@ -1,6 +1,7 @@
 import {
   createStore
 } from 'vuex'
+import firebase from "firebase/app";
 
 import axios from "axios";
 
@@ -17,6 +18,7 @@ export default createStore({
     checkLogin: true,
     loading: false,
     locale : localStorage.getItem("lang") ? localStorage.getItem("lang") : "gb",
+    isNotification : false
   },
   getters: {
     getTokenId: (state) => {
@@ -69,6 +71,9 @@ export default createStore({
     },
     SET_LOADING(state, loading) {
       return state.loading = loading;
+    },
+    SET_NOTIFICATION(state, isNotification) {
+      return state.isNotification = isNotification;
     },
   },
   actions: {
@@ -151,6 +156,11 @@ export default createStore({
         console.log('SignUp CORRECTED');
         commit('SET_LOADING', false);
         commit('SET_TOKEN_ID', res.data);
+        const db = firebase.firestore();
+        db.collection("user").add({
+          token: payLoad.token,
+          idCoachLogin: res.data.localId,
+        });
         localStorage.setItem("checkLogin", JSON.stringify(res.data));
         if (payLoad.route.query.redirect) {
           payLoad.router.push({
@@ -183,6 +193,11 @@ export default createStore({
           localId: res.data.localId,
           email: res.data.email,
         };
+        const db = firebase.firestore();
+        db.collection("user").add({
+          token: payLoad.token,
+          idCoachLogin: res.data.localId,
+        });
         localStorage.setItem("checkLogin", JSON.stringify(checkLogin));
         commit('SET_TOKEN_ID', checkLogin);
         // CHECK LINK TO LOGIN OR REGISTER

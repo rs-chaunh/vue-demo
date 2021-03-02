@@ -20,6 +20,31 @@ firebase.initializeApp({
     measurementId: "G-T6KR9FX7EY"
 });
 
+// push notification with firestore local
+const db = firebase.firestore();
+if (location.hostname === "localhost") {
+    console.log("localhost");
+    db.settings({
+        host: "localhost:8080",
+        ssl: false,
+    });
+}
+
+const messaging = firebase.messaging();
+
+messaging.onMessage(() => {
+    let CoachLogin = store.getters.getTokenId;
+    if (CoachLogin) {
+        db.collection('user').get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().idCoachLogin == CoachLogin.localId) {
+                    store.commit('SET_NOTIFICATION', true);
+                }
+            })
+        })
+    }
+
+});
 
 const app = createApp(App);
 

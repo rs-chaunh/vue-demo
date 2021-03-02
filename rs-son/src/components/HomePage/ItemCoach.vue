@@ -1,7 +1,7 @@
 <template>
   <li>
     <h3>{{ itemList[1].firstName }}</h3>
-    <h4>${{ itemList[1].hourlyRate }}/{{$t('hour')}}</h4>
+    <h4>${{ itemList[1].hourlyRate }}/{{ $t("hour") }}</h4>
     <div>
       <item-badge
         v-for="(itemArea, index) in itemList[1].areas"
@@ -19,7 +19,7 @@
         }"
         class="outline"
       >
-        {{$t('contact')}}
+        {{ $t("contact") }}
       </item-link>
       <item-link
         :linkTo="{
@@ -27,7 +27,7 @@
           params: { id: itemList[0] },
         }"
       >
-        {{$t('viewDetail')}}
+        {{ $t("viewDetail") }}
       </item-link>
     </div>
   </li>
@@ -44,8 +44,10 @@ export default {
     return {
       linkToContact: "",
       linkToDetail: "",
+      token: "",
     };
   },
+  
 };
 </script>
 
