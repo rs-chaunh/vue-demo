@@ -22,7 +22,6 @@ firebase.initializeApp({
   appId: "1:388672539755:web:4cf2c81179079df409352e",
   measurementId: "G-CVE743ESLV",
 });
-
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
@@ -35,6 +34,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: "Background Message body.",
     icon: "/firebase-logo.png",
+    click_action: "http://localhost:8080/coaches",
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);

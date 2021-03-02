@@ -1,29 +1,46 @@
 const functions = require("firebase-functions");
-
 const admin = require("firebase-admin");
 admin.initializeApp();
+let fcmToken = "";
 
 exports.sendNotificationToFCMToken = functions.firestore
-  .document("messages/{a}")
-  .onWrite(async (event) => {
-    const uid = event.after.get("userUid");
-    const title = event.after.get("title");
-    const content = event.after.get("content");
-    let userDoc = await admin
+  .document("messages/{uid}")
+  .onWrite(async (change, context) => {
+    console.log(change.before.data());
+    const uid = change.after.get("id");
+    const title = change.after.get("title");
+    const content = change.after.get("content");
+    await admin
       .firestore()
-      .doc(`users/${uid}`)
-      .get();
-    let fcmToken = userDoc.get("fcm");
+      .collection("users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().userUid === uid) {
+            fcmToken = doc.data().tokens;
+          }
+        });
+      });
 
-    var message = {
-      notification: {
-        title: title,
-        body: content,
-      },
-      token:
-        "eKeLKBDh7ePrXIkZFJfvIS:APA91bEMDsfpxhvYx95CK1mBkkKZqBHqvSPTF4vqHuH_azKYxvAFMnt2IMhP4D5TRG_GoJahXAe6tCvgNRYQ8WC0pvQosmVIkhPWa1OqVOk71JdQPBfrGjL9Wpb9u2WHa2Y5KWIcfaJH",
-    };
+    console.log("fcmToken", fcmToken);
 
-    let response = await admin.messaging().send(message);
-    console.log(response);
+    if (fcmToken !== "") {
+      let message = {
+        notification: {
+          title: title,
+          body: content,
+        },
+        token: fcmToken,
+      };
+
+      await admin
+        .messaging()
+        .send(message)
+        .then((response) => {
+          fcmToken = "";
+        })
+        .catch((error) => {
+          console.log("error sending message", error);
+        });
+    }
   });

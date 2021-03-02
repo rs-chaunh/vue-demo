@@ -1,6 +1,7 @@
 <template>
   <section>
     <the-heading />
+    <alert-notification v-if="$store.state.isNotification" />
     <router-view v-slot="{ Component }">
       <transition name="animate" mode="out-in">
         <component :is="Component"></component>
@@ -10,9 +11,11 @@
 </template>
 <script>
 import TheHeading from "./components/common/TheHeading";
+import AlertNotification from "./components/common/AlertNotification";
+
 export default {
   name: "App",
-  components: { TheHeading },
+  components: { TheHeading, AlertNotification },
 };
 </script>
 

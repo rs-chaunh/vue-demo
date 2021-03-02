@@ -10,6 +10,22 @@ router.beforeEach((to, from) => {
   console.log("from page: ", from.name);
 });
 
+const db = firebase.firestore();
+if (location.hostname === "localhost") {
+  console.log("localhost");
+  db.settings({
+    host: "localhost:8081",
+    ssl: false,
+  });
+}
+
+const messaging = firebase.messaging();
+
+messaging.onMessage((payload) => {
+  console.log(" message ", payload);
+  store.commit("SET_IS_NOTIFICATION", true);
+});
+
 createApp(App)
   .use(store)
   .use(router)

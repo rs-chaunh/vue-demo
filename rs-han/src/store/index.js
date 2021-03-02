@@ -3,7 +3,12 @@ import router from "../router";
 import axios from "axios";
 import firebase from "../firebase";
 import "firebase/auth";
+import "firebase/messaging";
+
 import i18n from "../plugins/i18n";
+
+const messaging = firebase.messaging();
+let db = firebase.firestore();
 
 export default createStore({
   state: {
@@ -19,14 +24,21 @@ export default createStore({
     lang: localStorage.getItem("lang") || "gb",
     errorAuth: null,
     checkValid: false,
+    isNotification: false,
   },
   getters: {
     allCoaches: (state) => {
-      return state.coaches.filter(
-        (coaches, i) => state.areas.indexOf(coaches.areas[i]) != -1
-      );
+      return state.coaches.filter((coaches) => {
+        let flag = false;
+        for (let i = 0; i < coaches.areas.length; i++) {
+          if (state.areas.indexOf(coaches.areas[i]) != -1) {
+            flag = true;
+            break;
+          }
+        }
+        return flag;
+      });
     },
-    checkLogin: (state) => state.auth != null,
   },
   actions: {
     async getCoaches({ commit }) {
@@ -75,7 +87,7 @@ export default createStore({
       }
     },
 
-    async sendRequest({}, payload) {
+    async sendRequest({ dispatch }, payload) {
       try {
         await axios
           .post("https://my-coaches-default-rtdb.firebaseio.com/request.json", {
@@ -88,6 +100,25 @@ export default createStore({
       } catch (error) {
         console.log(error);
       }
+      await dispatch("addNotification", payload);
+      router.push({ name: "Coaches" });
+    },
+
+    addNotification({}, payload) {
+      // let db = firebase.firestore();
+      db.collection("messages")
+        .add({
+          id: payload.id,
+          title: "You receive a notification from email : " + payload.email,
+          content: payload.message,
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+          localStorage.setItem("docID", docRef.id);
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
     },
 
     async registerCoaches({ dispatch, commit }, payload) {
@@ -140,11 +171,25 @@ export default createStore({
         });
     },
 
-    logout({ commit }) {
+    async logout({ dispatch, commit }) {
       localStorage.removeItem("userID");
-      localStorage.removeItem("token");
       commit("SET_IS_REGISTER", false);
       commit("TOGGLE_AUTH", null);
+      await dispatch("deleteUsers");
+      localStorage.removeItem("docID");
+    },
+
+    deleteUsers() {
+      // let db = firebase.firestore();
+      db.collection("users")
+        .doc(localStorage.getItem("docID"))
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
     },
 
     checkUserRegister({ commit, state }, payload) {
@@ -157,8 +202,9 @@ export default createStore({
       }
     },
 
-    loginOrSignup({ dispatch, commit }, payload) {
+    async loginOrSignup({ dispatch, commit }, payload) {
       let method;
+      let userID;
       if (payload.isLogin) {
         method = firebase
           .auth()
@@ -174,11 +220,12 @@ export default createStore({
         commit("SET_CHECK_VALID", false);
         commit("SET_OPEN_DIALOG", true);
         commit("SET_LOADING_DIALOG", true);
-        method
+        await method
           .then((userCredential) => {
-            var user = userCredential.user;
-            commit("TOGGLE_AUTH", user.uid);
-            localStorage.setItem("userID", user.uid);
+            userID = userCredential.user.uid;
+            commit("TOGGLE_AUTH", userID);
+            localStorage.setItem("userID", userID);
+            dispatch("getTokenFCM", userID);
             setTimeout(() => {
               commit("SET_OPEN_DIALOG", false);
               commit("SET_LOADING_DIALOG", false);
@@ -193,6 +240,37 @@ export default createStore({
             dispatch("errorLoginAndSignup", error.message);
           });
       }
+    },
+
+    getTokenFCM({}, userID) {
+      messaging
+        .getToken({
+          vapidKey:
+            "BKJRY0TZ_tn1Afod5lvQNuxlb63cqNxNfBdCq1UzLLCfemeVUFmrlBzOuWSmG3TktVRmyk862XGhDEgD5UWnvTM",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            localStorage.setItem("fcmToken", currentToken);
+            db.collection("users")
+              .add({
+                tokens: currentToken,
+                userUid: userID,
+              })
+              .then((docRef) => {
+                localStorage.setItem("docID", docRef.id);
+              })
+              .catch((error) => {
+                console.error("Error adding document: ", error);
+              });
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+        });
     },
 
     changLanguage({ commit }, payload) {
@@ -258,6 +336,10 @@ export default createStore({
 
     SET_LANGUAGE(state, payload) {
       state.lang = payload;
+    },
+
+    SET_IS_NOTIFICATION(state, payload) {
+      state.isNotification = payload;
     },
   },
 });
