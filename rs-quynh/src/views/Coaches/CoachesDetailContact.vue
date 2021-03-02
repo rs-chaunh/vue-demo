@@ -8,15 +8,9 @@
             <textarea rows="5" name="message" id="message" v-model="message"></textarea>
         </form-control>
         <p class="error" v-if="error">Please enter a valid email and non-empty message.</p>
-<<<<<<< HEAD
         <div class="actions">
-            <custom-button type="purple">Send Message</custom-button>
+            <custom-button type="purple">{{ $t('coach.buttons.send_messages') }}</custom-button>
         </div>
-=======
-        <coaches-action>
-            <button-purple>{{ $t('coach.buttons.send_messages') }}</button-purple>
-        </coaches-action>
->>>>>>> master
     </form>
 </div>
 </template>

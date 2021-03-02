@@ -12,9 +12,7 @@ import TheHeading from './views/layouts/TheHeading.vue'
 
 export default {
   name: 'App',
-  components: {
-    TheHeading
-  }
+  components: { TheHeading }
 }
 </script>
 

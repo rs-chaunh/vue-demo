@@ -1,12 +1,11 @@
 <template>
   <div>
-<<<<<<< HEAD
     <div class="card">
       <form>
         <form-control
           :error="dataForm.email.error"
           :id="'email'"
-          :label="'E-Mail'"
+          :label="$t('common.form.email')"
         >
           <input
             type="email"
@@ -19,20 +18,8 @@
         <form-control
           :error="dataForm.password.error"
           :id="'password'"
-          :label="'Password'"
+          :label="$t('common.form.password')"
         >
-=======
-    <card>
-      <form @submit.prevent="handlerSubmitAuthForm">
-        <form-control :id="'email'" :label="$t('common.form.email')">
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            v-model="email" />
-        </form-control>
-        <form-control :id="'password'" :label="$t('common.form.password')">
->>>>>>> master
           <input
             type="password"
             id="password"
@@ -41,47 +28,39 @@
             @blur="validatePassword"
           />
         </form-control>
-<<<<<<< HEAD
         <p v-if="isError">
-          Please enter a valid email and password (must be at least 6 characters
-          long).
+          {{ $t("auth.errors.form") }}
         </p>
 
-        <custom-button @click.prevent="handlerSubmitAuthForm" type="purple">{{ isHasAccount ? "Login " : "Signup" }}</custom-button>
+        <custom-button @click.prevent="handlerSubmitAuthForm" type="purple">{{
+          isHasAccount ? $t("auth.buttons.login") : $t("auth.buttons.signup")
+        }}</custom-button>
 
         <custom-button @click.prevent="handlerChangeType" type="transparent">{{
-          isHasAccount ? "Signup instead" : "Login instead"
+          $t("auth.buttons.instead", {
+            action: isHasAccount
+              ? $t("auth.buttons.signup")
+              : $t("auth.buttons.login"),
+          })
         }}</custom-button>
-=======
-        <p v-if="errors">
-         {{ $t('auth.errors.form') }}
-        </p>
-        
-        <button-purple v-if="isHasAccount">{{ $t('auth.buttons.login') }}</button-purple>
-        <button-purple v-else>{{ $t('auth.buttons.signup') }}</button-purple>
-
-        <button-transparent @click="handlerChangeType">
-          {{ $t('auth.buttons.instead', { 
-            action: isHasAccount ? $t('auth.buttons.signup') :  $t('auth.buttons.login')
-          }) }}
-        </button-transparent>
->>>>>>> master
       </form>
     </div>
-    <auth-modal
+    <modal-notification
       v-if="isOpenModal"
       :handlerCloseModal="handlerCloseModal"
-    ></auth-modal>
+      :textError="$t('auth.errors.authen')"
+    >
+    </modal-notification>
   </div>
 </template>
 
 <script>
 import CustomButton from "../commons/CustomButton";
 import FormControl from "../commons/FormControl.vue";
-import AuthModal from "./AuthModal.vue";
+import ModalNotification from "../commons/ModalNotification.vue";
 
 export default {
-  components: { FormControl, CustomButton, AuthModal },
+  components: { FormControl, CustomButton, ModalNotification },
   data() {
     return {
       email: this.dataForm.email.value,
@@ -121,6 +100,14 @@ export default {
     },
     handlerCloseModal: {
       type: Function,
+    },
+  },
+  computed: {
+    errorsAuth() {
+      return this.$store.getters.isError;
+    },
+    isLoading() {
+      return this.$store.getters.isLoading;
     },
   },
   watch: {

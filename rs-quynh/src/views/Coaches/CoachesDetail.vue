@@ -1,34 +1,23 @@
 <template>
   <div>
     <section>
-<<<<<<< HEAD
       <div class="card">
         <h2>{{ fullname }}</h2>
-        <h3>${{ coach && coach.hourlyRate }}/hour</h3>
+        <h3>${{ coach && coach.hourlyRate }}/{{ $t("common.unit_price") }}</h3>
       </div>
     </section>
-=======
-        <card>
-            <h2>{{ coach.firstName + " " + coach.lastName}}</h2>
-            <h3>${{ coach.hourlyRate }}/{{ $t('common.unit_price') }}</h3>
-        </card>
-    </section>
-   <section>
-       <card>
-            <header>
-                <h2>{{ $t('coach.contact.title') }}</h2>
-                <button-purple :href="`/coaches/${$route.params.id}/contact`">{{ $t('coach.buttons.contact') }}</button-purple>
-            </header>
->>>>>>> master
 
     <section>
       <div class="card">
         <header>
-          <h2>Interested? Reach out now!</h2>
+          <h2>{{ $t("coach.contact.title") }}</h2>
           <custom-button
             type="purple"
-            :href="{ name: 'CoachesDetailContact', params: { id: $route.params.id }}"
-            >Contact</custom-button
+            :href="{
+              name: 'CoachesDetailContact',
+              params: { id: $route.params.id },
+            }"
+            >{{ $t("coach.buttons.contact") }}</custom-button
           >
         </header>
 
@@ -38,15 +27,24 @@
 
     <section>
       <div class="card" v-if="coach">
-        <div class="badge" :class="area"
+        <div
+          class="badge"
+          :class="area"
           v-for="(area, index) of coach.areas"
           :area="area"
           :key="index"
-        >{{ area }}</div>
+        >
+          {{ area }}
+        </div>
         <p>{{ coach.description }}</p>
       </div>
     </section>
   </div>
+  <modal-notification
+    v-if="isError"
+    :handlerCloseModal="handlerCloseModal"
+    :textError="'Lỗi rồi nhé bạn ơi'"
+  ></modal-notification>
 </template>
 
 <script>
@@ -66,6 +64,9 @@ export default {
     fullname() {
       return this.coach ? this.coach.firstName + " " + this.coach.lastName : "";
     },
+    isError() {
+      return this.$store.getters.isError;
+    }
   },
 };
 </script>

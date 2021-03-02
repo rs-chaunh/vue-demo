@@ -2,6 +2,7 @@
   <coaches-detail-contact
     :sendNewRequest="sendNewRequest"
     :error="error"
+    :handlerCloseModal="handlerCloseModal"
   ></coaches-detail-contact>
 </template>
 
@@ -25,6 +26,9 @@ export default {
           userId: coach ? coach.userId : "",
         });
       }
+    },
+    handlerCloseModal() {
+      this.$store.commit("SET_IS_ERROR", false);
     },
   },
   created() {

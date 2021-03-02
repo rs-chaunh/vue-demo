@@ -1,27 +1,16 @@
 <template>
   <section>
     <nav>
-<<<<<<< HEAD
       <div class="card">
-        <h2>Requests Received</h2>
-        <ul v-if="listRequest">
-=======
-      <card>
         <h2>{{ $t('requests.title')}}</h2>
         <ul v-if="listRequest.length > 0">
->>>>>>> master
           <li v-for="(request, index) in listRequest" :key="index">
             <a :href="`mailto: ${request.email}`">{{ request.email }}</a>
             <p>{{ request.message }}</p>
           </li>
         </ul>
-<<<<<<< HEAD
-        <h3 v-else>You haven't received any requests yet!</h3>
-      </div>
-=======
         <h3 v-else>{{ $t('requests.not_requests')}}</h3>
-      </card>
->>>>>>> master
+      </div>
     </nav>
   </section>
 </template>

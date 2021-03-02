@@ -91,7 +91,11 @@ export default {
     },
     handlerCloseModal() {
       this.isOpenModal = false;
+      this.$store.commit("SET_IS_ERROR", false);
     },
   },
+  beforeUnmount () {
+    this.$store.dispatch("getAllRequests")
+  }
 };
 </script>

@@ -1,17 +1,12 @@
 <template>
   <section>
-<<<<<<< HEAD
     <div class="card">
-      <h2>Register as a coach now!</h2>
-=======
-    <card>
-      <h2>{{ $t('register.title') }}</h2>
->>>>>>> master
+      <h2>{{ $t("register.title") }}</h2>
       <form @submit.prevent="handlerRegister">
         <form-control
           :error="coach.firstName.error"
           :id="'firstname'"
-          :label="$t('register.labels.firstname') "
+          :label="$t('register.labels.firstname')"
         >
           <input
             v-model="firstName"
@@ -70,15 +65,18 @@
             @change="toggleAreas(area.id)"
           ></filter-option>
         </form-control>
-<<<<<<< HEAD
-        <p v-if="isHadError">Please fix the above errors and submit again.</p>
-        <custom-button type="purple">Register</custom-button>
-=======
-        <p v-if="isHadError">{{ $t('register.errors.all') }}</p>
-        <button-purple>{{ $t('register.buttons.submit') }}</button-purple>
->>>>>>> master
+        <p v-if="isHadError">{{ $t("register.errors.all") }}</p>
+        <custom-button type="purple">{{
+          $t("register.buttons.submit")
+        }}</custom-button>
       </form>
     </div>
+    <modal-notification
+      v-if="isOpenModal"
+      :handlerCloseModal="handlerCloseModal"
+      :textError="'Lỗi rồi nhé bạn ơi'"
+    >
+    </modal-notification>
   </section>
 </template>
 
@@ -86,9 +84,10 @@
 import FormControl from "../commons/FormControl.vue";
 import FilterOption from "../commons/FilterOption.vue";
 import CustomButton from "../commons/CustomButton.vue";
+import ModalNotification from "../commons/ModalNotification";
 
 export default {
-  components: { FormControl, FilterOption, CustomButton },
+  components: { FormControl, FilterOption, CustomButton, ModalNotification },
   data() {
     return {
       firstName: this.coach.firstName.value,
@@ -102,6 +101,10 @@ export default {
       type: Object,
     },
     isHadError: {
+      type: Boolean,
+      default: false,
+    },
+    isOpenModal: {
       type: Boolean,
       default: false,
     },
@@ -123,6 +126,9 @@ export default {
     handlerRegister: {
       type: Function,
     },
+    handlerCloseModal: {
+      type: Function,
+    },
     setValueType: {
       type: Function,
     },
@@ -131,11 +137,13 @@ export default {
     dataAreas() {
       return this.$store.getters.getDataAreas;
     },
+    isError() {
+      return this.$store.getters.isError;
+    },
   },
   methods: {
     toggleAreas(option) {
       this.$emit("toggleAreas", option);
-      
     },
   },
   watch: {

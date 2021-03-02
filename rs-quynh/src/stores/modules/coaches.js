@@ -35,6 +35,8 @@ const mutations = {
 const actions = {
   getAllCoaches({ commit }) {
     commit("SET_IS_LOADING", true);
+    commit("SET_IS_ERROR", false);
+
     axios
       .get(
         `https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/coaches.json`
@@ -48,11 +50,13 @@ const actions = {
         commit("SET_COACHES_DATA", arrayData);
         commit("SET_IS_LOADING", false);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
+        commit("SET_IS_ERROR", true);
       });
   },
   getCoachById({ commit }, id) {
+    commit("SET_IS_ERROR", false);
+
     axios
       .get(
         `https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/coaches/${id}.json`
@@ -60,9 +64,14 @@ const actions = {
       .then((response) => {
         commit("SET_COACH_DETAIL", { ...response.data, id: id });
       })
-      .catch((e) => console.log(e));
+      .catch(() => {
+        commit("SET_IS_ERROR", true);
+      });
   },
   addNewCoach({ commit }, coach) {
+    commit("SET_IS_LOADING", true);
+    commit("SET_IS_ERROR", false);
+
     axios
       .post(
         `https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/coaches.json`,
@@ -78,7 +87,10 @@ const actions = {
         });
         router.push({ name: "Coaches" });
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        commit("SET_IS_LOADING", false);
+        commit("SET_IS_ERROR", true);
+      });
   },
 };
 

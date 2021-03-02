@@ -6,22 +6,17 @@ const API_KEY = "AIzaSyDHWnxo0i4pcV8qpmO6pEXCq6uAbPMSBok";
 const state = {
   auth: {
     isAuthenticated: localStorage.getItem("userId") ? true : false,
-    isError: false,
   },
 };
 
 const getters = {
   isAuthenticated: (state) => state.auth.isAuthenticated,
-  isError: (state) => state.auth.isError,
 };
 
 const mutations = {
   TOGGLE_AUTH(state) {
     state.auth.isAuthenticated = !state.auth.isAuthenticated;
-  },
-  SET_IS_ERROR(state, status) {
-    state.auth.isError = status;
-  },
+  }
 };
 
 const actions = {

@@ -28,11 +28,13 @@ const mutations = {
       }
       return item;
     });
-  }
+  },
 };
 
 const actions = {
   getAllRequests({ commit }) {
+    commit("SET_IS_ERROR", false);
+
     axios
       .get(
         "https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/requests.json"
@@ -45,10 +47,13 @@ const actions = {
         }
         commit("SET_REQUESTS", arrayData);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        commit("SET_IS_ERROR", true);
+      });
   },
   sendNewRequest({ commit, getters }, payload) {
     const userExist = getters.filterRequestsByUserId(payload.userId);
+    commit("SET_IS_ERROR", false);
 
     if (userExist) {
       userExist.listRequest.push(payload.listRequest);
@@ -64,7 +69,9 @@ const actions = {
           commit("UPDATE_NEW_REQUEST", payload);
           router.push({ name: "Coaches" });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          commit("SET_IS_ERROR", true);
+        });
     } else {
       axios
         .post(
@@ -82,7 +89,9 @@ const actions = {
           });
           router.push({ name: "Coaches" });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          commit("SET_IS_ERROR", true);
+        });
     }
   },
 };

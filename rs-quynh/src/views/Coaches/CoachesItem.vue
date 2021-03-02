@@ -1,26 +1,14 @@
 <template>
     <li>
-<<<<<<< HEAD
         <h3>{{ fullname }}</h3>
-        <h4>${{ coach.hourlyRate }}/hour</h4>
-=======
-        <h3>{{ coach.firstName + " " + coach.lastName}}</h3>
         <h4>${{ coach.hourlyRate }}/{{ $t('common.unit_price') }}</h4>
->>>>>>> master
         <div>
             <div class="badge" :class="area" v-for="(area, index) of coach.areas" :area="area" :key="index" >{{ area }}</div>
         </div>
         <div class="actions">
-            <custom-button type="outline" :href="{ name: 'CoachesDetailContact', params: { id: coach.id }}">Contact</custom-button>
-            <custom-button type="purple" :href="{ name: 'CoachesDetail', params: { id: coach.id }} ">View Details</custom-button>
+            <custom-button type="outline" :href="{ name: 'CoachesDetailContact', params: { id: coach.id }}">{{ $t('coach.buttons.contact') }}</custom-button>
+            <custom-button type="purple" :href="{ name: 'CoachesDetail', params: { id: coach.id }} ">{{ $t('coach.buttons.view_details') }}</custom-button>
         </div>
-<<<<<<< HEAD
-=======
-        <coaches-action>
-            <button-outline :href="'/coaches/' + coach.id + '/contact'">{{ $t('coach.buttons.contact') }}</button-outline>
-            <button-purple :href="'/coaches/' + coach.id ">{{ $t('coach.buttons.view_details') }}</button-purple>
-        </coaches-action>
->>>>>>> master
     </li>
 </template>
 
