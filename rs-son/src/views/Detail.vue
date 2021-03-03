@@ -37,12 +37,10 @@
 </template>
 
 <script>
-import ItemBadge from "../components/Common/ItemBadge";
-import ItemCard from "../components/Common/ItemCard";
-import ItemLink from "../components/Common/ItemLink";
-// import axios from "axios";
+
+import { mapState } from 'vuex';
+
 export default {
-  components: { ItemCard, ItemBadge, ItemLink },
   data() {
     return {
       detailCoach: "",
@@ -53,13 +51,14 @@ export default {
   mounted() {
     this.id = this.$route.params.id;
     this.$store.dispatch({
-      type: "getDataDetail",
-      url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`,
+      type: "coach/getDataDetail",
+      id : this.id ,
     });
   },
   computed: {
+    ...mapState(["coach"]),
     getDataDetail() {
-      return this.$store.state.dataDetail;
+      return this.coach.dataDetail;
     },
   },
   beforeRouteLeave() {

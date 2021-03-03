@@ -27,7 +27,7 @@ export const vn = {
     errhRate_1: 'Giá tiền không được để trống',
     errhRate_2: 'Số phải lớn hơn 0.',
     errareasOf: 'Ít nhất một chuyên môn phải được chọn.',
-    errNote : 'Vui lòng sửa các lỗi trên và gửi lại.',
+    errNote: 'Vui lòng sửa các lỗi trên và gửi lại.',
     // NOT FOUND
     notFound: 'Không tìm thấy',
     notFoundContent: 'Không thể tìm thấy trang này - có thể xem tất cả',
@@ -41,6 +41,7 @@ export const vn = {
     findCoach: 'Tìm huấn luyện viên',
     // CONTACT PAGE 
     Yemail: 'E-mail của bạn',
+    email: 'Địa chỉ email',
     mess: 'Lời nhắn',
     err: 'Vui lòng nhập một email hợp lệ và tin nhắn không trống',
     send: 'Gửi',
@@ -55,6 +56,6 @@ export const vn = {
     textBtn: 'Đăng nhập',
     textLink: 'Đăng ký',
     close: ' Đóng',
-    check: ' Xảy ra lỗi...',
-    loading: ' Đang kiểm tra...',
+    titleErr: ' Xảy ra lỗi...',
+    loadingMessage: ' Đang kiểm tra...',
 }

@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
 export default {
   components: {},
   data() {
@@ -11,14 +12,16 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["auth"]),
     togglePopup() {
-      this.$store.commit("SET_LOADING", false);
-      this.$store.commit("SET_CHECK_LOGIN", true);
+      this.$store.commit("auth/SET_LOADING",false);
+      this.$store.commit("auth/SET_CHECK_LOGIN",true);
     },
   },
   computed: {
+    ...mapState(["auth"]),
     checkLoading() {
-      return this.$store.state.loading;
+      return this.auth.loading;
     },
   },
 };

@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import ItemCard from "../components/Common/ItemCard";
 export default {
-  components: { ItemCard },
   beforeRouteLeave() {
     console.log("GOODBYE");
   },

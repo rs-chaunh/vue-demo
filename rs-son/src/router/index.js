@@ -1,83 +1,77 @@
 import {
   createRouter,
   createWebHistory
-} from 'vue-router'
-import Home from '../views/Home.vue'
-import store from '../store/index'
+} from 'vue-router';
+import store from '../store/index';
 
 const routes = [{
     path: '/',
     redirect: {
       path: '/coaches',
-      name: 'Coaches'
-    }
-  }, {
+      name: 'Coaches',
+    },
+  },
+  {
     path: '/coaches',
     name: 'Coaches',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Home.vue'),
-    components: {
-      default: Home,
-    },
-    // children: [{
-    //   path: '/coaches/:id',
-    //   name: 'Detail',
-    //   component: () => import( /* webpackChunkName: "about" */ '../views/Detail.vue'),
-    // }]
+    component: () =>
+    import('../views/Coach.vue'), //FIXED
   },
   {
     path: '/auth',
     query: {
-      redirect: 'register'
+      redirect: 'register',
     },
     name: 'Auth',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Auth.vue')
-  },
-  {
-    path: '/auth',
-    name: 'Auth',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Auth.vue')
+    component: () =>
+      import('../views/Auth.vue'),
   },
   {
     path: '/coaches/:id/contact',
     name: 'Contact',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Contact.vue')
+    component: () =>
+      import('../views/Contact.vue'),
   },
   {
     path: '/register',
     name: 'RegisterCoach',
     beforeEnter: (to, from, next) => {
-      let checkCoach = localStorage.getItem('checkCoach');
-      if (store.state.tokenId != null) {
-        if (checkCoach > 0 ) {
+      let indexOfCoach = localStorage.getItem('checkCoach');
+      if (store.state.auth.tokenId != null) {
+        if (indexOfCoach > 0) { //FIXED
           next('/coaches');
         } else {
-          next()
+          next();
         }
       } else {
         next('/auth');
       }
     },
-    component: () => import( /* webpackChunkName: "about" */ '../views/RegisterCoach.vue'),
+    component: () =>
+      import('../views/RegisterCoach.vue'),
   },
   {
     path: '/detail/:id',
     name: 'Detail',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Detail.vue')
+    component: () =>
+      import('../views/Detail.vue'),
   },
   {
     path: '/requests',
     name: 'Request',
-    component: () => import( /* webpackChunkName: "about" */ '../views/Request.vue')
+    component: () =>
+      import('../views/Request.vue'),
   },
   {
     path: '/:NotFound(.*)*',
-    component: () => import( /* webpackChunkName: "about" */ '../views/NotFound.vue')
-  }
-]
+    component: () =>
+      import('../views/NotFound.vue'),
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
-export default router
+export default router;

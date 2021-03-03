@@ -10,7 +10,6 @@ export default {};
 
 <style scoped lang="scss">
 button {
-  text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
   background-color: #3a0061;

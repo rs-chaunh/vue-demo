@@ -1,0 +1,72 @@
+{
+  "common": {
+    "select_lang": "Languages",
+    "unit_price": "hour",
+    "buttons": {
+      "refresh": "Refresh",
+      "requests": "Requests",
+      "all_coaches": "All Coaches",
+      "login_to_register": "Login to Register as Coach",
+      "register": "Register as Coach"
+    },
+    "form": {
+      "email": "E-mail",
+      "message": "Message",
+      "password": "Password"
+    }
+  },
+  "auth": {
+    "buttons": {
+      "login": "Login",
+      "signup": "Signup",
+      "logout": "Logout",
+      "instead": "{action} Instead",
+      "close": "Close"
+    },
+    "labels": {
+      "authenticating": "Authenticating",
+      "errors": "An error occurred"
+    },
+    "errors": {
+      "authen": "Failed to authenticate. Check your login data.",
+      "form": "Please enter a valid email and password (must be at least 6 characters long)."
+    }
+  },
+  "requests": {
+    "title": "Requests Received",
+    "not_requests": "You haven't received any requests yet!" 
+  },
+  "coach": {
+    "buttons": {
+      "contact": "Contact",
+      "view_details": "View Details",
+      "send_messages": "Send Message"
+    },
+    "contact": {
+      "title": "Interested? Reach out now!"
+    },
+    "not_coach": "No coaches found."
+  },
+  "register": {
+    "title": "Register as a coach now!",
+    "labels": {
+      "firstname": "Firstname",
+      "lastname": "Lastname",
+      "description": "Description",
+      "hourlyrate": "Hourly Rate",
+      "areas": "Areas of Expertise"
+    },
+    "buttons": {
+      "submit": "Register"
+    },
+    "errors": {
+      "empty": "{field} must not be empty.",
+      "capitalize_letter": "{field} must capitalize the first letter.",
+      "min_length": "{field} must be over {number} characters.",
+      "max_length": "{field} must be less than {number} characters.",
+      "is_number": "{field} must be greater than 0.",
+      "selected": "At least one expertise must be selected.",
+      "all": "Please fix the above errors and submit again."
+    }
+  }
+}

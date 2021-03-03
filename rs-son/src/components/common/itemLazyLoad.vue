@@ -1,3 +1,4 @@
+//FIXED
 <template>
   <div class="center">
     <div class="lds-roller">

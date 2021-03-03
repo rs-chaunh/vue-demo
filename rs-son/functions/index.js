@@ -1,11 +1,9 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
-const firebase = require('firebase')
+const firebase = require('firebase');
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
-const {
-  event
-} = require('firebase-functions/lib/providers/analytics');
+
 const {
   default: axios
 } = require('axios');
@@ -39,7 +37,7 @@ exports.sendNotification = functions.firestore
     });
 
     if (content.idCoach == idCoachLogin) {
-      let API_KEY =
+      const API_KEY =
         "AAAAxIOvnHg:APA91bFXkdc6nmHwV10NDuY8FlwSX5oTLxWrX89zSlbtaMlhQP3tbdpFZZZKnzy2gAAsixG_2VfLlYfJeo94RSG3hKvIsI0YifFV1PiNLPwuJ9-9uW40RV65VR19kGTCVMqQ0Y09Xw_n";
       axios
         .post(
@@ -47,8 +45,8 @@ exports.sendNotification = functions.firestore
             notification: {
               title: title,
               body: content.message,
-              "click_action": "http://localhost:3001/",
-              "icon": "/firebase-logo.png"
+              click_action : `http://${content.defaultURL}/`,
+              icon: "/firebase-logo.png"
             },
             to: token,
           }, {

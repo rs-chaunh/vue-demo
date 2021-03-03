@@ -1,23 +1,24 @@
+// FIXED
 <template>
   <teleport to="body">
     <transition name="popup">
-      <item-pop :titlePopup="loading" v-if="$store.state.loading">
+      <item-pop-up :popupTitle="loadingMessage" v-if="$store.state.auth.loading">
         <item-lazy-load></item-lazy-load>
-      </item-pop>
+      </item-pop-up>
     </transition>
     <transition name="popup">
-      <item-pop :titlePopup="check" v-if="$store.state.checkLogin == false">
-        <p>{{ getTextErr }}</p>
-      </item-pop>
+      <item-pop-up :popupTitle="titleErr" v-if="$store.state.auth.checkLogin == false">
+        <p>{{ textErr }}</p>
+      </item-pop-up>
     </transition>
     <item-modal
-      v-if="$store.state.checkLogin == false || $store.state.loading == true"
+      v-if="$store.state.auth.checkLogin == false || $store.state.auth.loading == true"
     ></item-modal>
   </teleport>
 
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
-      <label for="email">E-mail</label>
+      <label for="email"> {{ $t("email") }} </label>
       <input type="email" v-model="email" id="email" />
     </div>
     <div class="form-control">
@@ -28,58 +29,43 @@
       {{ $t("errAuth") }}
     </p>
     <item-button> {{ textBtn }} </item-button>
-    <item-link @click.prevent="handleChangeAction()" class="flat" :linkTo="linkToReg">
+    <item-button @click.prevent="handleChangeAction()" class="flat">
       {{ textLink }} {{ $t("instead") }}
-    </item-link>
+    </item-button>
+    <!-- FIXED -->
   </form>
 </template>
 
 <script>
-// import axios from "axios";
-import ItemButton from "../Common/ItemButton";
-import ItemLink from "../Common/ItemLink";
-import ItemPop from "../Common/ItemPop";
-import ItemModal from "../Common/ItemModal";
-import ItemLazyLoad from "../Common/itemLazyLoad";
+import { mapMutations, mapState } from "vuex";
 import firebase from "firebase/app";
+import * as firebase_API from '../../env'
 
 export default {
-  components: { ItemButton, ItemLink, ItemPop, ItemModal, ItemLazyLoad },
   data() {
     return {
-      linkToReg: "#",
-      checkAction: false,
-      textBtn: "",
-      textLink: "",
+      doLogin: false, //FIXED
       email: "",
       password: "",
       errors: false,
-      path: "",
-      loading: "",
-      check: "",
-      token : ''
+      loadingMessage: "", //FIXED
+      titleErr: "", //FIXED
+      token: "",
     };
   },
   methods: {
+    ...mapMutations(["auth"]),
     handleChangeAction() {
-      // SET TEXT FOR BTN
-      this.checkAction = !this.checkAction;
-      if (this.checkAction) {
-        this.textBtn = this.$i18n.messages[this.getLocale].textBtn;
-        this.textLink = this.$i18n.messages[this.getLocale].textLink;
-      } else {
-        this.textBtn = this.$i18n.messages[this.getLocale].textLink;
-        this.textLink = this.$i18n.messages[this.getLocale].textBtn;
-      }
+      this.doLogin = !this.doLogin;
     },
-      handleSubmit() {
+    async handleSubmit() {
       // SET TEXT FOR POPUP
-      this.loading = this.$i18n.messages[this.getLocale].loading;
-      this.check = this.$i18n.messages[this.getLocale].check;
+      this.loadingMessage = this.$i18n.messages[this.locale].loadingMessage;
+      this.titleErr = this.$i18n.messages[this.locale].titleErr;
       // VALIDATE FORM
       if (this.email == "" || this.messages == "" || this.password.length < 6) {
         this.errors = true;
-        event.preventDefault();
+        //FIXED
       } else {
         let dataPost = {
           email: this.email,
@@ -87,43 +73,63 @@ export default {
           returnSecureToken: true,
         };
         if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
-          // SIGN UP
           console.log("SIGN UP");
-          
           event.preventDefault();
-          this.$store.dispatch({
-            type: "handleSignUp",
-            url:
-              "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCe3EbXvHvc8FM4F00XoX8Fm_hOQDDctic",
+          let result = await this.$store.dispatch({
+            type: "auth/handleSignUp",
             data: dataPost,
-            route: this.$route,
-            router: this.$router,
-            token : this.token
+            token: this.token,
           });
+          if (result) {
+            this.handleSetRouter(this.$route.query.redirect, -1);
+          } else {
+            this.$store.commit("auth/SET_CHECK_LOGIN", false);
+          }
+          //FIXED
         } else {
           // LOGIN
           console.log("LOGIN");
-          event.preventDefault();
-          this.$store.dispatch({
-            type: "handleLogin",
-            url:
-              "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCe3EbXvHvc8FM4F00XoX8Fm_hOQDDctic",
+          let result = await this.$store.dispatch({
+            type: "auth/handleLogin",
             data: dataPost,
-            route: this.$route,
-            router: this.$router,
-            token : this.token
+            token: this.token,
           });
+          if (result) {
+            // CHECK LINK TO LOGIN OR REGISTER
+            let arrCoachesTemp = this.coach.coachesTemp;
+            let userId = this.auth.tokenId;
+            let index = -1;
+            if (userId != null && arrCoachesTemp != null) {
+              index = Object.keys(arrCoachesTemp).findIndex(
+                (item) => item == userId.localId
+              );
+            }
+            // DON'T TO REGISTER PAGE IF HAVE ACCOUNT
+            this.handleSetRouter(this.$route.query.redirect,index);
+          } else {
+            this.$store.commit("auth/SET_CHECK_LOGIN", false);
+          }
         }
       }
     },
-    
+    handleSetRouter(query, index) {
+      if ((query && index == -1)) {
+        this.$router.push({
+          path: "/register",
+        });
+      } else {
+        this.$router.push({
+          path: "/coaches",
+        });
+      }
+    },
     handleSetToken() {
       // GET TOKEN TO SEND MESS
       const messaging = firebase.messaging();
       messaging
         .getToken({
           vapidKey:
-            "BHfAYLs9Ki2M-6qa_yfRYGJNUp08A3WAjJFGWarwcTIHqir9YheKXhjfPuTmTgMq_X_wGto3DUGmyFQ716ARKaA",
+          `${firebase_API.KEY_MESS}`
         })
         .then((currentToken) => {
           if (currentToken) {
@@ -144,19 +150,36 @@ export default {
     this.handleChangeAction();
   },
   computed: {
-    getTextErr() {
+    ...mapState(["auth", "coach"]),
+    textErr() {
       let text = "";
-      if (!this.$store.state.checkLogin) {
-        text = this.$i18n.messages[this.getLocale].errLoginContent;
+      if (!this.auth.checkLogin) {
+        text = this.$i18n.messages[this.locale].errLoginContent;
       }
       return text;
+    }, //FIXED
+    locale() {
+      return this.auth.locale;
     },
-    getLocale() {
-      return this.$store.state.locale;
+    textBtn() {
+      // FIXED
+      if (this.doLogin) {
+        return this.$i18n.messages[this.locale].textBtn;
+      } else {
+        return this.$i18n.messages[this.locale].textLink;
+      }
+    },
+    textLink() {
+      // FIXED
+      if (!this.doLogin) {
+        return this.$i18n.messages[this.locale].textBtn;
+      } else {
+        return this.$i18n.messages[this.locale].textLink;
+      }
     },
   },
   watch: {
-    getLocale: function () {
+    locale: function () {
       this.handleChangeAction();
     },
   },

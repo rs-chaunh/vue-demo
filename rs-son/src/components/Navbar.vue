@@ -10,15 +10,13 @@
             {{ $t("allCoaches") }}
           </router-link>
         </li>
-        <li v-if="getTokenId != null && getTokenId != ''">
+        <li v-if="tokenId != null && tokenId != ''">
           <router-link to="/requests" @click.prevent="deleteNotification">
             {{ $t("request") }}
-            <sup class="text__note">
             {{ notificaiton.length > 0 ? `+${notificaiton.length}` : "" }}
-            </sup>
           </router-link>
         </li>
-        <li v-if="getTokenId != null && getTokenId != ''">
+        <li v-if="tokenId != null && tokenId != ''">
           <item-button @click="handleLogout()">{{ $t("logout") }}</item-button>
         </li>
         <li v-else>
@@ -38,11 +36,10 @@
 </template>
 
 <script>
-import ItemButton from "./Common/ItemButton";
+import { mapMutations, mapState } from "vuex";
 import firebase from "firebase/app";
 
 export default {
-  components: { ItemButton },
   data() {
     return {
       checkLogin: "",
@@ -51,13 +48,14 @@ export default {
     };
   },
   methods: {
+    ...mapMutations("auth", ["SET_TOKEN_ID", "SET_LOCALE"]),
     handleLogout() {
       const db = firebase.firestore();
-      let CoachLogin = this.$store.getters.getTokenId;
+      let CoachLogin = this.$store.state.auth.tokenId;
       if (CoachLogin) {
         localStorage.clear();
-        this.$store.commit("SET_TOKEN_ID", "");
-        this.$store.commit("SET_LOADING", false);
+        this.SET_TOKEN_ID("");
+        this.$store.commit("auth/SET_LOADING", false);
         this.$router.push({ path: "/coaches" });
         db.collection("user")
           .get()
@@ -73,7 +71,7 @@ export default {
     // GET NOTIFICATION FROM FIRESTORE
     getNotification() {
       const db = firebase.firestore();
-      let CoachLogin = this.$store.getters.getTokenId;
+      let CoachLogin = this.$store.state.auth.tokenId;
       db.collection("message")
         .get()
         .then((querySnapshot) => {
@@ -98,18 +96,19 @@ export default {
     },
   },
   computed: {
-    getTokenId() {
-      return this.$store.getters.getTokenId;
+    ...mapState(["auth"]),
+    tokenId() {
+      return this.auth.tokenId;
     },
-    isNotification(){
-      return this.$store.state.isNotification;
-    }
+    isNotification() {
+      return this.auth.isNotification;
+    },
   },
   watch: {
     language: function () {
       localStorage.setItem("lang", this.language);
       this.$i18n.locale = this.language;
-      this.$store.commit("SET_LOCALE", this.language);
+      this.SET_LOCALE(this.language);
     },
   },
   mounted() {
@@ -136,7 +135,7 @@ header {
     align-items: center;
   }
   a {
-    text-decoration: none;
+    // FIXED
     color: #f391e3;
     display: inline-block;
     padding: 0.75rem 1.5rem;

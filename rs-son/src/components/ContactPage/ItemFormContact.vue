@@ -1,3 +1,4 @@
+//NOT FIX  đây là 1 page luôn, sao lại đặt tên là item nhỉ => : Em có bỏ form này ở dưới Contact Page nữa a
 <template>
   <form @submit.prevent="handleSubmitRequest">
     <div class="form-control">
@@ -16,12 +17,11 @@
 </template>
 
 <script>
-import ItemButton from "../Common/ItemButton";
+
 import firebase from "firebase/app";
 import "firebase/messaging";
 
 export default {
-  components: { ItemButton },
   data() {
     return {
       email: "",
@@ -47,7 +47,8 @@ export default {
             title: `You have message from ${this.email}`,
             content: {
               message : `Content : ${this.messages}`,
-              idCoach : idCoach
+              idCoach : idCoach,
+              defaultURL : window.location.host
             },
           })
           .then(console.log("Document written with ID: "))
@@ -56,8 +57,8 @@ export default {
           });
         // SEND REQUEST
         this.$store.dispatch({
-          type: "handlePostDataRequest",
-          url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/request/${this.$route.params.id}.json`,
+          type: "auth/handlePostDataRequest",
+          requestId : this.$route.params.id,
           data: dataPostRequest,
         });
         this.$router.push({ path: "/coaches" });

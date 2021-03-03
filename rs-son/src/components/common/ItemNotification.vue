@@ -16,15 +16,16 @@
 export default {
   computed: {
     isNotification() {
-      return this.$store.state.isNotification;
+      console.log(this.$store.state.auth.isNotification);
+      return this.$store.state.auth.isNotification;
     },
   },
   methods: {
     closeNotification() {
-      this.$store.commit("SET_NOTIFICATION", false);
+      this.$store.commit("auth/SET_NOTIFICATION", false);
     },
     onpenRequestPage() {
-      this.$store.commit("SET_NOTIFICATION", false);
+      this.$store.commit("auth/SET_NOTIFICATION", false);
       this.$router.push("/requests");
     },
   },

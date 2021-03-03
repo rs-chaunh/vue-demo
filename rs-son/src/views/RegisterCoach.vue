@@ -10,10 +10,9 @@
 </template>
 
 <script>
-import ItemCard from "../components/Common/ItemCard";
 import ItemFormRegis from "../components/RegisterPage/ItemFormRegis.vue";
 export default {
-  components: { ItemCard, ItemFormRegis },
+  components: {  ItemFormRegis },
     beforeRouteLeave() {
     console.log("GOODBYE");
   },

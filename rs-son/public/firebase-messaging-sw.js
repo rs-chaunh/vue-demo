@@ -1,6 +1,6 @@
 importScripts("https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.2.8/firebase-messaging.js");
-
+import * as firebase_API from '../src/env'
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker
@@ -14,14 +14,14 @@ if ("serviceWorker" in navigator) {
 }
 
 firebase.initializeApp({
-    apiKey: "AIzaSyCe3EbXvHvc8FM4F00XoX8Fm_hOQDDctic",
-    authDomain: "coaches-project-8d77f.firebaseapp.com",
-    databaseURL: "https://coaches-project-8d77f-default-rtdb.firebaseio.com",
-    projectId: "coaches-project-8d77f",
-    storageBucket: "coaches-project-8d77f.appspot.com",
-    messagingSenderId: "844022914168",
-    appId: "1:844022914168:web:24930c899f52a92fdb218d",
-    measurementId: "G-T6KR9FX7EY"
+    apiKey: `${firebase_API.API_KEY}`,
+  authDomain: `${firebase_API.API_DOMAIN}`,
+  databaseURL: `${firebase_API.API_DATA_JSON}`,
+  projectId: `${firebase_API.PROJECT_ID}`,
+  storageBucket: `${firebase_API.STORAGE_BUCKET}`,
+  messagingSenderId: `${firebase_API.MESS_ID_SENDER}`,
+  appId: `${firebase_API.API_ID}`,
+  measurementId: `${firebase_API.MEAS_ID}`,
 });
 
 
