@@ -1,6 +1,5 @@
 importScripts("https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.2.8/firebase-messaging.js");
-import * as firebase_API from '../src/env'
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker
@@ -12,18 +11,6 @@ if ("serviceWorker" in navigator) {
             console.log("Service worker registration failed, error:", err);
         });
 }
-
-firebase.initializeApp({
-    apiKey: `${firebase_API.API_KEY}`,
-  authDomain: `${firebase_API.API_DOMAIN}`,
-  databaseURL: `${firebase_API.API_DATA_JSON}`,
-  projectId: `${firebase_API.PROJECT_ID}`,
-  storageBucket: `${firebase_API.STORAGE_BUCKET}`,
-  messagingSenderId: `${firebase_API.MESS_ID_SENDER}`,
-  appId: `${firebase_API.API_ID}`,
-  measurementId: `${firebase_API.MEAS_ID}`,
-});
-
 
 const messaging = firebase.messaging();
 
@@ -37,7 +24,6 @@ messaging.onBackgroundMessage((payload) => {
     const notificationOptions = {
         body: "You have message.",
         icon: "/firebase-logo.png",
-        click_action : "http://localhost:3000/"
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
 });

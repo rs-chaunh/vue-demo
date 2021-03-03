@@ -1,6 +1,5 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
-const firebase = require('firebase');
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
 
@@ -8,16 +7,6 @@ const {
   default: axios
 } = require('axios');
 admin.initializeApp();
-firebase.initializeApp({
-  apiKey: "AIzaSyCe3EbXvHvc8FM4F00XoX8Fm_hOQDDctic",
-  authDomain: "coaches-project-8d77f.firebaseapp.com",
-  databaseURL: "https://coaches-project-8d77f-default-rtdb.firebaseio.com",
-  projectId: "coaches-project-8d77f",
-  storageBucket: "coaches-project-8d77f.appspot.com",
-  messagingSenderId: "844022914168",
-  appId: "1:844022914168:web:24930c899f52a92fdb218d",
-  measurementId: "G-T6KR9FX7EY"
-});
 
 exports.sendNotification = functions.firestore
   .document("message/{idMessages}")
@@ -56,9 +45,7 @@ exports.sendNotification = functions.firestore
             },
           }
         )
-        .then((res) => {
-          console.log(res);
-        })
+        .then()
         .catch((err) => console.log(err));
     }
   })
