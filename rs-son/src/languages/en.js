@@ -27,7 +27,7 @@ export const en = {
     errhRate_1: 'Rate must be greater than 0.',
     errhRate_2: 'The number must be greater than 0.',
     errareasOf: 'At least one expertise must be selected.',
-    errNote : 'Please fix the above errors and submit again.',
+    errNote: 'Please fix the above errors and submit again.',
     // NOT FOUND
     notFound: 'Page not found',
     notFoundContent: 'This page could not be found - maybe check out all our',
@@ -41,6 +41,7 @@ export const en = {
     findCoach: 'Find Your Coach',
     // CONTACT PAGE 
     Yemail: 'Your E-mail',
+    email: 'E-mail',
     mess: 'Message',
     err: 'Please enter a valid email and non-empty message',
     send: 'Send Message',
@@ -56,7 +57,7 @@ export const en = {
     errLoginContent: 'Failed to authenticate. Check your login data.',
     errLoginTitle: 'An error occurred',
     close: ' Close',
-    check: ' An error occurred',
-    loading: ' Authenticating...',
+    titleErr: ' An error occurred',
+    loadingMessage: ' Authenticating...',
 
 }

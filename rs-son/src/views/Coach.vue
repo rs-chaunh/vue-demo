@@ -1,22 +1,21 @@
 <template>
   <transition appear name="open">
     <div class="home">
-      <Filter @handleGetItemList="handleGetItemList" />
+      <coach-filter @handleGetItemList="handleGetItemList" />
       <router-view></router-view>
-      <list-coach :itemFilter="itemFilter" />
+      <coach-list :itemFilter="itemFilter" />
     </div>
   </transition>
 </template>
 
 <script>
-import Filter from "../components/HomePage/Filter.vue";
-import ListCoach from "../components/HomePage/ListCoach.vue";
+import CoachFilter from '../components/CoachPage/CoachFilter.vue';
+import CoachList from "../components/CoachPage/CoachList.vue";
 
 export default {
-  name: "Home",
   components: {
-    ListCoach,
-    Filter,
+    CoachList,
+    CoachFilter,
   },
   data() {
     return {

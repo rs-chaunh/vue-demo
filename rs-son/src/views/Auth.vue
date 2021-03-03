@@ -7,10 +7,9 @@
 </template>
 
 <script>
-import ItemCard from "../components/common/ItemCard.vue";
 import ItemFormAuth from "../components/AuthPage/ItemFormAuth.vue";
 export default {
-  components: { ItemCard, ItemFormAuth },
+  components: { ItemFormAuth },
   beforeRouteLeave() {
     console.log("GOODBYE");
   },

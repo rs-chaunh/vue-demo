@@ -1,9 +1,9 @@
-//TODO tên file k rõ
+//FIXED
 <template>
   <transition name="popup" appear>
     <dialog open>
       <header>
-        <h2>{{ titlePopup }}</h2>
+        <h2>{{ popupTitle }}</h2>
       </header>
       <section>
         <slot></slot>
@@ -16,22 +16,25 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import ItemButton from "./ItemButton.vue";
 export default {
   components: { ItemButton },
-  props: ["titlePopup"], //TODO đúng ngữ pháp sẽ là popupTitle
+  props: ["popupTitle"], //FIXED
   data() {
     return {};
   },
   methods: {
+    ...mapMutations(["auth"]),
     togglePopup() {
-      this.$store.commit("SET_LOADING", false);
-      this.$store.commit("SET_CHECK_LOGIN", true);
+      this.$store.commit("auth/SET_LOADING", false);
+      this.$store.commit("auth/SET_CHECK_LOGIN", true);
     },
   },
   computed: {
+    ...mapState(["auth"]),
     checkLogin() {
-      return this.$store.state.checkLogin;
+      return this.auth.checkLogin;
     },
   },
 };

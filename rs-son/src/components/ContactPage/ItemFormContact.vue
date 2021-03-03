@@ -1,4 +1,4 @@
-// TODO đây là 1 page luôn, sao lại đặt tên là item nhỉ
+//NOT FIX  đây là 1 page luôn, sao lại đặt tên là item nhỉ => : Em có bỏ form này ở dưới Contact Page nữa a
 <template>
   <form @submit.prevent="handleSubmitRequest">
     <div class="form-control">
@@ -17,10 +17,7 @@
 </template>
 
 <script>
-import ItemButton from "../common/ItemButton.vue";
-
 export default {
-  components: { ItemButton },
   data() {
     return {
       email: "",
@@ -39,8 +36,8 @@ export default {
         this.errors = true;
       } else {
         this.$store.dispatch({
-          type: "handlePostDataRequest",
-          url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/request/${this.$route.params.id}.json`,
+          type: "auth/handlePostDataRequest",
+          requestId : this.$route.params.id,
           data: dataPostRequest,
         });
         this.$router.push({ path: "/coaches" });

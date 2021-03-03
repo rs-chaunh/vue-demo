@@ -1,8 +1,8 @@
 <template>
-  <item-lazy-load v-if="$store.state.loading"></item-lazy-load>
+  <item-lazy-load v-if="$store.state.coach.loading"></item-lazy-load>
   <div>
-    <ul v-if="getDataRequest != ''">
-      <li v-for="(item, index) in getDataRequest" :key="index">
+    <ul v-if="dataRequest != ''">
+      <li v-for="(item, index) in dataRequest" :key="index">
         <div>
           <a :href="`mailto:` + item.userEmail"> {{ item.userEmail }} </a>
         </div>
@@ -14,21 +14,21 @@
 </template>
 
 <script>
-import itemLazyLoad from "../common/itemLazyLoad.vue";
+import { mapState } from 'vuex';
 export default {
-  components: { itemLazyLoad },
   computed: {
-    getDataRequest() {
-      if (this.$store.state.request) {
-        return Object.values(this.$store.state.request);
+    ...mapState(["auth"]),
+    dataRequest() {
+      if (this.auth.request) {
+        return Object.values(this.auth.request);
       } else {
         return "";
       }
     },
   },
   created() {
-    this.$store.commit("SET_LOADING", true);
-    this.$store.dispatch("getDataRequest");
+    this.$store.commit("auth/SET_LOADING",true);
+    this.$store.dispatch("auth/getDataRequest");
   },
 };
 </script>
@@ -48,7 +48,6 @@ ul {
     }
     a {
       color: #3d008d;
-      text-decoration: none;
       font-weight: 700;
     }
   }

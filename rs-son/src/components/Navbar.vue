@@ -10,10 +10,10 @@
             {{ $t("allCoaches") }}
           </router-link>
         </li>
-        <li v-if="getTokenId != null && getTokenId != ''">
+        <li v-if="tokenId != null && tokenId != ''">
           <router-link to="/requests"> {{ $t("request") }} </router-link>
         </li>
-        <li v-if="getTokenId != null && getTokenId != ''">
+        <li v-if="tokenId != null && tokenId != ''">
           <item-button @click="handleLogout()">{{ $t("logout") }}</item-button>
         </li>
         <li v-else>
@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import ItemButton from "./common/ItemButton.vue";
+import { mapMutations, mapState } from "vuex";
+
 export default {
-  components: { ItemButton },
   data() {
     return {
       checkLogin: "",
@@ -43,23 +43,25 @@ export default {
     };
   },
   methods: {
+    ...mapMutations("auth", ["SET_TOKEN_ID", "SET_LOCALE"]),
     handleLogout() {
       localStorage.clear();
-      this.$store.commit("SET_TOKEN_ID", "");
-      this.$store.commit("SET_LOADING", false);
+      this.SET_TOKEN_ID("");
+      this.$store.commit("auth/SET_LOADING",false);
       this.$router.push({ path: "/coaches" });
     },
   },
   computed: {
-    getTokenId() {
-      return this.$store.getters.getTokenId;
+    ...mapState(["auth"]),
+    tokenId() {
+      return this.auth.tokenId;
     },
   },
   watch: {
     language: function () {
       localStorage.setItem("lang", this.language);
       this.$i18n.locale = this.language;
-      this.$store.commit("SET_LOCALE", this.language);
+      this.SET_LOCALE(this.language);
     },
   },
 };
@@ -83,7 +85,7 @@ header {
     align-items: center;
   }
   a {
-    text-decoration: none; //TODO style này a thấy bị lặp lại nhiều, nên để trong file css chung, còn nhiều style đang bị tương tự
+    // FIXED
     color: #f391e3;
     display: inline-block;
     padding: 0.75rem 1.5rem;

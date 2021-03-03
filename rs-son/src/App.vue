@@ -30,6 +30,9 @@ h3,
 h4 {
   margin: 0.5rem 0;
 }
+a {
+  text-decoration: none;
+}
 .open-enter-active,
 .open-leave-active {
   transition: 1s;

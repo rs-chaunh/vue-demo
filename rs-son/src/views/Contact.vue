@@ -33,14 +33,12 @@
 </template>
 
 <script>
-import ItemBadge from "../components/common/ItemBadge.vue";
-import ItemCard from "../components/common/ItemCard.vue";
-import ItemLink from "../components/common/ItemLink.vue";
+import { mapState } from 'vuex';
+
 import ItemFormContact from "../components/ContactPage/ItemFormContact.vue";
-// import axios from "axios";
 
 export default {
-  components: { ItemCard, ItemLink, ItemFormContact, ItemBadge },
+  components: { ItemFormContact },
   data() {
     return {
       NotFound: "/NotFound",
@@ -54,25 +52,15 @@ export default {
     getDetail() {
       this.id = this.$route.params.id;
       this.$store.dispatch({
-        type: "getDataDetail",
-        url: `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`,
+        type: "coach/getDataDetail",
+        id : this.id,
       });
-      // this.id = this.$route.params.id;
-      // axios
-      //   .get(
-      //     `https://coaches-project-8d77f-default-rtdb.firebaseio.com/coaches/${this.id}.json/`
-      //   )
-      //   .then((res) => {
-      //     this.detailCoach = res.data;
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     },
   },
   computed: {
+    ...mapState(["coach"]),
     getDataDetail() {
-      return this.$store.state.dataDetail;
+      return this.coach.dataDetail;
     },
   },
   beforeRouteLeave() {

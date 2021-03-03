@@ -1,26 +1,26 @@
-// TODO tên folder nếu đã k viết hoa thì không biết hoa hết, k để chỗ có chỗ k
+// FIXED
 <template>
   <teleport to="body">
     <transition name="popup">
-      <item-pop :titlePopup="loading" v-if="$store.state.loading">
+      <item-pop-up :popupTitle="loadingMessage" v-if="$store.state.auth.loading">
         <item-lazy-load></item-lazy-load>
-      </item-pop>
+      </item-pop-up>
     </transition>
     <transition name="popup">
-      <item-pop :titlePopup="check" v-if="$store.state.checkLogin == false">
-        <p>{{ getTextErr }}</p>
-      </item-pop>
+      <item-pop-up :popupTitle="titleErr" v-if="$store.state.auth.checkLogin == false">
+        <p>{{ textErr }}</p>
+      </item-pop-up>
     </transition>
     <item-modal
-      v-if="$store.state.checkLogin == false || $store.state.loading == true"
+      v-if="$store.state.auth.checkLogin == false || $store.state.auth.loading == true"
     ></item-modal>
   </teleport>
 
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
-      <label for="email">E-mail</label> 
-      <!-- //TODO thiếu i18 -->
-      <input type="email" v-model="email" id="email"/>
+      <label for="email"> {{ $t("email") }} </label>
+      <!--FIXED -->
+      <input type="email" v-model="email" id="email" />
     </div>
     <div class="form-control">
       <label for="password">{{ $t("pass") }}</label>
@@ -30,57 +30,39 @@
       {{ $t("errAuth") }}
     </p>
     <item-button> {{ textBtn }} </item-button>
-    <item-link @click.prevent="handleChangeAction()" class="flat" :linkTo="linkToReg">
+    <item-button @click.prevent="handleChangeAction()" class="flat">
       {{ textLink }} {{ $t("instead") }}
-    </item-link>
-    <!-- //TODO cái này để là button thì hợp lí hơn vì nó k redirect, a thấy cái linkTo bị thừa -->
+    </item-button>
+    <!-- FIXED -->
   </form>
 </template>
 
 <script>
-// import axios from "axios";
-import ItemButton from "../common/ItemButton.vue";
-import ItemLink from "../common/ItemLink.vue";
-import ItemPop from "../common/ItemPop.vue";
-import ItemModal from "../common/ItemModal.vue";
-import ItemLazyLoad from "../common/itemLazyLoad.vue";
+import { mapMutations, mapState } from "vuex";
 export default {
-  components: { ItemButton, ItemLink, ItemPop, ItemModal, ItemLazyLoad }, //TODO những component thì sẽ sử dụng ở nhiều chỗ, nên khi báo global
   data() {
     return {
-      linkToReg: "#", //TODO cái này chỉ đc sử dụng 1 chỗ duy nhất thì viết thằng trên template luôn, cần gì đặt biến
-      checkAction: false, //TODO tên biến k rõ, có gì để check đâu, có thể sửa thành như doLogin, doRegister,... 
-      textBtn: "", //TODO nên bỏ ở computed
-      textLink: "", //TODO nên bỏ ở computed
+      doLogin: false, //FIXED
       email: "",
       password: "",
       errors: false,
-      path: "", //TODO biến này k dùng thì xóa đi
-      loading: "", //TODO loading ở đây là text thì nên đặt tên là loadingMessage, ...
-      check: "", //TODO tên biến k rõ
+      loadingMessage: "", //FIXED
+      titleErr: "", //FIXED
     };
   },
   methods: {
+    ...mapMutations(["auth"]),
     handleChangeAction() {
-      // SET TEXT FOR BTN
-      this.checkAction = !this.checkAction;
-      if (this.checkAction) {
-        this.textBtn = this.$i18n.messages[this.getLocale].textBtn;
-        this.textLink = this.$i18n.messages[this.getLocale].textLink;
-      } else {
-        this.textBtn = this.$i18n.messages[this.getLocale].textLink;
-        this.textLink = this.$i18n.messages[this.getLocale].textBtn;
-      }
+      this.doLogin = !this.doLogin;
     },
-    handleSubmit() {
+    async handleSubmit() {
       // SET TEXT FOR POPUP
-      this.loading = this.$i18n.messages[this.getLocale].loading;
-      console.log(this.loading);
-      this.check = this.$i18n.messages[this.getLocale].check;
+      this.loadingMessage = this.$i18n.messages[this.locale].loadingMessage;
+      this.titleErr = this.$i18n.messages[this.locale].titleErr;
       // VALIDATE FORM
       if (this.email == "" || this.messages == "" || this.password.length < 6) {
         this.errors = true;
-        event.preventDefault(); //TODO preventDefault bị lặp lại quá nhiều lần, .prevent trên template luôn, hoặc đặt ngoài điều kiện if để nó luôn chạy
+        //FIXED
       } else {
         let dataPost = {
           email: this.email,
@@ -89,31 +71,56 @@ export default {
         };
         if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
           // SIGN UP
-          console.log("SIGN UP");
-          event.preventDefault(); 
-          this.$store.dispatch({
-            type: "handleSignUp",
-            url:
-              "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCe3EbXvHvc8FM4F00XoX8Fm_hOQDDctic",
+          let result = await this.$store.dispatch({
+            type: "auth/handleSignUp",
             data: dataPost,
-            route: this.$route,
-            router: this.$router,
           });
-          //TODO đường dẫn api và apiKey nên lưu vào file env, nếu sau này có thay đổi firebase thì chỉ cần sửa 1 chỗ
-          //TODO k nên truyền route, router vào action, async await đợi api chạy xong rồi redirect tiếp theo
-          //TODO k truyền url kiểu này, set vào trong action luôn, ở đâu dispatch ra th
+          if (result) {
+            if (this.$route.query.redirect) {
+              this.$router.push({
+                path: "/register",
+              });
+            } else {
+              this.$router.push({
+                path: "/coaches",
+              });
+            }
+          } else {
+            this.$store.commit("auth/SET_CHECK_LOGIN",false);
+          }
+          //FIXED
         } else {
           // LOGIN
           console.log("LOGIN");
-          event.preventDefault();
-          this.$store.dispatch({
-            type: "handleLogin",
-            url:
-              "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCe3EbXvHvc8FM4F00XoX8Fm_hOQDDctic",
+          let result = await this.$store.dispatch({
+            type: "auth/handleLogin",
             data: dataPost,
-            route: this.$route,
-            router: this.$router,
           });
+          if (result) {
+            // CHECK LINK TO LOGIN OR REGISTER
+            let arrCoachesTemp = this.coach.coachesTemp;
+            let userId = this.auth.tokenId;
+            let index = -1;
+            if (userId != null && arrCoachesTemp != null) {
+              index = Object.keys(arrCoachesTemp).findIndex(
+                (item) => item == userId.localId
+              );
+            }
+            // DON'T TO REGISTER PAGE IF HAVE ACCOUNT
+            if (this.$route.query.redirect && index == -1) {
+              console.log("a");
+              this.$router.push({
+                path: "/register",
+              });
+            } else {
+              console.log("b");
+              this.$router.push({
+                path: "/coaches",
+              });
+            }
+          } else {
+            this.$store.commit("auth/SET_CHECK_LOGIN",false);
+          }
         }
       }
     },
@@ -122,19 +129,36 @@ export default {
     this.handleChangeAction();
   },
   computed: {
-    getTextErr() {
+    ...mapState(["auth", "coach"]),
+    textErr() {
       let text = "";
-      if (!this.$store.state.checkLogin) {
-        text = this.$i18n.messages[this.getLocale].errLoginContent;
+      if (!this.auth.checkLogin) {
+        text = this.$i18n.messages[this.locale].errLoginContent;
       }
       return text;
-    }, // TODO k nên đặt tên là get..., vì sẽ hiểu đây là 1 action, computed cũng tương tự như data, computed nên đặt là danh từ
-    getLocale() {
-      return this.$store.state.locale;
+    }, //FIXED
+    locale() {
+      return this.auth.locale;
+    },
+    textBtn() {
+      // FIXED
+      if (this.doLogin) {
+        return this.$i18n.messages[this.locale].textBtn;
+      } else {
+        return this.$i18n.messages[this.locale].textLink;
+      }
+    },
+    textLink() {
+      // FIXED
+      if (!this.doLogin) {
+        return this.$i18n.messages[this.locale].textBtn;
+      } else {
+        return this.$i18n.messages[this.locale].textLink;
+      }
     },
   },
   watch: {
-    getLocale: function () {
+    locale: function () {
       this.handleChangeAction();
     },
   },
