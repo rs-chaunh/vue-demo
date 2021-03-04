@@ -10,7 +10,7 @@
             $t("common.button.allCoaches")
           }}</router-link>
         </li>
-        <template v-if="checkLogin">
+        <template v-if="auth">
           <li class="header__menu-item">
             <router-link :to="{ name: 'CoachesRequest' }">{{
               $t("common.button.request")
@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import SelectLanguage from "./SelectLanguage";
 export default {
   name: "TheHeading",
   components: { SelectLanguage },
-  computed: mapGetters(["checkLogin"]),
+  computed: mapState(["auth"]),
   methods: {
     logout() {
       this.$store.dispatch("logout");

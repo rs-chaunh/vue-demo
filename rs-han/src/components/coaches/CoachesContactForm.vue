@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import "firebase/firestore";
 export default {
   props: ["id"],
   name: "CoachesContactForm",
@@ -28,6 +29,7 @@ export default {
     userId() {
       return this.id;
     },
+
     sendRequest() {
       this.$store.dispatch("sendRequest", {
         id: this.userId,

@@ -157,7 +157,7 @@ export default {
       });
       if (
         !this.dataValidate.firstName.error &&
-        !this.dataValidate.lasttName.error &&
+        !this.dataValidate.lastName.error &&
         !this.dataValidate.description.error &&
         !this.dataValidate.hourlyRate.error &&
         !this.dataValidate.areas.error
