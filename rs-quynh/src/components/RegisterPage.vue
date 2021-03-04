@@ -2,12 +2,14 @@
   <register
     :coach="coach"
     :isHadError="isHadError"
+    :isOpenModal="isOpenModal"
     :validateFirstName="validateFirstName"
     :validateLastName="validateLastName"
     :validateDescription="validateDescription"
     :validateHourlyRate="validateHourlyRate"
     :validateAreas="validateAreas"
     :handlerRegister="handlerRegister"
+    :handlerCloseModal="handlerCloseModal"
     @toggleAreas="toggleAreas"
     @setValueType="setValueType"
   ></register>
@@ -43,6 +45,7 @@ export default {
           error: "",
         },
       },
+      isOpenModal: false
     };
   },
   computed: {
@@ -67,6 +70,8 @@ export default {
       ].forEach((func) => func());
 
       if (!this.isHadError) {
+        this.isOpenModal = true;
+
         this.$store.dispatch("addNewCoach", {
           firstName: this.coach.firstName.value,
           lastName: this.coach.lastName.value,
@@ -141,6 +146,10 @@ export default {
     },
     setValueType(type, value) {
       this.coach[type].value = value;
+    },
+    handlerCloseModal() {
+      this.isOpenModal = false;
+      this.$store.commit("SET_IS_ERROR", false);
     },
   },
 };

@@ -16,6 +16,10 @@
 <script>
 import Auth from "../views/Auth/Auth.vue";
 import { checkErrors } from "../assets/js/validate";
+// import firebase from "firebase/app";
+// import "firebase/messaging";
+// const messaging = firebase.messaging();
+// const token = messaging.getToken();
 
 export default {
   components: { Auth },
@@ -48,7 +52,11 @@ export default {
   },
   methods: {
     validateEmail() {
-      checkErrors(this.dataForm.email, "Email must not be empty.", "isRequired");
+      checkErrors(
+        this.dataForm.email,
+        "Email must not be empty.",
+        "isRequired"
+      );
       checkErrors(
         this.dataForm.email,
         "Email must be included with an '@' ",
@@ -56,7 +64,11 @@ export default {
       );
     },
     validatePassword() {
-      checkErrors(this.dataForm.password, "Password must not be empty", "isRequired");
+      checkErrors(
+        this.dataForm.password,
+        "Password must not be empty",
+        "isRequired"
+      );
       checkErrors(
         this.dataForm.password,
         "Password must be at least 6 characters long.",
@@ -71,7 +83,7 @@ export default {
       this.dataForm[type].value = valueInput;
     },
     handlerSubmitAuthForm() {
-      [this.validateEmail, this.validatePassword].forEach((func) => func())
+      [this.validateEmail, this.validatePassword].forEach((func) => func());
 
       if (!this.isError) {
         this.isOpenModal = true;
@@ -87,16 +99,17 @@ export default {
             password: this.dataForm.password.value,
           });
         }
-
-        // this.$store.dispatch("notificationNewRequest")
       }
     },
     handlerCloseModal() {
       this.isOpenModal = false;
+      this.$store.commit("SET_IS_ERROR", false);
     },
   },
   beforeUnmount() {
-    this.$store.dispatch("getAllRequests")
-  }
+    if (localStorage.getItem("userId")) {
+      this.$store.dispatch("getAllRequests");
+    }
+  },
 };
 </script>

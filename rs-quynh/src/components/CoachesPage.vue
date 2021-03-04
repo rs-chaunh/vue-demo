@@ -5,6 +5,7 @@
     :isAuthenticated="isAuthenticated"
     :isHadRegisterACoach="isHadRegisterACoach"
     :refreshPage="refreshPage"
+    :handlerCloseModal="handlerCloseModal"
     @toggleFilterOption="toggleFilterOption"
   ></coaches>
 </template>
@@ -56,12 +57,13 @@ export default {
     refreshPage() {
       this.$store.dispatch("getAllCoaches");
     },
+    handlerCloseModal() {
+      this.$store.commit("SET_IS_ERROR", false);
+    },
   },
   created() {
     this.refreshPage();
-  },
-  mounted() {
-    this.$store.dispatch("notificationNewRequest");
+    localStorage.getItem("userId") && this.$store.dispatch("notificationNewRequest");
   },
 };
 </script>

@@ -3,18 +3,21 @@
     <section>
       <div class="card">
         <h2>{{ fullname }}</h2>
-        <h3>${{ coach && coach.hourlyRate }}/{{ $t('common.unit_price') }}</h3>
+        <h3>${{ coach && coach.hourlyRate }}/{{ $t("common.unit_price") }}</h3>
       </div>
     </section>
 
     <section>
       <div class="card">
         <header>
-          <h2>{{ $t('coach.contact.title') }}</h2>
+          <h2>{{ $t("coach.contact.title") }}</h2>
           <custom-button
             type="purple"
-            :href="{ name: 'CoachesDetailContact', params: { id: $route.params.id }}"
-            >{{ $t('coach.buttons.contact') }}</custom-button
+            :href="{
+              name: 'CoachesDetailContact',
+              params: { id: $route.params.id },
+            }"
+            >{{ $t("coach.buttons.contact") }}</custom-button
           >
         </header>
 
@@ -24,19 +27,29 @@
 
     <section>
       <div class="card" v-if="coach">
-        <div class="badge" :class="area"
+        <div
+          class="badge"
+          :class="area"
           v-for="(area, index) of coach.areas"
           :area="area"
           :key="index"
-        >{{ area }}</div>
+        >
+          {{ area }}
+        </div>
         <p>{{ coach.description }}</p>
       </div>
     </section>
+    <modal-notification
+      v-if="isError"
+      :handlerCloseModal="handlerCloseModal"
+      :textError="'Lỗi rồi nhé bạn ơi'"
+    ></modal-notification>
   </div>
 </template>
 
 <script>
 import CustomButton from "../commons/CustomButton";
+import ModalNotification from "../commons/ModalNotification";
 
 export default {
   props: {
@@ -44,13 +57,20 @@ export default {
       type: Object,
       require: true,
     },
+    handlerCloseModal: {
+      type: Function,
+    },
   },
   components: {
     CustomButton,
+    ModalNotification,
   },
   computed: {
     fullname() {
       return this.coach ? this.coach.firstName + " " + this.coach.lastName : "";
+    },
+    isError() {
+      return this.$store.getters.isError;
     },
   },
 };

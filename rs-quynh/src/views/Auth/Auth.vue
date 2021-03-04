@@ -41,20 +41,22 @@
         </custom-button>
       </form>
     </div>
-    <auth-modal
+    <modal-notification
       v-if="isOpenModal"
       :handlerCloseModal="handlerCloseModal"
-    ></auth-modal>
+      :textError="$t('auth.errors.authen')"
+    >
+    </modal-notification>
   </div>
 </template>
 
 <script>
 import CustomButton from "../commons/CustomButton";
 import FormControl from "../commons/FormControl.vue";
-import AuthModal from "./AuthModal.vue";
+import ModalNotification from "../commons/ModalNotification.vue";
 
 export default {
-  components: { FormControl, CustomButton, AuthModal },
+  components: { FormControl, CustomButton, ModalNotification },
   data() {
     return {
       email: this.dataForm.email.value,
@@ -94,6 +96,14 @@ export default {
     },
     handlerCloseModal: {
       type: Function,
+    },
+  },
+  computed: {
+    errorsAuth() {
+      return this.$store.getters.isError;
+    },
+    isLoading() {
+      return this.$store.getters.isLoading;
     },
   },
   watch: {

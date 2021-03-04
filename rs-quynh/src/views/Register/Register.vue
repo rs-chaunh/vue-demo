@@ -1,12 +1,12 @@
 <template>
   <section>
     <div class="card">
-      <h2>{{ $t('register.title') }}</h2>
+      <h2>{{ $t("register.title") }}</h2>
       <form @submit.prevent="handlerRegister">
         <form-control
           :error="coach.firstName.error"
           :id="'firstname'"
-          :label="$t('register.labels.firstname') "
+          :label="$t('register.labels.firstname')"
         >
           <input
             v-model="firstName"
@@ -69,6 +69,12 @@
         <custom-button type="purple">{{ $t('register.buttons.submit') }}</custom-button>
       </form>
     </div>
+    <modal-notification
+      v-if="isError"
+      :handlerCloseModal="handlerCloseModal"
+      :textError="'Lỗi rồi nhé bạn ơi'"
+    >
+    </modal-notification>
   </section>
 </template>
 
@@ -76,9 +82,10 @@
 import FormControl from "../commons/FormControl.vue";
 import FilterOption from "../commons/FilterOption.vue";
 import CustomButton from "../commons/CustomButton.vue";
+import ModalNotification from "../commons/ModalNotification";
 
 export default {
-  components: { FormControl, FilterOption, CustomButton },
+  components: { FormControl, FilterOption, CustomButton, ModalNotification },
   data() {
     return {
       firstName: this.coach.firstName.value,
@@ -92,6 +99,10 @@ export default {
       type: Object,
     },
     isHadError: {
+      type: Boolean,
+      default: false,
+    },
+    isOpenModal: {
       type: Boolean,
       default: false,
     },
@@ -113,6 +124,9 @@ export default {
     handlerRegister: {
       type: Function,
     },
+    handlerCloseModal: {
+      type: Function,
+    },
     setValueType: {
       type: Function,
     },
@@ -121,11 +135,13 @@ export default {
     dataAreas() {
       return this.$store.getters.getDataAreas;
     },
+    isError() {
+      return this.$store.getters.isError;
+    },
   },
   methods: {
     toggleAreas(option) {
       this.$emit("toggleAreas", option);
-      
     },
   },
   watch: {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import router from "../../router";
-import { sendFcmMessage } from "../../firebase/send-message";
+import { sendFcmMessageToListToken } from "../../firebase/send-message";
 import { askForPermissioToReceiveNotifications } from "../../firebase/push-notification";
 
 const state = {
@@ -31,10 +31,24 @@ const mutations = {
       return item;
     });
   },
+  UPDATE_STATUS_REQUEST(state, payload) {
+    state.requests = state.requests.map((item) => {
+      if (item.userId === payload.userId) {
+        item.listRequest.forEach((request) => {
+          if (request.id === payload.requestId) {
+            request.isSendNotification = payload.status;
+          }
+        });
+      }
+      return item;
+    });
+  },
 };
 
 const actions = {
-  getAllRequests({ commit, state }) {
+  getAllRequests({ commit }) {
+    commit("SET_IS_ERROR", false);
+
     axios
       .get(
         "https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/requests.json"
@@ -46,12 +60,14 @@ const actions = {
           arrayData.push({ id: key, ...data[key] });
         }
         commit("SET_REQUESTS", arrayData);
-        console.log(state.requests);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        commit("SET_IS_ERROR", true);
+      });
   },
-  sendNewRequest({ commit, getters }, payload) {
+  sendNewRequest({ commit, getters, dispatch }, payload) {
     const userExist = getters.filterRequestsByUserId(payload.userId);
+    commit("SET_IS_ERROR", false);
 
     if (userExist) {
       userExist.listRequest.push(payload.listRequest);
@@ -61,14 +77,15 @@ const actions = {
           {
             userId: payload.userId,
             listRequest: userExist.listRequest,
-            isSendNotification: false
           }
         )
         .then(() => {
           commit("UPDATE_NEW_REQUEST", payload);
           router.push({ name: "Coaches" });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          commit("SET_IS_ERROR", true);
+        });
     } else {
       axios
         .post(
@@ -76,7 +93,6 @@ const actions = {
           {
             listRequest: [payload.listRequest],
             userId: payload.userId,
-            isSendNotification: false,
           }
         )
         .then((response) => {
@@ -87,55 +103,71 @@ const actions = {
           });
           router.push({ name: "Coaches" });
         })
+        .catch(() => {
+          commit("SET_IS_ERROR", true);
+        });
+    }
+
+    const receiver = getters.getCoachByUserId(payload.userId);
+      console.log(payload);
+    if (receiver) {
+      sendFcmMessageToListToken(
+        payload.listRequest.email,
+        payload.listRequest.message,
+        receiver.deviceTokens
+      );
+      dispatch("updateStatusRequest", {
+        userId: payload.userId,
+        requestId: payload.listRequest.id,
+        status: true,
+      });
+    }
+  },
+  updateStatusRequest({ commit, getters }, payload) {
+    const requestOfUser = getters.filterRequestsByUserId(payload.userId);
+    if (requestOfUser) {
+      const listRequest = requestOfUser.listRequest
+        ? requestOfUser.listRequest.map((item) => {
+            if (item.id === payload.requestId)
+              item.isSendNotification = payload.status;
+            return item;
+          })
+        : [];
+      axios
+        .put(
+          `https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/requests/${requestOfUser.id}.json`,
+          {
+            userId: requestOfUser.userId,
+            listRequest: listRequest,
+          }
+        )
+        .then(() => {
+          commit("UPDATE_STATUS_REQUEST", payload);
+        })
         .catch((err) => console.log(err));
     }
   },
-  async notificationNewRequest({ getters, state }) {
+  notificationNewRequest({ getters, state, dispatch }) {
     askForPermissioToReceiveNotifications();
-    // await dispatch("getAllRequests");
-    // console.log(localStorage.getItem("userId"));
-    const request =
-      state.requests &&
-      getters.filterRequestsByUserId("yOuqABUQm1YZvMFcqMcrIjBOxCg1");
-    // console.log(state.requests);
-
-    let listNotificationNotSend;
+    const userId = localStorage.getItem("userId");
+    const request = state.requests && getters.filterRequestsByUserId(userId);
     if (request) {
-      listNotificationNotSend = request.listRequest.filter(
-        (item) => item.isSendNotification === false
-      );
-
-      if (listNotificationNotSend.length > 0) {
+      let listNotificationNotSend = request.listRequest.filter((item) => {
+        return item.isSendNotification === false;
+      });
+      const receiver = getters.getCoachByUserId(userId);
+      if (listNotificationNotSend.length > 0 && receiver) {
         listNotificationNotSend.forEach((notification) => {
-          axios
-            .get(
-              "https://book-coaches-by-charlotte-default-rtdb.firebaseio.com/devicesToken.json"
-            )
-            .then((res) => {
-              console.log(res.data);
-              const deviceTokenByUser = Object.values(res.data);
-              console.log(deviceTokenByUser);
-              let listActiveDevices = [];
-              if (deviceTokenByUser.length > 0) {
-                let deviceToken = deviceTokenByUser.find(
-                  (item) => item.userId === localStorage.getItem("userId")
-                );
-                listActiveDevices = deviceToken
-                  ? deviceToken.activeDevices
-                  : [];
-              }
-              console.log("List: ", listActiveDevices);
-              if (listActiveDevices.length > 0) {
-                listActiveDevices.forEach((device) => {
-                  sendFcmMessage(
-                    notification.email,
-                    notification.message,
-                    device
-                  );
-                });
-              }
-            })
-            .catch((err) => console.log(err));
+          sendFcmMessageToListToken(
+            notification.email,
+            notification.message,
+            receiver.deviceTokens
+          );
+          dispatch("updateStatusRequest", {
+            userId: userId,
+            requestId: notification.id,
+            status: true,
+          });
         });
       }
     }

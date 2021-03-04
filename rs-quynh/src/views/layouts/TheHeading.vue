@@ -22,7 +22,6 @@
         <li>
           <the-heading-language></the-heading-language>
         </li>
-        <li><button @click.prevent="hello">Open</button></li>
       </ul>
     </nav>
   </header>
@@ -42,9 +41,6 @@ export default {
   methods: {
     handlerLogout() {
       this.$store.dispatch("logout");
-    },
-    hello() {
-      this.$store.dispatch("notificationNewRequest");
     }
   },
 };

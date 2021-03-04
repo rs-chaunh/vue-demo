@@ -1,9 +1,9 @@
 const state = {
-    isLoading: null
+    isLoading: false
 };
 
 const getters = {
-    getIsLoading: state => state.isLoading 
+    isLoading: state => state.isLoading 
 };
 
 const mutations = {

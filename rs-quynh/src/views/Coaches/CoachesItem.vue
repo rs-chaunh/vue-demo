@@ -6,8 +6,8 @@
             <div class="badge" :class="area" v-for="(area, index) of coach.areas" :area="area" :key="index" >{{ area }}</div>
         </div>
         <div class="actions">
-            <custom-button type="outline" :href="{ name: 'CoachesDetailContact', params: { id: coach.id }}">Contact</custom-button>
-            <custom-button type="purple" :href="{ name: 'CoachesDetail', params: { id: coach.id }} ">View Details</custom-button>
+            <custom-button type="outline" :href="{ name: 'CoachesDetailContact', params: { id: coach.id }}">{{ $t('coach.buttons.contact') }}</custom-button>
+            <custom-button type="purple" :href="{ name: 'CoachesDetail', params: { id: coach.id }} ">{{ $t('coach.buttons.view_details') }}</custom-button>
         </div>
     </li>
 </template>

@@ -1,5 +1,11 @@
 import axios from "axios";
 
+export const sendFcmMessageToListToken = (title, body, listToken) => {
+  listToken && listToken.forEach(token => {
+    sendFcmMessage(title, body, token)
+  });
+}
+
 export const sendFcmMessage = (title, body, token) => {
   const data = {
     notification: {
