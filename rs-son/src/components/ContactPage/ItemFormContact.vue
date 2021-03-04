@@ -17,16 +17,20 @@
 </template>
 
 <script>
+
+import firebase from "firebase/app";
+import "firebase/messaging";
+
 export default {
   data() {
     return {
       email: "",
       messages: "",
       errors: false,
-      token: "",
     };
   },
   methods: {
+    // SEND REQUEST AND NOTIFICATION
     handleSubmitRequest() {
       let dataPostRequest = {
         userEmail: this.email,
@@ -35,6 +39,23 @@ export default {
       if (this.email == "" || this.messages == "") {
         this.errors = true;
       } else {
+        // PUSH NOTIFICATION
+        const db = firebase.firestore();
+        let idCoach = this.$route.params.id;
+        db.collection("message")
+          .add({
+            title: `You have message from ${this.email}`,
+            content: {
+              message : `Content : ${this.messages}`,
+              idCoach : idCoach,
+              defaultURL : window.location.host
+            },
+          })
+          .then(console.log("Document written with ID: "))
+          .catch((error) => {
+            console.error("Error adding document: ", error);
+          });
+        // SEND REQUEST
         this.$store.dispatch({
           type: "auth/handlePostDataRequest",
           requestId : this.$route.params.id,
@@ -45,6 +66,7 @@ export default {
       }
     },
   },
+  
 };
 </script>
 

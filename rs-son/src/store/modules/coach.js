@@ -9,16 +9,12 @@ const coach = {
         coachesTemp: [],
         dataDetail: [],
         loading: false,
-        // locale: localStorage.getItem("lang") ? localStorage.getItem("lang") : "gb",
     },
     getters: {
 
     },
     mutations: {
-        SET_LOCALE(state, locale) {
-            return state.locale = locale
-        },
-        SET_LOADING(state, loading) {
+        SET_LOADING_COACH(state, loading) {
             return state.loading = loading;
         },
         SET_DEFAULT_DATA(state, coaches) {
@@ -44,7 +40,7 @@ const coach = {
                 .then((res) => {
                     commit('SET_DEFAULT_DATA', res.data);
                     commit('SET_TEMP_DATA', res.data)
-                    commit('SET_LOADING', false);
+                    commit('SET_LOADING_COACH', false);
                 }).catch(err => console.log(err));
         },
         getDataDetail({

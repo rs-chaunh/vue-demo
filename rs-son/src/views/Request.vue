@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 import ListRequest from "../components/Request/ListRequest.vue";
 export default {
   components: {  ListRequest },

@@ -34,7 +34,6 @@
 
 <script>
 import { mapState } from 'vuex';
-
 import ItemFormContact from "../components/ContactPage/ItemFormContact.vue";
 
 export default {

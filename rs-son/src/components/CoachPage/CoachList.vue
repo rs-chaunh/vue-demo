@@ -86,15 +86,15 @@ export default {
     },
   },
   mounted() {
-    this.$store.commit("coach/SET_LOADING", true);
+    this.$store.commit("coach/SET_LOADING_COACH", true);
     this.$store.dispatch("coach/getDefaultData");
   },
   methods: {
     ...mapMutations(["coach"]),
     handleRefresh() {
-      this.$store.commit("coach/SET_LOADING",true);
+      this.$store.commit("coach/SET_LOADING_COACH",true);
       setTimeout(() => {
-        this.$store.commit("coach/SET_LOADING",false);
+        this.$store.commit("coach/SET_LOADING_COACH",false);
       }, 300);
       this.$store.dispatch({
         type: "coach/getDatafilter",

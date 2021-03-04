@@ -19,7 +19,6 @@
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
       <label for="email"> {{ $t("email") }} </label>
-      <!--FIXED -->
       <input type="email" v-model="email" id="email" />
     </div>
     <div class="form-control">
@@ -39,6 +38,9 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
+import firebase from "firebase/app";
+import * as firebase_API from '../../env'
+
 export default {
   data() {
     return {
@@ -48,6 +50,7 @@ export default {
       errors: false,
       loadingMessage: "", //FIXED
       titleErr: "", //FIXED
+      token: "",
     };
   },
   methods: {
@@ -70,23 +73,17 @@ export default {
           returnSecureToken: true,
         };
         if (this.textBtn == "Signup" || this.textBtn == "Đăng ký") {
-          // SIGN UP
+          console.log("SIGN UP");
+          event.preventDefault();
           let result = await this.$store.dispatch({
             type: "auth/handleSignUp",
             data: dataPost,
+            token: this.token,
           });
           if (result) {
-            if (this.$route.query.redirect) {
-              this.$router.push({
-                path: "/register",
-              });
-            } else {
-              this.$router.push({
-                path: "/coaches",
-              });
-            }
+            this.handleSetRouter(this.$route.query.redirect, -1);
           } else {
-            this.$store.commit("auth/SET_CHECK_LOGIN",false);
+            this.$store.commit("auth/SET_CHECK_LOGIN", false);
           }
           //FIXED
         } else {
@@ -95,6 +92,7 @@ export default {
           let result = await this.$store.dispatch({
             type: "auth/handleLogin",
             data: dataPost,
+            token: this.token,
           });
           if (result) {
             // CHECK LINK TO LOGIN OR REGISTER
@@ -107,25 +105,48 @@ export default {
               );
             }
             // DON'T TO REGISTER PAGE IF HAVE ACCOUNT
-            if (this.$route.query.redirect && index == -1) {
-              console.log("a");
-              this.$router.push({
-                path: "/register",
-              });
-            } else {
-              console.log("b");
-              this.$router.push({
-                path: "/coaches",
-              });
-            }
+            this.handleSetRouter(this.$route.query.redirect,index);
           } else {
-            this.$store.commit("auth/SET_CHECK_LOGIN",false);
+            this.$store.commit("auth/SET_CHECK_LOGIN", false);
           }
         }
       }
     },
+    handleSetRouter(query, index) {
+      if ((query && index == -1)) {
+        this.$router.push({
+          path: "/register",
+        });
+      } else {
+        this.$router.push({
+          path: "/coaches",
+        });
+      }
+    },
+    handleSetToken() {
+      // GET TOKEN TO SEND MESS
+      const messaging = firebase.messaging();
+      messaging
+        .getToken({
+          vapidKey:
+          `${firebase_API.KEY_MESS}`
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            this.token = currentToken;
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+        });
+    },
   },
   created() {
+    this.handleSetToken();
     this.handleChangeAction();
   },
   computed: {

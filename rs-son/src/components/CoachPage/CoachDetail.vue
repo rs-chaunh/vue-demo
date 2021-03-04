@@ -41,8 +41,10 @@ export default {
     return {
       linkToContact: "",
       linkToDetail: "",
+      token: "",
     };
   },
+  
 };
 </script>
 
