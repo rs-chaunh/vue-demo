@@ -61,7 +61,7 @@ export default {
       this.$store.commit("SET_IS_ERROR", false);
     },
   },
-  created() {
+  mounted() {
     this.refreshPage();
     localStorage.getItem("userId") && this.$store.dispatch("notificationNewRequest");
   },
