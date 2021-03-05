@@ -79,6 +79,9 @@ export default {
         },
         isRegistered() {
             return this.$store.getters.isRegistered;
+        },
+        tokenDevices() {
+            return this.$store.state.tokenDevices;
         }
     },
     methods: {
@@ -87,8 +90,18 @@ export default {
         }
     },
     created() {
+        if(this.tokenDevices) this.tokenDevices.forEach(element => {
+            this.$store.getters.requestsUnsent.forEach(el => {
+                this.$store.dispatch("sendNotification", {
+                    ...el,
+                    tokenDevice: element
+                });
+                this.$store.dispatch("setStatusNotification", el);
+                this.$store.commit("SET_STATUS_REQUEST", el.key);
+            });
+        });
         this.$store.dispatch("getAllCoach");
-    }
+    },
 };
 </script>
 
