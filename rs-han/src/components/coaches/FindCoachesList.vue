@@ -1,3 +1,4 @@
+//TODO tên file chưa rõ, compent này để show coach list thì đặt là CoachesList là được rồi, tên file nên là danh từ, và đồng bộ với các tên file còn lại
 <template>
   <section>
     <div class="card">
@@ -10,6 +11,7 @@
         </button>
 
         <div v-if="isRegister"></div>
+        <!-- //TODO hình như bị thừa ô div phải không, check !isRegistered là được -->
         <div v-else>
           <button-link :name="'Register'" v-if="auth">
             {{ $t("common.button.registerCoaches") }}

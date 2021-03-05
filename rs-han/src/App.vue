@@ -15,7 +15,7 @@ import AlertNotification from "./components/common/AlertNotification";
 
 export default {
   name: "App",
-  components: { TheHeading, AlertNotification },
+  components: { TheHeading, AlertNotification }, //TODO alert component được sử dụng nhiều chỗ thì nên khai báo global, tương tự cho những common component khác
 };
 </script>
 
@@ -58,7 +58,7 @@ html {
   margin-right: 0.5rem;
   display: inline-block;
 }
-
+/* //TODO dự án nhỏ nên viết css ở đây không sao, nhưng tốt nhất là tạo 1 file global css */
 .card {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 26%);

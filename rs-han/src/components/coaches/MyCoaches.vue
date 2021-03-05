@@ -1,3 +1,4 @@
+//TODO file này nên để trong folder views, vì nó là 1 page, chứ không còn là component nhỏ nữa, nên đặt tên là CoachesPage
 <template>
   <section>
     <find-coaches />
