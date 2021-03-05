@@ -6,34 +6,23 @@ const API_KEY = "AIzaSyDHWnxo0i4pcV8qpmO6pEXCq6uAbPMSBok";
 const state = {
   auth: {
     isAuthenticated: localStorage.getItem("userId") ? true : false,
-    errors: false,
-    isAuthenticating: false
   },
 };
 
 const getters = {
   isAuthenticated: (state) => state.auth.isAuthenticated,
-  errors: (state) => state.auth.errors,
-  isAuthenticating: (state) => state.auth.isAuthenticating
 };
 
 const mutations = {
   TOGGLE_AUTH(state) {
     state.auth.isAuthenticated = !state.auth.isAuthenticated;
   },
-  SET_ERRORS(state, status) {
-    state.auth.errors = status;
-  },
-  SET_IS_AUTHENTICATING(state, status) {
-    state.auth.isAuthenticating = status;
-  }
 };
 
 const actions = {
-  login({ commit }, payload) {
-    commit("SET_IS_AUTHENTICATING", true);
+  login({ commit, dispatch }, payload) {
     commit("SET_IS_LOADING", true);
-    commit("SET_ERRORS", false);
+    commit("SET_IS_ERROR", false);
 
     axios
       .post(
@@ -44,25 +33,31 @@ const actions = {
           returnSecureToken: true,
         }
       )
-      .then((response) => {
-        commit("SET_ERRORS", false);
+      .then(async (response) => {
+        commit("SET_IS_ERROR", false);
         commit("TOGGLE_AUTH");
+        await dispatch("getToken");
 
         localStorage.setItem("userId", response.data.localId);
+
+        dispatch("addToken", {
+          userId: response.data.localId,
+        });
 
         if (router.currentRoute.value.query.redirect) {
           router.push({ name: "Register" });
         } else {
           router.push({ name: "Coaches" });
         }
+
       })
       .catch(() => {
         commit("SET_IS_LOADING", false);
-        commit("SET_ERRORS", true);
+        commit("SET_IS_ERROR", true);
       });
   },
-  signup({ commit }, payload) {
-    commit("SET_ERRORS", false);
+  signup({ commit, dispatch }, payload) {
+    commit("SET_IS_ERROR", false);
     commit("SET_IS_LOADING", true);
 
     axios
@@ -74,9 +69,11 @@ const actions = {
           returnSecureToken: true,
         }
       )
-      .then((response) => {
+      .then(async (response) => {
+        commit("SET_IS_ERROR", false);
         commit("TOGGLE_AUTH");
         localStorage.setItem("userId", response.data.localId);
+        await dispatch("getToken");
 
         if (router.currentRoute.value.query.redirect) {
           router.push({ name: "Register" });
@@ -86,11 +83,12 @@ const actions = {
       })
       .catch(() => {
         commit("SET_IS_LOADING", false);
-        commit("SET_ERRORS", true);
+        commit("SET_IS_ERROR", true);
       });
   },
-  logout({ commit }) {
+  logout({ dispatch, commit }) {
     commit("TOGGLE_AUTH");
+    dispatch("removeToken");
     localStorage.removeItem("userId");
     router.push({ name: "Coaches" });
   },

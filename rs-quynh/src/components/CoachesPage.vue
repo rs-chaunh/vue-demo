@@ -5,68 +5,65 @@
     :isAuthenticated="isAuthenticated"
     :isHadRegisterACoach="isHadRegisterACoach"
     :refreshPage="refreshPage"
+    :handlerCloseModal="handlerCloseModal"
     @toggleFilterOption="toggleFilterOption"
   ></coaches>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import Coaches from '../views/Coaches/Coaches.vue'
+import Coaches from "../views/Coaches/Coaches.vue";
 export default {
-    data() {
-        return {
-            filterOption: ["frontend", "backend", "career"],
-        }
-    },
-    components: { Coaches },
-    computed: {
-        ...mapGetters(['isAuthenticated', 'getCoaches']),
+  data() {
+    return {
+      filterOption: ["frontend", "backend", "career"],
+    };
+  },
+  components: { Coaches },
+  computed: {
+    ...mapGetters(["isAuthenticated", "getCoaches"]),
 
-        filterCoaches() {
-            return this.getCoaches.filter((coach) => {
-                let check = false;
-                if (coach.areas) {
-                    coach.areas.forEach((area) => {
-                        if (this.filterOption.indexOf(area) !== -1) 
-                            check = true;
-                    });
-                }
-                return check;
-            });
-        },
+    filterCoaches() {
+      return this.getCoaches.filter((coach) => {
+        return (
+          coach.areas &&
+          coach.areas.filter((area) => {
+            this.filterOption.indexOf(area) !== -1;
+          })
+        );
+      });
+    },
 
-        isHadRegisterACoach() {
-            const userId = localStorage.getItem("userId");
-            let check = false;
-            if (userId) {
-                this.getCoaches.forEach((coach) => {
-                    if (coach.userId === userId)
-                        check = true;
-                })
-            }
-            return check;
-        }
+    isHadRegisterACoach() {
+      const userId = localStorage.getItem("userId");
+      if (userId) {
+        this.getCoaches.forEach((coach) => {
+          if (coach.userId === userId) return true;
+        });
+      }
+      return false;
     },
-    methods: {
-        toggleFilterOption(option) {
-            const index = this.filterOption.indexOf(option);
-            if (index !== -1) {
-                this.filterOption.splice(index, 1);
-            } else {
-                this.filterOption.push(option);
-            }
-        },
-        refreshPage() {
-            this.$store.dispatch("getAllCoaches");
-        }
+  },
+  methods: {
+    toggleFilterOption(option) {
+      const index = this.filterOption.indexOf(option);
+      if (index !== -1) {
+        this.filterOption.splice(index, 1);
+      } else {
+        this.filterOption.push(option);
+      }
     },
-    created() {
-        this.$store.dispatch('getAllCoaches')
+    refreshPage() {
+      this.$store.dispatch("getAllCoaches");
     },
-}
+    handlerCloseModal() {
+      this.$store.commit("SET_IS_ERROR", false);
+    },
+  },
+  mounted() {
+    this.refreshPage();
+    localStorage.getItem("userId") && this.$store.dispatch("notificationNewRequest");
+  },
+};
 </script>
-
-<style>
-
-</style>

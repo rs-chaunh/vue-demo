@@ -1,7 +1,7 @@
 <template>
   <section>
     <nav>
-      <card>
+      <div class="card">
         <h2>{{ $t('requests.title')}}</h2>
         <ul v-if="listRequest.length > 0">
           <li v-for="(request, index) in listRequest" :key="index">
@@ -10,15 +10,13 @@
           </li>
         </ul>
         <h3 v-else>{{ $t('requests.not_requests')}}</h3>
-      </card>
+      </div>
     </nav>
   </section>
 </template>
 
 <script>
-import Card from "../commons/Card.vue";
 export default {
-  components: { Card },
   props: {
     listRequest: {
       type: Array,
@@ -31,7 +29,7 @@ export default {
 h2,
 h3 {
   text-align: center;
-}
+} 
 
 ul {
   list-style-type: none;

@@ -2,6 +2,7 @@
   <div class="form-control" :class="error ? 'error' : null">
     <label :for="id">{{ label }}</label>
     <slot></slot>
+    <p v-if="error"> {{ error }} </p>
   </div>
 </template>
 
@@ -20,8 +21,7 @@ export default {
       default: "text",
     },
     error: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
   },
 };

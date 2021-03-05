@@ -1,0 +1,48 @@
+.router-enter-from {
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.router-enter-to {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.router-enter-active {
+    transition: all .4s;
+}
+
+.router-leave-from {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.router-leave-active {
+    transition: all .4s;
+}
+
+.router-leave-to {
+    transform: translateY(50px);
+    opacity: 0;
+}
+
+.modal-enter-from {
+    transform: scale(0.7);
+    opacity: 0;
+}
+
+.modal-enter-to,
+.modal-leave-from {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modal-enter-active,
+.modal-leave-active {
+    transition: all ease 0.5s;
+}
+
+.modal-leave-to {
+    opacity: 0;
+    transform: scale(0.7);
+}

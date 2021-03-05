@@ -1,12 +1,12 @@
 <template>
   <section>
-    <card>
-      <h2>{{ $t('register.title') }}</h2>
+    <div class="card">
+      <h2>{{ $t("register.title") }}</h2>
       <form @submit.prevent="handlerRegister">
         <form-control
-          :error="coach.firstName.error ? true : false"
+          :error="coach.firstName.error"
           :id="'firstname'"
-          :label="$t('register.labels.firstname') "
+          :label="$t('register.labels.firstname')"
         >
           <input
             v-model="firstName"
@@ -14,12 +14,9 @@
             id="firstname"
             @blur="validateFirstName"
           />
-          <p v-if="coach.firstName.error">
-            {{ coach.firstName.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.lastName.error ? true : false"
+          :error="coach.lastName.error"
           :id="'lastname'"
           :label="$t('register.labels.lastname')"
         >
@@ -29,12 +26,9 @@
             id="lastname"
             @blur="validateLastName"
           />
-          <p v-if="coach.lastName.error">
-            {{ coach.lastName.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.description.error ? true : false"
+          :error="coach.description.error"
           :id="'description'"
           :label="$t('register.labels.description')"
         >
@@ -44,12 +38,9 @@
             rows="5"
             @blur="validateDescription"
           ></textarea>
-          <p v-if="coach.description.error">
-            {{ coach.description.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.hourlyRate.error ? true : false"
+          :error="coach.hourlyRate.error"
           :id="'hourlyRate'"
           :label="$t('register.labels.hourlyrate')"
         >
@@ -59,12 +50,9 @@
             id="hourlyRate"
             @blur="validateHourlyRate"
           />
-          <p v-if="coach.hourlyRate.error">
-            {{ coach.hourlyRate.error }}
-          </p>
         </form-control>
         <form-control
-          :error="coach.areas.error ? true : false"
+          :error="coach.areas.error"
           :id="'areas'"
           :label="$t('register.labels.areas')"
         >
@@ -76,25 +64,28 @@
             :key="area.id"
             @change="toggleAreas(area.id)"
           ></filter-option>
-          <p v-if="coach.areas.error">
-            {{ coach.areas.error }}
-          </p>
         </form-control>
         <p v-if="isHadError">{{ $t('register.errors.all') }}</p>
-        <button-purple>{{ $t('register.buttons.submit') }}</button-purple>
+        <custom-button type="purple">{{ $t('register.buttons.submit') }}</custom-button>
       </form>
-    </card>
+    </div>
+    <modal-notification
+      v-if="isError"
+      :handlerCloseModal="handlerCloseModal"
+      :textError="'Lỗi rồi nhé bạn ơi'"
+    >
+    </modal-notification>
   </section>
 </template>
 
 <script>
-import Card from "../commons/Card.vue";
 import FormControl from "../commons/FormControl.vue";
 import FilterOption from "../commons/FilterOption.vue";
-import ButtonPurple from "../commons/Button/ButtonPurple.vue";
+import CustomButton from "../commons/CustomButton.vue";
+import ModalNotification from "../commons/ModalNotification";
 
 export default {
-  components: { Card, FormControl, FilterOption, ButtonPurple },
+  components: { FormControl, FilterOption, CustomButton, ModalNotification },
   data() {
     return {
       firstName: this.coach.firstName.value,
@@ -108,6 +99,10 @@ export default {
       type: Object,
     },
     isHadError: {
+      type: Boolean,
+      default: false,
+    },
+    isOpenModal: {
       type: Boolean,
       default: false,
     },
@@ -129,6 +124,9 @@ export default {
     handlerRegister: {
       type: Function,
     },
+    handlerCloseModal: {
+      type: Function,
+    },
     setValueType: {
       type: Function,
     },
@@ -137,11 +135,13 @@ export default {
     dataAreas() {
       return this.$store.getters.getDataAreas;
     },
+    isError() {
+      return this.$store.getters.isError;
+    },
   },
   methods: {
     toggleAreas(option) {
       this.$emit("toggleAreas", option);
-      
     },
   },
   watch: {

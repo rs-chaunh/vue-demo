@@ -1,28 +1,43 @@
 <template>
   <teleport to="body">
     <div class="backdrop"></div>
-    <section class="modal">
-      <header>
-        <h2>{{ isLoading ? $t('auth.labels.authenticating') :  $t('auth.labels.errors') }}</h2>
-      </header>
-
-      <section>
-        <p v-if="errorsAuth">{{ $t('auth.errors.authen') }}</p>
-        <loading v-else></loading>
-      </section>
-
-      <menu>
-        <button-purple @click="handlerCloseModal">{{ $t('auth.buttons.close') }}</button-purple>
-      </menu>
-    </section>
+    <transition name="modal">
+        <section v-if="isLoading" class="modal">
+          <header><h2>{{$t('auth.labels.authenticating')}}</h2></header>
+          <section>
+            <loading></loading>
+          </section>
+          <menu>
+            <custom-button @click="handlerCloseModal" type="purple"
+              >{{ $t('auth.buttons.close') }}</custom-button
+            >
+          </menu>
+        </section>
+    </transition>
+    <transition name="modal">
+        <section v-if="errorsAuth" class="modal">
+          <header>
+            <h2>{{$t('auth.labels.errors')}}</h2>
+          </header>
+          <section>
+            <p>{{ $t('auth.errors.authen') }}</p>
+          </section>
+          <menu>
+            <custom-button @click="handlerCloseModal" type="purple"
+              >{{ $t('auth.buttons.close') }}</custom-button
+            >
+          </menu>
+        </section>
+    </transition>
   </teleport>
 </template>
 
 <script>
-import ButtonPurple from "../commons/Button/ButtonPurple.vue";
+import CustomButton from "../commons/CustomButton";
 import Loading from "../commons/Loading.vue";
+
 export default {
-  components: { ButtonPurple, Loading },
+  components: { Loading, CustomButton },
   props: {
     handlerCloseModal: {
       type: Function,
@@ -30,7 +45,7 @@ export default {
   },
   computed: {
     errorsAuth() {
-      return this.$store.getters.errors;
+      return this.$store.getters.isError;
     },
     isLoading() {
       return this.$store.getters.getIsLoading;
@@ -62,6 +77,7 @@ export default {
   margin: 0;
   overflow: hidden;
   background-color: #fff;
+
 
   header {
     background-color: #3a0061;

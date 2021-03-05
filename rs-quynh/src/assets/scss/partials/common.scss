@@ -1,0 +1,135 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font: inherit;
+    background-color: #3a0061;
+    border: 1px solid #3a0061;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 30px;
+    margin-right: 0.5rem;
+    display: inline-block;
+    font-family: "Roboto", sans-serif;
+    outline: none;
+    transition: 0.2s all;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+}
+
+h3 {
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+.actions {
+    margin: .5rem 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .26);
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 40rem;
+}
+.badge {
+    border-radius: 30px;
+    padding: .5rem 1.5rem;
+    display: inline-block;
+    margin-right: .5rem;
+    background-color: #ccc;
+    color: #252525;
+    text-transform: uppercase;
+}
+
+.frontend {
+    background-color: #3d008d;
+    color: #fff;
+}
+
+.backend {
+    background-color: #71008d;
+    color: #fff;
+}
+
+.career {
+    background-color: #8d006e;
+    color: #fff;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 10;
+}
+
+.modal {
+    position: fixed;
+    top: 20vh;
+    left: 10%;
+    width: 80%;
+    z-index: 100;
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #fff;
+
+
+    header {
+        background-color: #3a0061;
+        color: #fff;
+        width: 100%;
+        padding: 1rem;
+
+        h2 {
+            margin: 0;
+        }
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    menu {
+        padding: 1rem;
+        display: flex;
+        justify-content: flex-end;
+        margin: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .modal {
+        left: calc(50% - 20rem);
+        width: 40rem;
+    }
+}

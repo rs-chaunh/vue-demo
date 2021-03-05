@@ -1,106 +1,129 @@
 <template>
   <div>
-    <card>
-      <form @submit.prevent="handlerSubmitAuthForm">
-        <form-control :id="'email'" :label="$t('common.form.email')">
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            v-model="email" />
+    <div class="card">
+      <form>
+        <form-control
+          :error="dataForm.email.error"
+          :id="'email'"
+          :label="$t('common.form.email')"
+        >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            v-model="email"
+            @blur="validateEmail"
+          />
         </form-control>
-        <form-control :id="'password'" :label="$t('common.form.password')">
+        <form-control
+          :error="dataForm.password.error"
+          :id="'password'"
+          :label="$t('common.form.password')"
+        >
           <input
             type="password"
             id="password"
             name="password"
             v-model="password"
+            @blur="validatePassword"
           />
         </form-control>
-        <p v-if="errors">
-         {{ $t('auth.errors.form') }}
+        <p v-if="isError">
+          {{ $t('auth.errors.form') }}
         </p>
-        
-        <button-purple v-if="isHasAccount">{{ $t('auth.buttons.login') }}</button-purple>
-        <button-purple v-else>{{ $t('auth.buttons.signup') }}</button-purple>
 
-        <button-transparent @click="handlerChangeType">
+        <custom-button @click.prevent="handlerSubmitAuthForm" type="purple">{{ isHasAccount ? $t('auth.buttons.login') : $t('auth.buttons.signup') }}</custom-button>
+
+        <custom-button @click.prevent="handlerChangeType" type="transparent">
           {{ $t('auth.buttons.instead', { 
             action: isHasAccount ? $t('auth.buttons.signup') :  $t('auth.buttons.login')
           }) }}
-        </button-transparent>
+        </custom-button>
       </form>
-    </card>
-    <auth-modal v-if="isOpenModal" :handlerCloseModal="handlerCloseModal"></auth-modal>
+    </div>
+    <modal-notification
+      v-if="isOpenModal"
+      :handlerCloseModal="handlerCloseModal"
+      :textError="$t('auth.errors.authen')"
+    >
+    </modal-notification>
   </div>
 </template>
 
 <script>
-import ButtonPurple from "../commons/Button/ButtonPurple.vue";
-import ButtonTransparent from '../commons/Button/ButtonTransparent.vue';
-import Card from "../commons/Card";
+import CustomButton from "../commons/CustomButton";
 import FormControl from "../commons/FormControl.vue";
-import AuthModal from './AuthModal.vue';
+import ModalNotification from "../commons/ModalNotification.vue";
 
 export default {
-  components: { Card, FormControl, ButtonPurple, ButtonTransparent, AuthModal },
+  components: { FormControl, CustomButton, ModalNotification },
   data() {
     return {
-      email: this.emailProp,
-      password: this.passwordProp
-    }
+      email: this.dataForm.email.value,
+      password: this.dataForm.password.value,
+    };
   },
   props: {
-    errors: {
+    dataForm: {
+      type: Object,
+    },
+    isError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isOpenModal: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isHasAccount: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    emailProp: {
-      type: String,
-      default: ""
+    validateEmail: {
+      type: Function,
     },
-    passwordProp: {
-      type: String,
-      default: ""
+    validatePassword: {
+      type: Function,
     },
     handlerChangeType: {
-      type: Function
+      type: Function,
     },
     handlerChangeInput: {
-      type: Function
+      type: Function,
     },
     handlerSubmitAuthForm: {
-      type: Function
+      type: Function,
     },
     handlerCloseModal: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   computed: {
-    isAuthenticating() {
-      return this.$store.getters.isAuthenticating;
-    }
+    errorsAuth() {
+      return this.$store.getters.isError;
+    },
+    isLoading() {
+      return this.$store.getters.isLoading;
+    },
   },
   watch: {
-    email: function(){
-      this.$emit("handlerChangeInput", "email", this.email)
+    email: function () {
+      this.$emit("handlerChangeInput", "email", this.email);
     },
-    password: function() {
-      this.$emit("handlerChangeInput", "password", this.password)
-    }
-  }
+    password: function () {
+      this.$emit("handlerChangeInput", "password", this.password);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.form-control.error {
+  input,
+  textarea {
+    border: 1px solid red;
+  }
+}
 form {
   margin: 1rem;
   padding: 1rem;
