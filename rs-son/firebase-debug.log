@@ -460,3 +460,37 @@ java.io.IOException: An existing connection was forcibly closed by the remote ho
 [debug] [2021-03-03T07:41:02.902Z] [runtime-status] [2528] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.5.0","resolution":"C:\\Users\\Thanh Son\\Desktop\\Dev\\VueJS\\coaches-git\\vue-demo\\rs-son\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [2528] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"9.5.0\",\"resolution\":\"C:\\\\Users\\\\Thanh Son\\\\Desktop\\\\Dev\\\\VueJS\\\\coaches-git\\\\vue-demo\\\\rs-son\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}}"}}
 [debug] [2021-03-03T07:41:02.933Z] [runtime-status] [2528] initializeApp(DEFAULT) {"storageBucket":"coaches-project-8d77f.appspot.com","databaseURL":"https://coaches-project-8d77f-default-rtdb.firebaseio.com","projectId":"coaches-project-8d77f"} {"metadata":{"emulator":{"name":"functions"},"message":"[runtime-status] [2528] initializeApp(DEFAULT) {\"storageBucket\":\"coaches-project-8d77f.appspot.com\",\"databaseURL\":\"https://coaches-project-8d77f-default-rtdb.firebaseio.com\",\"projectId\":\"coaches-project-8d77f\"}"}}
 [debug] [2021-03-03T07:41:02.936Z] [worker-~diagnostic~-ce723d0c-3bd3-4a6a-8afd-62296868c811]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-~diagnostic~-ce723d0c-3bd3-4a6a-8afd-62296868c811]: IDLE"}}
+[debug] [2021-03-03T07:41:31.697Z] Mar 03, 2021 2:41:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:41:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:41:31.702Z] Mar 03, 2021 2:41:31 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:41:31 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose\r\nINFO: channel closed\r\n"}}
+[debug] [2021-03-03T07:48:15.589Z] Mar 03, 2021 2:48:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:15.839Z] Mar 03, 2021 2:48:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:15.904Z] Mar 03, 2021 2:48:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:16.170Z] Mar 03, 2021 2:48:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:16.180Z] Mar 03, 2021 2:48:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:16.488Z] Mar 03, 2021 2:48:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:18.191Z] Mar 03, 2021 2:48:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:18.442Z] Mar 03, 2021 2:48:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:18.537Z] Mar 03, 2021 2:48:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Mar 03, 2021 2:48:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\r\nINFO: Detected non-HTTP/2 connection.\r\n"}}
+[debug] [2021-03-03T07:48:20.292Z] Received signal SIGHUP 1

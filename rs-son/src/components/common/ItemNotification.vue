@@ -16,7 +16,6 @@
 export default {
   computed: {
     isNotification() {
-      console.log(this.$store.state.auth.isNotification);
       return this.$store.state.auth.isNotification;
     },
   },
