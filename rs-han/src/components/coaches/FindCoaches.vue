@@ -1,3 +1,4 @@
+//TODO tên file dễ nhầm với FindCoachesList, chưa đồng bộ với các tên file còn lại, nên sửa thành CoachesFilters
 <template>
   <section class="find__coaches">
     <div class="card">

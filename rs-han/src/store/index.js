@@ -1,31 +1,32 @@
-import { createStore } from "vuex";
-import router from "../router";
-import axios from "axios";
-import firebase from "../firebase";
-import "firebase/auth";
-import "firebase/messaging";
+import { createStore } from 'vuex';
+import router from '../router';
+import axios from 'axios';
+import firebase from '../firebase';
+import 'firebase/auth';
+import 'firebase/messaging';
 
-import i18n from "../plugins/i18n";
+import i18n from '../plugins/i18n';
 
 const messaging = firebase.messaging();
 let db = firebase.firestore();
 
 export default createStore({
   state: {
-    areas: ["frontend", "backend", "fullstack"],
+    areas: ['frontend', 'backend', 'fullstack'],
     coaches: [],
     infoCoaches: [],
-    auth: localStorage.getItem("userID") || null,
+    auth: localStorage.getItem('userID') || null,
     loading: false,
     isFindCoaches: false,
     isRegister: false,
     openDialog: false,
     loadingDialog: false,
-    lang: localStorage.getItem("lang") || "gb",
+    lang: localStorage.getItem('lang') || 'gb',
     errorAuth: null,
     checkValid: false,
     isNotification: false,
   },
+  //TODO nên tách nhỏ thành nhiều module: common, auth, coaches, ... state lớn thì sẽ khó quản lí
   getters: {
     allCoaches: (state) => {
       return state.coaches.filter((coaches) => {
@@ -42,27 +43,32 @@ export default createStore({
   },
   actions: {
     async getCoaches({ commit }) {
-      commit("SET_LOADING", true);
+      commit('SET_LOADING', true);
       const resCoaches = [];
       try {
         const response = await axios.get(
-          "https://my-coaches-default-rtdb.firebaseio.com/coaches.json"
+          'https://my-coaches-default-rtdb.firebaseio.com/coaches.json'
         );
+        //TODO nên set biến chung cho đường dẫn, nếu sau này có chỉnh sửa thì chỉ cần sửa 1 chỗ
         if (response.data == null) {
-          commit("SET_FIND_COACHES", false);
+          //TODO có thể viết gọn lại là if(response.data)
+          commit('SET_FIND_COACHES', false);
         } else {
-          commit("SET_FIND_COACHES", true);
-          let obj = Object.values(response.data);
+          commit('SET_FIND_COACHES', true);
+          let obj = Object.values(response.data); //TODO nên đặt tên có nghĩa hơn
           for (let i = 0; i < obj.length; i++) {
             let id = { id: Object.keys(response.data)[i] };
-            let temp = Object.assign(obj[i], id);
+            let temp = Object.assign(obj[i], id); //TODO đặt tên hơi tối nghĩa, không biết được temp này chứa gì
             resCoaches.push(temp);
           }
+          //TODO có thể viết gọn lại là
+          // const coachesData = response.data;
+          // const resCoaches = coachesData.map(id=>({id, ...coachesData[i] }))
         }
-        commit("SET_COACHES", resCoaches);
+        commit('SET_COACHES', resCoaches);
         setTimeout(() => {
-          commit("SET_LOADING", false);
-        }, 700);
+          commit('SET_LOADING', false);
+        }, 700); //TODO mục đích setTimeout?
       } catch (error) {
         console.log(error);
       }
@@ -71,7 +77,7 @@ export default createStore({
     async getUserRegister({ dispatch }) {
       try {
         axios
-          .get("https://my-coaches-default-rtdb.firebaseio.com/coaches.json")
+          .get('https://my-coaches-default-rtdb.firebaseio.com/coaches.json')
           .then((response) => {
             let tempArr = [];
             if (response.data) {
@@ -79,50 +85,50 @@ export default createStore({
                 tempArr.push(Object.values(response.data)[i].id);
               }
             }
-            dispatch("checkUserRegister", tempArr);
+            dispatch('checkUserRegister', tempArr);
           })
           .catch((error) => console.log(error));
       } catch (error) {
         console.log(error);
-      }
+      } //TODO đã then catch rồi thì không cần try catch, nếu đã dùng async thì dùng await luôn cho dễ nhìn
     },
 
     async sendRequest({ dispatch }, payload) {
       try {
         await axios
-          .post("https://my-coaches-default-rtdb.firebaseio.com/request.json", {
+          .post('https://my-coaches-default-rtdb.firebaseio.com/request.json', {
             id: payload.id,
             email: payload.email,
             message: payload.message,
           })
           .catch((error) => console.log(error));
-        router.push({ name: "Coaches" });
+        router.push({ name: 'Coaches' });
       } catch (error) {
         console.log(error);
       }
-      await dispatch("addNotification", payload);
-      router.push({ name: "Coaches" });
+      await dispatch('addNotification', payload);
+      router.push({ name: 'Coaches' });
     },
 
     addNotification({}, payload) {
-      db.collection("messages")
+      db.collection('messages')
         .add({
           id: payload.id,
-          title: "You receive a notification from email : " + payload.email,
+          title: 'You receive a notification from email : ' + payload.email,
           content: payload.message,
         })
         .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
-          localStorage.setItem("docID", docRef.id);
+          console.log('Document written with ID: ', docRef.id);
+          localStorage.setItem('docID', docRef.id);
         })
         .catch((error) => {
-          console.error("Error adding document: ", error);
+          console.error('Error adding document: ', error);
         });
     },
 
     async registerCoaches({ dispatch, commit }, payload) {
       await axios
-        .post("https://my-coaches-default-rtdb.firebaseio.com/coaches.json", {
+        .post('https://my-coaches-default-rtdb.firebaseio.com/coaches.json', {
           id: payload.id,
           areas: payload.areas,
           description: payload.description,
@@ -131,23 +137,23 @@ export default createStore({
           hourlyRate: payload.hourlyRate,
         })
         .catch((error) => console.log(error));
-      dispatch("getCoaches");
-      commit("SET_IS_REGISTER", true);
-      router.push({ name: "Coaches" });
+      dispatch('getCoaches');
+      commit('SET_IS_REGISTER', true);
+      router.push({ name: 'Coaches' });
     },
 
     async requestCoaches({ commit }, request) {
-      commit("SET_LOADING", true);
+      commit('SET_LOADING', true);
       await axios
-        .get("https://my-coaches-default-rtdb.firebaseio.com/request.json")
+        .get('https://my-coaches-default-rtdb.firebaseio.com/request.json')
         .then((response) => {
           setTimeout(() => {
-            commit("SET_LOADING", false);
+            commit('SET_LOADING', false);
           }, 700);
           for (let i = 0; i < Object.values(response.data).length; i++) {
             if (
               Object.values(response.data)[i].id ==
-              localStorage.getItem("userID")
+              localStorage.getItem('userID')
             ) {
               request.push(Object.values(response.data)[i]);
             }
@@ -161,41 +167,41 @@ export default createStore({
     infoCoaches({ commit }, id) {
       axios
         .get(
-          "https://my-coaches-default-rtdb.firebaseio.com/coaches/" +
+          'https://my-coaches-default-rtdb.firebaseio.com/coaches/' +
             id +
-            ".json"
+            '.json'
         )
         .then((response) => {
-          commit("SET_INFO_COACHES", response.data);
+          commit('SET_INFO_COACHES', response.data);
         });
     },
 
     async logout({ dispatch, commit }) {
-      localStorage.removeItem("userID");
-      commit("SET_IS_REGISTER", false);
-      commit("TOGGLE_AUTH", null);
-      await dispatch("deleteUsers");
-      localStorage.removeItem("docID");
+      localStorage.removeItem('userID');
+      commit('SET_IS_REGISTER', false);
+      commit('TOGGLE_AUTH', null);
+      await dispatch('deleteUsers');
+      localStorage.removeItem('docID');
     },
 
     deleteUsers() {
-      db.collection("users")
-        .doc(localStorage.getItem("docID"))
+      db.collection('users')
+        .doc(localStorage.getItem('docID'))
         .delete()
         .then(() => {
-          console.log("Document successfully deleted!");
+          console.log('Document successfully deleted!');
         })
         .catch((error) => {
-          console.error("Error removing document: ", error);
+          console.error('Error removing document: ', error);
         });
     },
 
     checkUserRegister({ commit, state }, payload) {
       if (state.auth != null) {
         if (payload.indexOf(state.auth) != -1) {
-          commit("SET_USER_REGISTER", true);
+          commit('SET_USER_REGISTER', true);
         } else {
-          commit("SET_USER_REGISTER", false);
+          commit('SET_USER_REGISTER', false);
         }
       }
     },
@@ -212,30 +218,30 @@ export default createStore({
           .auth()
           .createUserWithEmailAndPassword(payload.email, payload.password);
       }
-      if (payload.email == "" || payload.password == "") {
-        commit("SET_CHECK_VALID", true);
+      if (payload.email == '' || payload.password == '') {
+        commit('SET_CHECK_VALID', true);
       } else {
-        commit("SET_CHECK_VALID", false);
-        commit("SET_OPEN_DIALOG", true);
-        commit("SET_LOADING_DIALOG", true);
+        commit('SET_CHECK_VALID', false);
+        commit('SET_OPEN_DIALOG', true);
+        commit('SET_LOADING_DIALOG', true);
         await method
           .then((userCredential) => {
             userID = userCredential.user.uid;
-            commit("TOGGLE_AUTH", userID);
-            localStorage.setItem("userID", userID);
-            dispatch("getTokenFCM", userID);
+            commit('TOGGLE_AUTH', userID);
+            localStorage.setItem('userID', userID);
+            dispatch('getTokenFCM', userID);
             setTimeout(() => {
-              commit("SET_OPEN_DIALOG", false);
-              commit("SET_LOADING_DIALOG", false);
+              commit('SET_OPEN_DIALOG', false);
+              commit('SET_LOADING_DIALOG', false);
               if (payload.url) {
-                router.push({ name: "Register" });
+                router.push({ name: 'Register' });
               } else {
-                router.push({ name: "Coaches" });
+                router.push({ name: 'Coaches' });
               }
             }, 500);
           })
           .catch((error) => {
-            dispatch("errorLoginAndSignup", error.message);
+            dispatch('errorLoginAndSignup', error.message);
           });
       }
     },
@@ -244,46 +250,46 @@ export default createStore({
       messaging
         .getToken({
           vapidKey:
-            "BKJRY0TZ_tn1Afod5lvQNuxlb63cqNxNfBdCq1UzLLCfemeVUFmrlBzOuWSmG3TktVRmyk862XGhDEgD5UWnvTM",
+            'BKJRY0TZ_tn1Afod5lvQNuxlb63cqNxNfBdCq1UzLLCfemeVUFmrlBzOuWSmG3TktVRmyk862XGhDEgD5UWnvTM',
         })
         .then((currentToken) => {
           if (currentToken) {
-            localStorage.setItem("fcmToken", currentToken);
-            db.collection("users")
+            localStorage.setItem('fcmToken', currentToken);
+            db.collection('users')
               .add({
                 tokens: currentToken,
                 userUid: userID,
               })
               .then((docRef) => {
-                localStorage.setItem("docID", docRef.id);
+                localStorage.setItem('docID', docRef.id);
               })
               .catch((error) => {
-                console.error("Error adding document: ", error);
+                console.error('Error adding document: ', error);
               });
           } else {
             console.log(
-              "No registration token available. Request permission to generate one."
+              'No registration token available. Request permission to generate one.'
             );
           }
         })
         .catch((err) => {
-          console.log("An error occurred while retrieving token. ", err);
+          console.log('An error occurred while retrieving token. ', err);
         });
     },
 
     changLanguage({ commit }, payload) {
-      localStorage.setItem("lang", payload);
-      commit("SET_LANGUAGE", payload);
+      localStorage.setItem('lang', payload);
+      commit('SET_LANGUAGE', payload);
       i18n.global.locale = payload;
     },
 
     errorLoginAndSignup({ commit }, payload) {
-      commit("SET_OPEN_DIALOG", true);
-      commit("SET_LOADING_DIALOG", true);
+      commit('SET_OPEN_DIALOG', true);
+      commit('SET_LOADING_DIALOG', true);
       setTimeout(() => {
-        commit("SET_LOADING_DIALOG", false);
+        commit('SET_LOADING_DIALOG', false);
       }, 500);
-      commit("SET_ERROR_AUTH", payload);
+      commit('SET_ERROR_AUTH', payload);
     },
   },
   mutations: {
@@ -306,7 +312,7 @@ export default createStore({
     },
 
     SET_FIND_COACHES(state, payload) {
-      state.isFindCoaches = payload;
+      state.isFindCoaches = payload; //TODO sai ngữ pháp => areCoachesFounded hoặc haveCoaches, mục đích của state này là gì, anh thấy không cần thiết lắm
     },
 
     SET_OPEN_DIALOG(state, payload) {
@@ -322,7 +328,7 @@ export default createStore({
     },
 
     SET_USER_REGISTER(state, payload) {
-      state.isRegister = payload;
+      state.isRegister = payload; //TODO isRegistered
     },
     SET_INFO_COACHES(state, payload) {
       state.infoCoaches = payload;

@@ -1,3 +1,4 @@
+//TODO detail của cái gì? lỡ có nhiều trang detail thì sao
 <template>
   <div>
     <section>
