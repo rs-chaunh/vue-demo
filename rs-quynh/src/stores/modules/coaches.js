@@ -147,10 +147,8 @@ const actions = {
         .catch((err) => console.log(err));
     }
   },
-  addToken({ state, getters, commit }) {
-    const coachByUserId = getters.getCoachByUserId(
-      localStorage.getItem("userId")
-    );
+  addToken({ getters, commit }, payload) {
+    const coachByUserId = getters.getCoachByUserId(payload.userId);
     if (coachByUserId) {
       const deviceTokens = coachByUserId.deviceTokens
         ? coachByUserId.deviceTokens

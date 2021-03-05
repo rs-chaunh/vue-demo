@@ -39,8 +39,10 @@ const actions = {
         await dispatch("getToken");
 
         localStorage.setItem("userId", response.data.localId);
-        
-        dispatch("addToken");
+
+        dispatch("addToken", {
+          userId: response.data.localId,
+        });
 
         if (router.currentRoute.value.query.redirect) {
           router.push({ name: "Register" });
