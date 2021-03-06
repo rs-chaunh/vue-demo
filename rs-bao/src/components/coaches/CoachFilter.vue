@@ -1,7 +1,7 @@
 <template>
   <div>
     <coach-card>
-      <h2>Find Your Coach</h2>
+      <h2>{{ $t("findYourCoach") }}</h2>
       <span class="filter-option">
         <input
           type="checkbox"
@@ -10,7 +10,7 @@
           @change="onChange"
           checked
         />
-        <label for="frontend">Frontend</label>
+        <label for="frontend">{{ $t("career.frontend") }}</label>
       </span>
       <span class="filter-option">
         <input
@@ -20,7 +20,7 @@
           @change="onChange"
           checked
         />
-        <label for="backend">Backend</label>
+        <label for="backend">{{ $t("career.backend") }}</label>
       </span>
       <span class="filter-option">
         <input
@@ -30,7 +30,7 @@
           @change="onChange"
           checked
         />
-        <label for="career">Career</label>
+        <label for="career">{{ $t("career.career") }}</label>
       </span>
     </coach-card>
   </div>
@@ -50,12 +50,12 @@ export default {
     };
   },
   methods: {
-    onChange() {
-      // const id = e.target.id;
-      // const checkActive = e.target.checked;
-      //update filter data
+    onChange(e) {
+      const id = e.target.id;
+      const checkActive = e.target.checked;
+      // update filter data
       this.filter = {
-        // [id]: checkActive,
+        [id]: checkActive,
         ...this.filter,
       };
       this.$emit("changeFilter", this.filter);

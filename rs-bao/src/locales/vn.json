@@ -1,0 +1,62 @@
+{
+  "title": "Find a Coach",
+  "menu": {
+    "allCoaches": "Các huấn luyện viên",
+    "requests": "Các yêu cầu",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất"
+  },
+  "findYourCoach": "Tìm kiếm HLV của bạn",
+  "career": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "career": "Career"
+  },
+  "refresh": "Khôi phục",
+  "loginToRegister": "Đăng nhập để đăng ký HLV",
+  "registerCoach": "Đăng ký HLV",
+  "registerACoach": "Đăng ký 1 HLV",
+  "notFoundCoach": "Không tìm thấy HLV nào.",
+
+  "contact": "Liên hệ",
+  "viewDetails": "Xem chi tiết",
+  "hour": "giờ",
+
+  "email": "Email",
+  "password": "Mật khẩu",
+  "signup": "Đăng ký",
+  "signupInstead": "Hoặc đăng ký",
+  "loginInstead": "Hoặc đăng nhập",
+  "messageAuth": "Làm ơn hãy nhập e-mail và mật khẩu hợp lệ (phải có ít nhất 6 chữ số).",
+
+  "interest": "Bạn có thích thú? Hãy yêu cầu ngay bây giờ !",
+  "sendMessage": "Gửi tin nhắn",
+  "message": "Tin nhắn",
+  "notifyMessage": "Vui lòng nhập e-mail hợp lệ và mật khẩu không được để trống.",
+
+  "requestReceived": "Các yêu cầu nhận được",
+  "responseMessage": "Bạn chưa nhận được bất cứ yêu cầu nào!",
+
+
+  "fail": "Thất bại. Vui lòng kiểm tra dữ liệu.",
+
+  "pageNotFound": "Không tim thấy trang",
+  "notifyFound": "Trang này không được tìm thấy, vui lòng chuyển sang trang",
+  "coaches": "coaches",
+
+  "firstName": "Tên",
+  "errorFirst": "Tên được yêu cầu và chữ cái đầu tiên phải viết hoa",
+  "lastName": "Họ",
+  "errorLast": "Họ được yêu cầu và phải có ít nhất 3 kí tự",
+  "description": "Mô tả",
+  "errorDescription": "Mô tả được yêu cầu và không vượt quá 100 kí tự.",
+  "hourlyRate": "Tỉ lệ giờ",
+  "errorHourlyRate": "Tỉ lệ giờ phải là 1 số",
+  "area": "Các lĩnh vực chuyên gia",
+  "errorArea": "Lĩnh vực được chọn",
+  "frontendDev": "Nhà phát triển Frontend",
+  "backendDev": "Nhà phát triển Backend",
+  "careerDev": "Nhà cố vấn nghề nghiệp",
+
+  "failToFetch": "Lấy dữ liệu thất bại!"
+}

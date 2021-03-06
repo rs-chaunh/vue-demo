@@ -1,0 +1,69 @@
+{
+  "title": "Find a Coach",
+  "menu": {
+    "allCoaches": "All Coaches",
+    "requests": "Requests",
+    "login": "Login",
+    "logout": "Logout"
+  },
+
+
+  "findYourCoach": "Find Your Coach",
+  "career": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "career": "Career"
+  },
+  "refresh": "Refresh",
+  "loginToRegister": "Login to Register as Coach",
+  "registerCoach": "Register as Coach",
+  "registerACoach": "Register a Coach",
+  "notFoundCoach": "No coaches found.",
+
+
+  "contact": "Contact",
+  "viewDetails": "View Details",
+  "hour": "hour",
+
+
+  "email": "E-mail",
+  "password": "Password",
+  "signup": "Sign Up",
+  "signupInstead": "Signup instead",
+  "loginInstead": "Login instead",
+  "messageAuth": "Please enter a valid email and password (must be at least 6 characters long).",
+
+
+  "interest": "Interested? Reach out now!",
+  "sendMessage": "Send message",
+  "message": "Message",
+  "notifyMessage": "Please enter a valid email and non-empty message.",
+
+
+  "requestReceived": "Requests Received",
+  "responseMessage": "You haven't received any requests yet!",
+
+
+  "fail": "Failed to authenticate. Check your login data.",
+
+  "pageNotFound": "Page not found",
+  "notifyFound": "This page could not be found - maybe check out all our",
+  "coaches": "coaches",
+
+
+  "firstName": "Firstname",
+  "errorFirst": "FirstName is required and first character must be toUpperCase",
+  "lastName": "Lastname",
+  "errorLast": "LastName is required and first character must be toUpperCase",
+  "description": "Description",
+  "errorDescription": "Description is required and not more than 100 characters.",
+  "hourlyRate": "Hourly Rate",
+  "errorHourlyRate": "HourlyRate must be a number",
+  "area": "Areas of Expertise",
+  "errorArea": "Areas must be selected",
+  "frontendDev": "Frontend Development",
+  "backendDev": "Backend Development",
+  "careerDev": "Career Advisory",
+
+  "failToFetch": "Fail to fetch!"
+}

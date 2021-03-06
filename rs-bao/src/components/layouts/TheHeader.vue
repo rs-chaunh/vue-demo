@@ -1,33 +1,61 @@
 <template>
   <div id="header">
     <div class="container">
-      <router-link class="logo" to="/coaches">Find a Coach</router-link>
+      <router-link class="logo" to="/coaches"> {{ $t("title") }} </router-link>
       <div class="menu">
-        <router-link to="/coaches">All Coaches</router-link>
-        <template v-if="!isLogin">
-          <router-link to="/auth">Login</router-link>
+        <router-link to="/coaches">{{ $t("menu.allCoaches") }}</router-link>
+
+        <template v-if="!isAuth">
+          <router-link to="/auth">{{ $t("menu.login") }}</router-link>
         </template>
+
         <template v-else>
           <router-link to="/requests">
-            Requests
+            {{ $t("menu.requests") }}
           </router-link>
-          <coach-button class="logout" @click="logout">Logout</coach-button>
+          <coach-button class="logout" @click="logout">{{
+            $t("menu.logout")
+          }}</coach-button>
         </template>
+
+        <!--icon-->
+        <flag class="flag" :iso="check" />
+
+        <select
+          class="vuei18n"
+          v-model="check"
+          id="check"
+          @change="handleChange($event)"
+        >
+          <option value="us">
+            English
+          </option>
+          <option value="vn">Vietnam</option>
+        </select>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "TheHeader",
-  computed: {
-    isLogin() {
-      return this.$store.getters["auth/isLogin"];
-    },
-    ...mapGetters("requests", ["requests"]),
+  data() {
+    return {
+      check: this.$store.getters["auth/getLanguages"] || "us",
+    };
   },
+  computed: {
+    isAuth() {
+      return this.$store.getters["auth/isAuth"];
+    },
+  },
+
   methods: {
+    handleChange(event) {
+      localStorage.setItem("lang", event.target.value);
+      this.$i18n.locale = event.target.value;
+      this.$store.commit("auth/setLanguage", event.target.value);
+    },
     logout() {
       return this.$store.dispatch("auth/logout");
     },
@@ -87,5 +115,27 @@ export default {
   color: red;
   position: absolute;
   top: 20px;
+}
+
+.vuei18n {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  padding: 5px;
+  outline: none;
+  border: 1px solid #ddd;
+  background: transparent;
+  color: #f391e3;
+}
+
+.flag {
+  margin: 5px;
+}
+
+.notify {
+  color: red;
+  position: fixed;
+  right: 24.1%;
+  top: 21px;
 }
 </style>

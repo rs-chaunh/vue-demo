@@ -1,7 +1,7 @@
 <template>
   <div class="card-coaches">
     <h3>{{ firstName }} {{ lastName }}</h3>
-    <h4>${{ hourlyRate }}/hour</h4>
+    <h4>${{ hourlyRate }}/{{$t('hour')}}</h4>
     <div>
       <coach-badge
         v-for="area in areas"
@@ -15,10 +15,10 @@
 
     <div class="btn-more">
       <coach-button link :to="linkToContact" background="light">
-        Contact
+        {{ $t("contact") }}
       </coach-button>
       <coach-button link :to="linkToDetail" background="">
-        View Details
+        {{ $t("viewDetails") }}
       </coach-button>
     </div>
   </div>

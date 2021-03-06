@@ -5,61 +5,44 @@ const routes = [
   { path: "/", redirect: "/coaches" },
   {
     path: "/coaches",
-    name: "Coaches",
-    component: () =>
-      import(/* webpackChunkName: "Coaches" */ "../views/coaches/Coaches.vue"),
+    name: "CoachList",
+    component: () => import("../views/coaches/CoachList.vue"),
   },
   {
     path: "/coaches/:id",
     name: "CoachDetail",
-    component: () =>
-      import(
-        /* webpackChunkName: "CoachDetail" */ "../views/coaches/CoachDetail.vue"
-      ),
+    component: () => import("../views/coaches/CoachDetail.vue"),
     props: true,
     children: [
       {
         path: "contact",
         name: "CoachContact",
-        component: () =>
-          import(
-            /* webpackChunkName: "CoachContact" */ "../views/requests/CoachContact.vue"
-          ),
+        component: () => import("../views/requests/CoachContact.vue"),
       },
     ],
   },
   {
     path: "/register",
-    name: "register",
-    component: () =>
-      import(
-        /* webpackChunkName: "CoachCreate" */ "../views/coaches/CoachCreate.vue"
-      ),
-    meta: { requiresAuth: true },
+    name: "Register",
+    component: () => import("../views/coaches/CoachRegister.vue"),
+    meta: { authRequired: true },
   },
   {
     path: "/auth",
     name: "Auth",
-    component: () =>
-      import(/* webpackChunkName: "Auth" */ "../views/auth/Auth.vue"),
-    meta: { requiresUnauth: true },
+    component: () => import("../views/auth/Auth.vue"),
+    meta: { unAuthRequired: true },
   },
   {
     path: "/requests",
     name: "Requests",
-    component: () =>
-      import(
-        /* webpackChunkName: "CoachRequestsReceived" */ "../views/requests/CoachRequestsReceived.vue"
-      ),
+    component: () => import("../views/requests/CoachRequestsReceived.vue"),
   },
 
   {
     path: "/:NotFound(.*)*",
     name: "PageNotFound",
-    component: () =>
-      import(
-        /* webpackChunkName: "PageNotFound" */ "../components/layouts/PageNotFound.vue"
-      ),
+    component: () => import("../components/layouts/PageNotFound.vue"),
   },
 ];
 
@@ -70,20 +53,9 @@ const router = createRouter({
 
 //guard navigation
 router.beforeEach((to, _, next) => {
-  // if (to.matched.some((record) => record.meta.authRequired)) {
-  //   if (!store.state.user && !!store.state.token) {
-  //     next({
-  //       name: "Auth",
-  //     });
-  //   } else {
-  //     next();
-  //   }
-  // } else {
-  //   next();
-  // }
-  if (to.meta.requiresAuth && !store.getters["auth/isLogin"]) {
+  if (to.meta.authRequired && !store.getters["auth/isLogin"]) {
     next("/auth");
-  } else if (to.meta.requiresUnauth && store.getters["auth/isLogin"]) {
+  } else if (to.meta.unAuthRequired && store.getters["auth/isLogin"]) {
     next("/coaches");
   } else {
     next();

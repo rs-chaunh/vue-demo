@@ -3,7 +3,6 @@ const url = "https://coaches-e0de4-default-rtdb.firebaseio.com/coaches.json";
 
 export default {
   async registerCoach({ commit, rootGetters }, data) {
-    // const userId = state.coaches.length++;
     const user = rootGetters["auth/user"];
     const coachData = {
       id: user,

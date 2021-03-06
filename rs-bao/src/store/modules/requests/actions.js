@@ -3,7 +3,6 @@
 import axios from "axios";
 
 //Để dispatch các action và commit các mutation trong global namespace, truyền { root: true } như là tham số thứ 3 vào dispatch và commit
-// import axios from "axios";
 
 export default {
   //send request to an email
@@ -22,8 +21,7 @@ export default {
       const error = "Failed to send request.";
       throw error;
     }
-    // newRequest.id = response.data.name;
-    // newRequest.coachId = payload.coachId;
+
     commit("addRequest", newRequest);
   },
 

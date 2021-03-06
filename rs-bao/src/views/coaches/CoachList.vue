@@ -7,24 +7,19 @@
       <coach-card>
         <div class="list-button">
           <coach-button @click="fetchCoaches" background="light">
-            Refresh
+            {{ $t("refresh") }}
+          </coach-button>
+
+          <coach-button link v-if="!isAuth" :path="'/auth'" :query="'register'">
+            {{ $t("loginToRegister") }}
           </coach-button>
 
           <coach-button
-            link
-            v-if="!isLogin"
-            :path="'/auth'"
-            :query="'register'"
-          >
-            Login to Register as Coach
-          </coach-button>
-
-          <coach-button
-            v-if="isLogin && !isCoach && !loading"
+            v-if="isAuth && !isCoach && !loading"
             link
             :path="'/register'"
           >
-            Register as Coach
+            {{ $t("registerCoach") }}
           </coach-button>
         </div>
         <div v-if="loading">
@@ -46,7 +41,7 @@
           </coach-item>
         </div>
         <div v-else>
-          <h3>No coaches found.</h3>
+          <h3>{{ $t("notFoundCoach") }}</h3>
         </div>
       </coach-card>
     </section>
@@ -56,13 +51,14 @@
 <script>
 import CoachFilter from "../../components/coaches/CoachFilter.vue";
 import CoachItem from "../../components/coaches/CoachItem.vue";
+// import mapGetters from "vuex";
 
 export default {
   components: { CoachFilter, CoachItem },
   data() {
     return {
       loading: false,
-      coachesFilter: {
+      coachFilters: {
         frontend: true,
         backend: true,
         career: true,
@@ -71,28 +67,25 @@ export default {
     };
   },
   computed: {
-    isLogin() {
-      return this.$store.getters["auth/isLogin"];
+    isAuth() {
+      return this.$store.getters["auth/isAuth"];
     },
 
     isCoach() {
       return this.$store.getters["auth/isCoach"];
     },
-
+    // ...mapGetters("auth", ["isAuth", "isCoach"]),
     hasCoaches() {
       return !this.loading && this.$store.getters["coaches/hasCoaches"];
     },
     filteredCoaches() {
       const coaches = this.$store.getters["coaches/allCoaches"];
       return coaches.filter((coach) => {
-        //check phần tử có tồn tại trong mảng ko
-        if (this.coachesFilter.frontend && coach.areas.includes("frontend")) {
-          return true;
-        }
-        if (this.coachesFilter.backend && coach.areas.includes("backend")) {
-          return true;
-        }
-        if (this.coachesFilter.career && coach.areas.includes("career")) {
+        if (
+          (this.coachFilters.frontend && coach.areas.includes("frontend")) ||
+          (this.coachFilters.backend && coach.areas.includes("backend")) ||
+          (this.coachFilters.career && coach.areas.includes("career"))
+        ) {
           return true;
         }
         return false;
@@ -104,21 +97,22 @@ export default {
   },
   methods: {
     onChangeFilter(data) {
-      this.coachesFilter = data;
+      this.coachFilters = data;
     },
     async fetchCoaches() {
       this.loading = true;
       try {
-        await this.$store.dispatch("coaches/fetchCoaches").then(() => {
-          setTimeout(() => {
-            this.loading = false;
-          }, 300);
-        });
+        await this.$store.dispatch("coaches/fetchCoaches");
+        this.loading = false;
       } catch (err) {
-        this.error = "Failed to fetch!";
+        this.error = this.$t("failToFetch");
+        this.loading = false;
       }
     },
   },
+  beforeRouteLeave() {
+    console.log("good bye!");
+  }
 };
 </script>
 

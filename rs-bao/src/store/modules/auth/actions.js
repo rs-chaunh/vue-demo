@@ -1,4 +1,6 @@
 import axios from "axios";
+import router from "../../../router";
+
 export default {
   //SIGNUP
   async signUp({ commit }, payload) {
@@ -11,7 +13,7 @@ export default {
       returnSecureToken: true,
     });
 
-    if (response.status !== "200") {
+    if (response.status !== 200) {
       //error
     }
 
@@ -35,7 +37,7 @@ export default {
       returnSecureToken: true,
     });
 
-    if (response.status !== "200") {
+    if (response.status !== 200) {
       //error
     }
 
@@ -51,6 +53,7 @@ export default {
   logout({ commit }) {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    router.push("/coaches");
 
     commit("setUser", {
       user: null,

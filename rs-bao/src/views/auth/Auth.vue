@@ -11,6 +11,9 @@ export default {
   components: {
     CoachLoginForm,
   },
+  beforeRouteLeave() {
+    console.log("good bye!");
+  },
 };
 </script>
 <style scoped>
