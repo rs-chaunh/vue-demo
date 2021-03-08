@@ -2,7 +2,7 @@
   <form @submit="handleSubmit" method="post" novalidate="true">
     <div class="form-control" :class="{error:!!dataCoach.firstname.err}">
       <!-- //FIXED -->
-      <label for="firstname">{{ $t("firstname") }}</label>
+      <label for="firstname">{{ $t("registerCoach.firstname") }}</label>
       <input
         type="text"
         v-model="dataCoach.firstname.value"
@@ -12,7 +12,7 @@
       <p v-if="dataCoach.firstname.err">{{ dataCoach.firstname.err }}</p>
     </div>
     <div class="form-control" :class="{error:!!dataCoach.lastname.err}">
-      <label for="lastname">{{ $t("lastname") }}</label>
+      <label for="lastname">{{ $t("registerCoach.lastname") }}</label>
       <input
         type="text"
         v-model="dataCoach.lastname.value"
@@ -22,7 +22,7 @@
       <p v-if="dataCoach.lastname.err">{{ dataCoach.lastname.err }}</p>
     </div>
     <div class="form-control" :class="{error:!!dataCoach.description.err}">
-      <label for="description">{{ $t("description") }}</label>
+      <label for="description">{{ $t("registerCoach.description") }}</label>
       <textarea
         type="text"
         v-model="dataCoach.description.value"
@@ -33,7 +33,7 @@
       <p v-if="dataCoach.description.err">{{ dataCoach.description.err }}</p>
     </div>
     <div class="form-control" :class="{error:!!dataCoach.hRate.err}">
-      <label for="hRate">{{ $t("hRate") }}</label>
+      <label for="hRate">{{ $t("registerCoach.hRate") }}</label>
       <input
         type="number"
         v-model="dataCoach.hRate.value"
@@ -43,7 +43,7 @@
       <p v-if="dataCoach.hRate.err">{{ dataCoach.hRate.err }}</p>
     </div>
     <div class="form-control">
-      <h3>{{ $t("areasOf") }}</h3>
+      <h3>{{ $t("registerCoach.areasOf") }}</h3>
       <div :class="{error:!!dataCoach.areas.err}">
         <input
           type="checkbox"
@@ -52,7 +52,7 @@
           id="frontend"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="frontend">{{ $t("devF") }}</label>
+        <label for="frontend">{{ $t("registerCoach.devF") }}</label>
       </div>
       <div :class="{error:!!dataCoach.areas.err}">
         <input
@@ -62,7 +62,7 @@
           id="backend"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="backend">{{ $t("devB") }}</label>
+        <label for="backend">{{ $t("registerCoach.devB") }}</label>
       </div>
       <div :class="{error:!!dataCoach.areas.err}">
         <input
@@ -72,7 +72,7 @@
           id="career"
           @change="handleCheckErrItem('areas', dataCoach.areas)"
         />
-        <label for="career">{{ $t("devC") }}</label>
+        <label for="career">{{ $t("registerCoach.devC") }}</label>
       </div>
       <p v-if="dataCoach.areas.err">{{ dataCoach.areas.err }}</p>
       <p v-if="errNote">{{ errNote }}</p>

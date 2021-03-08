@@ -9,7 +9,7 @@
         <slot></slot>
       </section>
       <div class="menu">
-        <item-button @click.prevent="togglePopup()">  {{ $t("close") }} </item-button>
+        <item-button @click.prevent="togglePopup()">  {{ $t("common.close") }} </item-button>
       </div>
     </dialog>
   </transition>

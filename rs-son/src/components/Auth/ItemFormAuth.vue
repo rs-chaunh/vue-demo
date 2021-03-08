@@ -18,19 +18,19 @@
 
   <form @submit.prevent="handleSubmit">
     <div class="form-control">
-      <label for="email"> {{ $t("email") }} </label>
+      <label for="email"> {{ $t("contact.email") }} </label>
       <input type="email" v-model="email" id="email" />
     </div>
     <div class="form-control">
-      <label for="password">{{ $t("pass") }}</label>
+      <label for="password">{{ $t("auth.pass") }}</label>
       <input type="password" v-model="password" id="password" />
     </div>
     <p v-if="errors">
-      {{ $t("errAuth") }}
+      {{ $t("auth.errAuth") }}
     </p>
     <item-button> {{ textBtn }} </item-button>
     <item-button @click.prevent="handleChangeAction()" class="flat">
-      {{ textLink }} {{ $t("instead") }}
+      {{ textLink }} {{ $t("auth.instead") }}
     </item-button>
     <!-- FIXED -->
   </form>
@@ -39,7 +39,6 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import firebase from "firebase/app";
-import * as firebase_API from '../../env'
 
 export default {
   data() {
@@ -129,7 +128,7 @@ export default {
       messaging
         .getToken({
           vapidKey:
-          `${firebase_API.KEY_MESS}`
+          `${process.env.VUE_APP_KEY_MESS}`
         })
         .then((currentToken) => {
           if (currentToken) {
@@ -164,17 +163,17 @@ export default {
     textBtn() {
       // FIXED
       if (this.doLogin) {
-        return this.$i18n.messages[this.locale].textBtn;
+        return this.$i18n.messages[this.locale].auth.textBtn;
       } else {
-        return this.$i18n.messages[this.locale].textLink;
+        return this.$i18n.messages[this.locale].auth.textLink;
       }
     },
     textLink() {
       // FIXED
       if (!this.doLogin) {
-        return this.$i18n.messages[this.locale].textBtn;
+        return this.$i18n.messages[this.locale].auth.textBtn;
       } else {
-        return this.$i18n.messages[this.locale].textLink;
+        return this.$i18n.messages[this.locale].auth.textLink;
       }
     },
   },

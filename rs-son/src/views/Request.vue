@@ -3,19 +3,18 @@
     <section>
       <item-card>
         <header>
-          <h2>{{$t('requestRecevied')}}</h2>
+          <h2>{{ $t("listRequest.requestRecevied") }}</h2>
         </header>
-        <list-request></list-request>
+        <coach-request></coach-request>
       </item-card>
     </section>
   </transition>
 </template>
 
 <script>
-
-import ListRequest from "../components/Request/ListRequest.vue";
+import CoachRequest from "../components/Coach/CoachRequest.vue";
 export default {
-  components: {  ListRequest },
+  components: { CoachRequest },
   beforeRouteLeave() {
     console.log("GOODBYE");
   },

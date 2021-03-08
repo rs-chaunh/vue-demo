@@ -1,9 +1,9 @@
 //FIXED
 <template>
   <section>
-    {{setDataFilter}}
+    {{ setDataFilter }}
     <item-card>
-      <h2>{{$t('findCoach')}}</h2>
+      <h2>{{ $t("home.findCoach") }}</h2>
       <span class="filter-option">
         <input
           type="checkbox"
@@ -53,10 +53,8 @@ export default {
   },
   methods: {
     handlegetDatafilter() {
-      return this.$store.dispatch({
-        type: "coach/getDatafilter",
-        listFilter: this.list,
-      });
+      this.$store.commit("coach/SET_DATA_FILTER", this.list);
+      return this.$store.getters["coach/getDatafilter"](this.list);
     },
   },
 };

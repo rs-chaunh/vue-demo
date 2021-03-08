@@ -1,4 +1,4 @@
-//TODO tách riêng làm 2 module: auth, coach, sử dụng namespaced
+
 import {
   createStore
 } from 'vuex'

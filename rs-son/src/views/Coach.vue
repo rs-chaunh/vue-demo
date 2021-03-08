@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import CoachFilter from '../components/CoachPage/CoachFilter.vue';
-import CoachList from "../components/CoachPage/CoachList.vue";
+import CoachFilter from "../components/Coach/CoachFilter.vue";
+import CoachList from "../components/Coach/CoachList.vue";
 
 export default {
   components: {
@@ -30,7 +30,7 @@ export default {
       window.location.reload();
     },
   },
-    beforeRouteLeave() {
+  beforeRouteLeave() {
     console.log("GOODBYE");
   },
   beforeRouteEnter(to, from) {
@@ -39,6 +39,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

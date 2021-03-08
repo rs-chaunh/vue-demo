@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ItemFormAuth from "../components/AuthPage/ItemFormAuth.vue";
+import ItemFormAuth from "../components/Auth/ItemFormAuth.vue";
 export default {
   components: { ItemFormAuth },
   beforeRouteLeave() {

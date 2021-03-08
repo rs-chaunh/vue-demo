@@ -2,11 +2,11 @@
   <transition name="open" appear>
     <section>
       <item-card>
-        <h2>{{ $t("notFound") }}</h2>
+        <h2>{{ $t("notFound.notFound") }}</h2>
         <p>
-          " {{ $t("notFoundContent") }} "
+          " {{ $t("notFound.notFoundContent") }} "
           <router-link to="/coaches">
-            {{ $t("coaches") }}
+            {{ $t("coaches.coaches") }}
           </router-link>
         </p>
       </item-card>

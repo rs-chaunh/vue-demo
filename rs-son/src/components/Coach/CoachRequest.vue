@@ -1,16 +1,15 @@
-// TODO đây cũng là 1 phần của Coach components, bỏ vào chung folder a thấy hợp lí hơn. Để request chẳng biết request của cái gì.
 <template>
   <item-lazy-load v-if="$store.state.coach.loading"></item-lazy-load>
   <div>
-    <ul v-if="dataRequest != ''">
-      <li v-for="(item, index) in dataRequest" :key="index">
+    <ul v-if="requestedData != ''">
+      <li v-for="(item, index) in requestedData" :key="index">
         <div>
           <a :href="`mailto:` + item.userEmail"> {{ item.userEmail }} </a>
         </div>
         <p>{{ item.message }}</p>
       </li>
     </ul>
-    <h4 v-else> {{$t('received')}} </h4>
+    <h4 v-else> {{$t('listRequest.received')}} </h4>
   </div>
 </template>
 
@@ -21,16 +20,15 @@ import { mapState } from 'vuex';
 export default {
   computed: {
     ...mapState(["auth"]),
-    dataRequest() {
+    requestedData() {
       if (this.auth.request) {
         return Object.values(this.auth.request);
       } else {
         return "";
       }
-    }, //TODO dataRequest => requestedData
+    },
   },
   created() {
-    this.$store.commit("auth/SET_LOADING",true);
     this.$store.dispatch("auth/getDataRequest");
   },
 };

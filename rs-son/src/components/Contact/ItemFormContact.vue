@@ -2,16 +2,16 @@
 <template>
   <form @submit.prevent="handleSubmitRequest">
     <div class="form-control">
-      <label for="email">{{ $t("Yemail") }}</label>
+      <label for="email">{{ $t("contact.Yemail") }}</label>
       <input type="email" id="email" v-model="email" />
     </div>
     <div class="form-control">
-      <label for="message">{{ $t("mess") }}</label>
+      <label for="message">{{ $t("contact.mess") }}</label>
       <textarea rows="5" id="message" v-model="messages"></textarea>
     </div>
-    <p v-if="errors" class="errors">{{ $t("err") }}.</p>
+    <p v-if="errors" class="errors">{{ $t("contact.err") }}.</p>
     <div class="action">
-      <item-button>{{ $t("send") }}</item-button>
+      <item-button>{{ $t("contact.send") }}</item-button>
     </div>
   </form>
 </template>
@@ -51,7 +51,7 @@ export default {
               defaultURL : window.location.host
             },
           })
-          .then(console.log("Document written with ID: "))
+          .then()
           .catch((error) => {
             console.error("Error adding document: ", error);
           });
