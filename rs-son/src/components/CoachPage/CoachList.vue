@@ -1,3 +1,4 @@
+//TODO đặt folder là CoachPage sẽ dễ bị hiểu nhầm, vì đây chỉ là component, còn coach page em đã bỏ trong folder views rồi
 <template>
   <section>
     <item-card>
