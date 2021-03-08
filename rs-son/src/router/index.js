@@ -4,12 +4,16 @@ import {
 } from 'vue-router';
 import store from '../store/index';
 
-const routes = [{
+//TODO coaches/:id, coaches/:id/xxx là nested route, nên sử dụng thuộc tính children
+// https://router.vuejs.org/guide/essentials/nested-routes.html
+
+const routes = [
+  {
     path: '/',
     redirect: {
       path: '/coaches',
       name: 'Coaches',
-    },
+    }, //TODO redirect thì theo path hoặc theo name thôi, name là đại diện cho path, phòng trường hợp sau này path có thay đổi
   },
   {
     path: '/coaches',
@@ -38,17 +42,17 @@ const routes = [{
     beforeEnter: (to, from, next) => {
       let indexOfCoach = localStorage.getItem('checkCoach');
       if (store.state.auth.tokenId != null) {
-        if (indexOfCoach > 0) { //FIXED
-          next('/coaches');
+        if (indexOfCoach > 0) {
+          //FIXED
+          next('/coaches'); //TODO navigate thì ưu tiên dùng name hơn là dùng path, vì path có thể bị thay đổi, nhưng name thì ko
         } else {
           next();
         }
       } else {
         next('/auth');
       }
-    },
-    component: () =>
-      import('../views/RegisterCoach.vue'),
+    }, //TODO nên định nghĩa function này phía dưới, rồi ở beforeEnter gắn function đó vào thôi, clean và có thể tái sử dụng
+    component: () => import('../views/RegisterCoach.vue'),
   },
   {
     path: '/detail/:id',
@@ -70,7 +74,7 @@ const routes = [{
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(process.env.BASE_URL), //TODO em định nghĩa BASE_URL ở đâu a ko thấy
   routes,
 });
 

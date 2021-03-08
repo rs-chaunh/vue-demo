@@ -1,3 +1,4 @@
+//TODO ở đây cũng chia folder tương tự như ở folder components, page của coach thì sẽ gồm những page nào, em để detail này làm sao biết detail của cái gì
 <template>
   <transition appear name="open" id="detail">
     <div v-if="getDataDetail">
