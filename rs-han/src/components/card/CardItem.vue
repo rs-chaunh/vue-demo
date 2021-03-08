@@ -15,7 +15,7 @@
       <button-link :name="'ContactCoach'" :id="list.id" class="outline">{{
         $t("common.button.contact")
       }}</button-link>
-      <button-link :name="'ViewDetail'" :id="list.id">{{
+      <button-link :name="'ViewDetailCoaches'" :id="list.id">{{
         $t("common.button.viewDetail")
       }}</button-link>
     </div>
@@ -23,11 +23,8 @@
 </template>
 
 <script>
-import MyBadge from "../common/MyBadge";
-import ButtonLink from "../common/ButtonLink";
 export default {
   name: "CardItem",
-  components: { MyBadge, ButtonLink },
   props: ["listItem"],
   computed: {
     list() {

@@ -14,7 +14,7 @@ export default {
     console.log("good bye!");
   },
   created() {
-    this.$store.dispatch("getUserRegister");
+    this.$store.dispatch("coaches/getUserRegister");
   },
 };
 </script>

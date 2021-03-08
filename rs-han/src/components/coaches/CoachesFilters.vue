@@ -1,4 +1,3 @@
-//TODO tên file dễ nhầm với FindCoachesList, chưa đồng bộ với các tên file còn lại, nên sửa thành CoachesFilters
 <template>
   <section class="find__coaches">
     <div class="card">
@@ -20,7 +19,7 @@
 <script>
 import { mapMutations } from "vuex";
 export default {
-  name: "FindCoaches",
+  name: "CoachesFilters",
   data() {
     return {
       areas: ["frontend", "backend", "fullstack"],
@@ -31,7 +30,7 @@ export default {
       ],
     };
   },
-  methods: mapMutations(["FILTER_COACHES"]),
+  methods: mapMutations("coaches", ["FILTER_COACHES"]),
 };
 </script>
 

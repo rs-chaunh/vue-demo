@@ -37,14 +37,12 @@
 
 <script>
 import { mapState } from "vuex";
-import SelectLanguage from "./SelectLanguage";
 export default {
   name: "TheHeading",
-  components: { SelectLanguage },
-  computed: mapState(["auth"]),
+  computed: mapState("auth", ["auth"]),
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("common/logout");
     },
   },
 };

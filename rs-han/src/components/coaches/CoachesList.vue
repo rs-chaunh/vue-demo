@@ -1,17 +1,15 @@
-//TODO tên file chưa rõ, compent này để show coach list thì đặt là CoachesList là được rồi, tên file nên là danh từ, và đồng bộ với các tên file còn lại
 <template>
   <section>
     <div class="card">
       <div class="controls">
         <button
-          @click="$store.dispatch('getCoaches')"
+          @click="$store.dispatch('coaches/getCoaches')"
           class="my-button outline"
         >
           {{ $t("common.button.refresh") }}
         </button>
 
-        <div v-if="isRegister"></div>
-        <!-- //TODO hình như bị thừa ô div phải không, check !isRegistered là được -->
+        <div v-if="isRegisterCoaches"></div>
         <div v-else>
           <button-link :name="'Register'" v-if="auth">
             {{ $t("common.button.registerCoaches") }}
@@ -33,14 +31,15 @@
 
 <script>
 import CardList from "../card/CardList";
-import ButtonLink from "../common/ButtonLink";
 import MyLoading from "../loading/MyLoading";
 import { mapState } from "vuex";
 export default {
-  name: "FindCoachesList",
-  components: { CardList, ButtonLink, MyLoading },
+  name: "CoachesList",
+  components: { CardList, MyLoading },
   computed: {
-    ...mapState(["auth", "loading", "isRegister"]),
+    ...mapState("auth", ["auth"]),
+    ...mapState("common", ["loading"]),
+    ...mapState("coaches", ["isRegisterCoaches"]),
   },
 };
 </script>

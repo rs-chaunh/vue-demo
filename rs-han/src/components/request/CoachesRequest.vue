@@ -33,10 +33,10 @@ export default {
       request: [],
     };
   },
-  computed: { ...mapState(["loading"]) },
+  computed: mapState("common", ["loading"]),
 
   created() {
-    this.$store.dispatch("requestCoaches", this.request);
+    this.$store.dispatch("coaches/requestCoaches", this.request);
   },
   beforeRouteLeave() {
     console.log("good bye!");
