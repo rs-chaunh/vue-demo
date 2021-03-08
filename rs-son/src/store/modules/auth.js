@@ -132,6 +132,9 @@ const auth = {
             }
         },
         // GET DATA REQUEST FOR MEM FROM API
+        // TODO đây là context chứ ko phải store nhé, em console ra để xem nó khác nhau gì, tương tự những chỗ khác
+        // https://vuex.vuejs.org/guide/actions.html
+        // TODO nếu đã set loading false ở đây, thì set loading true ở đây luôn, thường thì a ko lưu loading trong state, lưu trnog data của component là được rồi
         getDataRequest(store) {
             let userId = store.state.tokenId.localId;
             axios

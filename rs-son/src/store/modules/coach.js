@@ -32,6 +32,7 @@ const coach = {
     },
     actions: {
         // GET DATA COACHES DEFAUT FROM API
+        // TODO lấy coach thì đặt tên của action liên quan đến coach chứ, data nghe chung chung quá: getCoaches, getCoachDetails, getCoachFilters, ...
         getDefaultData({
             commit
         }) {
@@ -52,6 +53,7 @@ const coach = {
                     commit('SET_DATA_DETAIL', res.data);
                 }).catch(err => console.log(err));
         }, // GET DATA TEMP TO SS WITH FILTER
+        //TODO cái này bỏ vào getters
         getDatafilter(store, payLoad) {
             // console.log(store);
             store.commit('SET_DATA_FILTER', payLoad.listFilter)

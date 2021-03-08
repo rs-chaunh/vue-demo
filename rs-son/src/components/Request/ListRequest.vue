@@ -1,3 +1,4 @@
+// TODO đây cũng là 1 phần của Coach components, bỏ vào chung folder a thấy hợp lí hơn. Để request chẳng biết request của cái gì.
 <template>
   <item-lazy-load v-if="$store.state.coach.loading"></item-lazy-load>
   <div>
@@ -26,7 +27,7 @@ export default {
       } else {
         return "";
       }
-    },
+    }, //TODO dataRequest => requestedData
   },
   created() {
     this.$store.commit("auth/SET_LOADING",true);
