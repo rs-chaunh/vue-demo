@@ -7,20 +7,20 @@
       <ul>
         <li>
           <router-link :active="isActive" to="/coaches">
-            {{ $t("allCoaches") }}
+            {{ $t("navbar.allCoaches") }}
           </router-link>
         </li>
         <li v-if="tokenId != null && tokenId != ''">
           <router-link to="/requests" @click.prevent="deleteNotification">
-            {{ $t("request") }}
+            {{ $t("navbar.request") }}
             {{ notificaiton.length > 0 ? `+${notificaiton.length}` : "" }}
           </router-link>
         </li>
         <li v-if="tokenId != null && tokenId != ''">
-          <item-button @click="handleLogout()">{{ $t("logout") }}</item-button>
+          <item-button @click="handleLogout()">{{ $t("navbar.logout") }}</item-button>
         </li>
         <li v-else>
-          <router-link to="/auth"> {{ $t("login") }} </router-link>
+          <router-link to="/auth"> {{ $t("navbar.login") }} </router-link>
         </li>
 
         <li>

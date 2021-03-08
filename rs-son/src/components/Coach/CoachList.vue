@@ -1,30 +1,29 @@
-//TODO đặt folder là CoachPage sẽ dễ bị hiểu nhầm, vì đây chỉ là component, còn coach page em đã bỏ trong folder views rồi
 <template>
   <section>
     <item-card>
       <div class="controls">
         <item-button @click="handleRefresh()" class="outline">
-          {{ $t("refresh") }}
+          {{ $t("home.refresh") }}
         </item-button>
 
         <item-link v-if="isCheckCoach == -1 && locale == 'gb'" :linkTo="linkTo">
           {{ (textLink = tokenId ? "" : "Login to" || "") }}
-          {{ $t("regAsCoach") }}
+          {{ $t("home.regAsCoach") }}
         </item-link>
 
         <item-link v-if="isCheckCoach == -1 && locale == 'vn'" :linkTo="linkTo">
           {{ (textLink = tokenId ? "" : "Đăng nhập để" || "") }}
-          {{ $t("regAsCoach") }}
+          {{ $t("home.regAsCoach") }}
         </item-link>
       </div>
       <item-lazy-load v-if="$store.state.coach.loading"></item-lazy-load>
       <ul v-else>
-        <coach-detail
+        <coach-item
           v-for="item in Object.entries(dataCoachDefault)"
           :key="item[0]"
           :itemList="item"
         >
-        </coach-detail>
+        </coach-item>
       </ul>
     </item-card>
   </section>
@@ -33,10 +32,10 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 
-import CoachDetail from "./CoachDetail";
+import CoachItem from "./CoachItem";
 
 export default {
-  components: { CoachDetail },
+  components: { CoachItem },
   data() {
     return {
       textLink: "",
@@ -87,8 +86,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.commit("coach/SET_LOADING_COACH", true);
-    this.$store.dispatch("coach/getDefaultData");
+    this.$store.dispatch("coach/getCoaches");
   },
   methods: {
     ...mapMutations(["coach"]),
@@ -97,15 +95,12 @@ export default {
       setTimeout(() => {
         this.$store.commit("coach/SET_LOADING_COACH",false);
       }, 300);
-      this.$store.dispatch({
-        type: "coach/getDatafilter",
-        listFilter: this.coach.areas,
-      });
+      this.$store.getters["coach/getDatafilter"](this.coach.areas);
     },
   },
   watch: {
     resultPost: function () {
-      this.$store.dispatch("coach/getDefaultData");
+      this.$store.dispatch("coach/getCoaches");
     },
   },
 };

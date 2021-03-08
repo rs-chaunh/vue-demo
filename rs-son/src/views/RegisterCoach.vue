@@ -2,7 +2,7 @@
   <transition appear name="open">
     <section>
       <item-card>
-        <h2> {{$t('registerCoach')}} </h2>
+        <h2> {{$t('registerCoach.registerCoach')}} </h2>
         <item-form-regis></item-form-regis>
       </item-card>
     </section>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ItemFormRegis from "../components/RegisterPage/ItemFormRegis.vue";
+import ItemFormRegis from "../components/Register/ItemFormRegis.vue";
 export default {
   components: {  ItemFormRegis },
     beforeRouteLeave() {

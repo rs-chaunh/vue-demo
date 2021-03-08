@@ -24,7 +24,7 @@ exports.sendNotification = functions.firestore
         }
       });
     });
-
+    console.log(content);
     if (content.idCoach == idCoachLogin) {
       const API_KEY =
         "AAAAxIOvnHg:APA91bFXkdc6nmHwV10NDuY8FlwSX5oTLxWrX89zSlbtaMlhQP3tbdpFZZZKnzy2gAAsixG_2VfLlYfJeo94RSG3hKvIsI0YifFV1PiNLPwuJ9-9uW40RV65VR19kGTCVMqQ0Y09Xw_n";

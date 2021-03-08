@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as firebase_API from '../../env'
+// import * as firebase_API from '../../env'
 import firebase from "firebase/app"
 
 const auth = {
@@ -59,7 +59,7 @@ const auth = {
         handlePostDataCoach({
             commit
         }, payLoad) {
-            axios.put(`${firebase_API.API_DATA_JSON}/coaches/${payLoad.user.localId}.json?auth=${payLoad.user.idToken}`, payLoad.data).then((res) => {
+            axios.put(`${process.env.VUE_APP_API_DATA_JSON}/coaches/${payLoad.user.localId}.json?auth=${payLoad.user.idToken}`, payLoad.data).then((res) => {
                 console.log('POST CORRECTED');
                 commit('SET_RESULT_POST', res.data);
             }).catch(err => {
@@ -69,7 +69,7 @@ const auth = {
         },
         // HANDLE POST REQUEST FROM USER
         handlePostDataRequest(store, payLoad) {
-            axios.post(`${firebase_API.API_DATA_JSON}/request/${payLoad.requestId}.json`, payLoad.data).then((res) => {
+            axios.post(`${process.env.VUE_APP_API_DATA_JSON}/request/${payLoad.requestId}.json`, payLoad.data).then((res) => {
                 console.log('POST REQUESTS CORRECTED');
                 console.log(res);
             }).catch(err => {
@@ -86,7 +86,7 @@ const auth = {
                 commit('SET_LOADING', false);
             }, 500)
             try {
-                let res = await axios.post(`${firebase_API.API_AUTH}:signUp?key=${firebase_API.API_KEY}`, payLoad.data);
+                let res = await axios.post(`${process.env.VUE_APP_API_AUTH}:signUp?key=${process.env.VUE_APP_API_KEY}`, payLoad.data);
                 commit('SET_LOADING', false);
                 commit('SET_TOKEN_ID', res.data);
                 const db = firebase.firestore();
@@ -112,7 +112,7 @@ const auth = {
                 commit('SET_LOADING', false);
             }, 500)
             try {
-                let res = await axios.post(`${firebase_API.API_AUTH}:signInWithPassword?key=${firebase_API.API_KEY}`, payLoad.data)
+                let res = await axios.post(`${process.env.VUE_APP_API_AUTH}:signInWithPassword?key=${process.env.VUE_APP_API_KEY}`, payLoad.data)
                 let checkLogin = {
                     idToken: res.data.idToken,
                     localId: res.data.localId,
@@ -132,19 +132,20 @@ const auth = {
             }
         },
         // GET DATA REQUEST FOR MEM FROM API
-        // TODO đây là context chứ ko phải store nhé, em console ra để xem nó khác nhau gì, tương tự những chỗ khác
-        // https://vuex.vuejs.org/guide/actions.html
-        // TODO nếu đã set loading false ở đây, thì set loading true ở đây luôn, thường thì a ko lưu loading trong state, lưu trnog data của component là được rồi
-        getDataRequest(store) {
-            let userId = store.state.tokenId.localId;
+        getDataRequest({
+            commit,
+            state
+        }) {
+            let userId = state.tokenId.localId;
+            commit('SET_LOADING', true);
             axios
-                .get(`${firebase_API.API_DATA_JSON}/request/${userId}.json`)
+                .get(`${process.env.VUE_APP_API_DATA_JSON}/request/${userId}.json`)
                 .then((res) => {
-                    store.commit('SET_DATA_REQUEST', res.data);
-                    store.commit('SET_LOADING', false);
+                    commit('SET_DATA_REQUEST', res.data);
+                    commit('SET_LOADING', false);
                 }).catch((err) => {
                     console.log(err);
-                    store.commit('SET_LOADING', false);
+                    commit('SET_LOADING', false);
                 })
         },
     }

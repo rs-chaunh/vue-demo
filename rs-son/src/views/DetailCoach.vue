@@ -1,22 +1,21 @@
-//TODO ở đây cũng chia folder tương tự như ở folder components, page của coach thì sẽ gồm những page nào, em để detail này làm sao biết detail của cái gì
 <template>
   <transition appear name="open" id="detail">
     <div v-if="getDataDetail">
       <section>
         <item-card>
           <h2>{{ getDataDetail.firstName }}</h2>
-          <h3>${{ getDataDetail.hourlyRate }}/ {{$t('hour')}} </h3>
+          <h3>${{ getDataDetail.hourlyRate }}/ {{$t('contact.hour')}} </h3>
         </item-card>
       </section>
       <section>
         <item-card>
           <header>
-            <h2>{{$t('interested')}} </h2>
+            <h2>{{$t('contact.interested')}} </h2>
             <item-link
               :linkTo="{
                 name: 'Contact',
               }"
-              >{{$t('contact')}}</item-link
+              >{{$t('home.contact')}}</item-link
             >
           </header>
         </item-card>
