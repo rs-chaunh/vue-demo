@@ -35,7 +35,7 @@ import { mapState } from "vuex";
 export default {
   name: "ErrorAuth",
   components: { MyLoading },
-  computed: mapState([
+  computed: mapState("auth", [
     "openDialog",
     "authenDialog",
     "loadingDialog",
@@ -43,7 +43,7 @@ export default {
   ]),
   methods: {
     closeDialog() {
-      this.$store.commit("SET_OPEN_DIALOG", false);
+      this.$store.commit("auth/SET_OPEN_DIALOG", false);
     },
   },
 };

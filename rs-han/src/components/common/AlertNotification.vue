@@ -36,7 +36,7 @@ export default {
     setTimeout(() => {
       this.isShow = false;
       this.isHide = true;
-      this.$store.commit("SET_IS_NOTIFICATION", false);
+      this.$store.commit("common/SET_IS_NOTIFICATION", false);
     }, 5000);
   },
 

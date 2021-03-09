@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
   },
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "firebase": "^8.2.4",
+    "nodemon": "^2.0.7",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
     "vue-flag-icon": "^1.0.6",
@@ -23,6 +24,7 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0"
+    "@vue/compiler-sfc": "^3.0.0",
+    "dotenv": "^8.2.0"
   }
 }

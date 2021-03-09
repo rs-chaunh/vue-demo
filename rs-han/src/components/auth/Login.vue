@@ -34,10 +34,8 @@
 </template>
 
 <script>
-import ErrorAuth from "../common/ErrorAuth";
 export default {
   name: "Login",
-  components: { ErrorAuth },
   data() {
     return {
       isLogin: true,
@@ -47,7 +45,7 @@ export default {
   },
   computed: {
     checkValid() {
-      return this.$store.state.checkValid;
+      return this.$store.state.auth.checkValid;
     },
   },
   methods: {
@@ -55,7 +53,7 @@ export default {
       this.isLogin = !this.isLogin;
     },
     loginOrSignup() {
-      this.$store.dispatch("loginOrSignup", {
+      this.$store.dispatch("auth/loginOrSignup", {
         email: this.email,
         password: this.password,
         url: this.$route.query.redirect,

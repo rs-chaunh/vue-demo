@@ -1,4 +1,3 @@
-//TODO detail của cái gì? lỡ có nhiều trang detail thì sao
 <template>
   <div>
     <section>
@@ -29,21 +28,18 @@
 </template>
 
 <script>
-import ButtonLink from "../components/common/ButtonLink";
-import MyBadge from "../components/common/MyBadge";
 export default {
-  name: "ViewDetail",
-  components: { ButtonLink, MyBadge },
+  name: "ViewDetailCoaches",
   computed: {
     infoCoaches() {
-      return this.$store.state.infoCoaches;
+      return this.$store.state.coaches.infoCoaches;
     },
     fullName() {
       return this.infoCoaches.firstName + " " + this.infoCoaches.lastName;
     },
   },
   created() {
-    this.$store.dispatch("infoCoaches", this.$route.params.id);
+    this.$store.dispatch("coaches/infoCoaches", this.$route.params.id);
   },
   beforeRouteLeave() {
     console.log("good bye!");

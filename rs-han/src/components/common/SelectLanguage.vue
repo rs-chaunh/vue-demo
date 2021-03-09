@@ -13,12 +13,12 @@ export default {
   name: "SelectLanguage",
   data() {
     return {
-      language: this.$store.state.lang,
+      language: this.$store.state.common.lang,
     };
   },
   watch: {
     language() {
-      this.$store.dispatch("changLanguage", this.language);
+      this.$store.dispatch("common/changLanguage", this.language);
     },
   },
 };

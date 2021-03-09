@@ -29,22 +29,20 @@
 </template>
 
 <script>
-import ButtonLink from "../components/common/ButtonLink";
-import MyBadge from "../components/common/MyBadge";
 import CoachesContactForm from "../components/coaches/CoachesContactForm.vue";
 export default {
-  name: "ContacCoach",
-  components: { ButtonLink, MyBadge, CoachesContactForm },
+  name: "ContactCoach",
+  components: { CoachesContactForm },
   computed: {
     infoCoaches() {
-      return this.$store.state.infoCoaches;
+      return this.$store.state.coaches.infoCoaches;
     },
     fullName() {
       return this.infoCoaches.firstName + " " + this.infoCoaches.lastName;
     },
   },
   created() {
-    this.$store.dispatch("infoCoaches", this.$route.params.id);
+    this.$store.dispatch("coaches/infoCoaches", this.$route.params.id);
   },
   beforeRouteLeave() {
     console.log("good bye!");

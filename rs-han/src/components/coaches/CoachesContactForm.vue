@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import "firebase/firestore";
 export default {
   props: ["id"],
   name: "CoachesContactForm",
@@ -31,7 +30,7 @@ export default {
     },
 
     sendRequest() {
-      this.$store.dispatch("sendRequest", {
+      this.$store.dispatch("coaches/sendRequest", {
         id: this.userId,
         email: this.email,
         message: this.message,

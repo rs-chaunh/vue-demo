@@ -19,10 +19,13 @@ export default {
   components: { CardItem },
   computed: {
     allList() {
-      return this.$store.getters.allCoaches;
+      return this.$store.getters["coaches/allCoaches"];
     },
     isCoaches() {
-      return this.allList.length == 0 || this.$store.state.coaches.length == 0;
+      return (
+        this.allList.length == 0 ||
+        this.$store.state.coaches.coaches.length == 0
+      );
     },
   },
 };

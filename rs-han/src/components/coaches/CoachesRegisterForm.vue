@@ -128,7 +128,7 @@ export default {
   },
   computed: {
     language() {
-      return this.$store.state.lang;
+      return this.$store.state.common.lang;
     },
     i18n() {
       return this.$i18n.messages[this.language].register.error.validate;
@@ -163,7 +163,7 @@ export default {
         !this.dataValidate.areas.error
       ) {
         this.dataValidate.general.error = false;
-        this.$store.dispatch("registerCoaches", {
+        this.$store.dispatch("coaches/registerCoaches", {
           id: localStorage.getItem("userID"),
           areas: this.dataValidate.areas.value,
           description: this.dataValidate.description.value,
