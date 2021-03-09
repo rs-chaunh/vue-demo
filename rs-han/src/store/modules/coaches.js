@@ -41,21 +41,14 @@ const mutations = {
 const actions = {
   async getCoaches({ commit }) {
     commit("common/SET_LOADING", true, { root: true });
-    const resCoaches = [];
     try {
       const response = await axios.get(
         process.env.VUE_APP_COACHES_FIREBASE_URL
       );
-
-      let obj = Object.values(response.data); //TODO nên đặt tên có nghĩa hơn
-      for (let i = 0; i < obj.length; i++) {
-        let id = { id: Object.keys(response.data)[i] };
-        let temp = Object.assign(obj[i], id); //TODO đặt tên hơi tối nghĩa, không biết được temp này chứa gì
-        resCoaches.push(temp);
-      }
-      //TODO có thể viết gọn lại là
-      // const coachesData = response.data;
-      // const resCoaches = coachesData.map(id=>({id, ...coachesData[i] }))
+      const coachesData = response.data;
+      const resCoaches = Object.entries(coachesData).map((el) => {
+        return { ...el[1], id: el[0] };
+      });
       commit("SET_COACHES", resCoaches);
       commit("common/SET_LOADING", false, { root: true });
     } catch (error) {
@@ -66,13 +59,13 @@ const actions = {
     axios
       .get(process.env.VUE_APP_COACHES_FIREBASE_URL)
       .then((response) => {
-        let tempArr = [];
+        let listIdCoaches = [];
         if (response.data) {
           for (let i = 0; i < Object.values(response.data).length; i++) {
-            tempArr.push(Object.values(response.data)[i].id);
+            listIdCoaches.push(Object.values(response.data)[i].id);
           }
         }
-        dispatch("checkUserRegister", tempArr);
+        dispatch("checkUserRegister", listIdCoaches);
       })
       .catch((error) => console.log(error));
   },
